@@ -443,6 +443,16 @@ int main (void)
 
         // odczyt temperatury
         t = temp_read();
+        // konwersja odczytu na stopnie Celsjusza
+        // dla MAX6576 z TS1=VCC, TS0=VCC (scalar_multiplier = 640 μs/°K)
+        float tempC = ((float)t / 640.0) - 273.15;
+
+        // wyswietlanie temperatury w stopniach Celsjusza
+        sprintf(buf, "%.1f C", tempC);
+        oled_fillRect((1+9*6),1, 80, 8, OLED_COLOR_WHITE);
+        oled_putString((1+9*6),1, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+
+
 
         // odczyt swiatla
         lux = light_read();
@@ -498,7 +508,7 @@ int main (void)
 		// mokra gleba
 		else
 		{
-			sprintf(buf, "zbyt mokro");
+			sprintf(buf, "mokro");
 
 			PWM_SetColor(30, 255, 255); // dioda swieci na #1effff
 		}

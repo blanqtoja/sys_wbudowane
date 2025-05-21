@@ -1,0 +1,1448 @@
+<?xml version="1.0"?>
+<dumps>
+  <platform name="Native" char_bit="8" short_bit="16" int_bit="32" long_bit="64" long_long_bit="64" pointer_bit="64"/>
+  <rawtokens>
+    <file index="0" name="song.c"/>
+    <file index="1" name="song.h"/>
+    <tok fileIndex="0" linenr="2" column="1" str="#"/>
+    <tok fileIndex="0" linenr="2" column="2" str="include"/>
+    <tok fileIndex="0" linenr="2" column="10" str="&quot;lpc17xx_pinsel.h&quot;"/>
+    <tok fileIndex="0" linenr="3" column="1" str="#"/>
+    <tok fileIndex="0" linenr="3" column="2" str="include"/>
+    <tok fileIndex="0" linenr="3" column="10" str="&quot;lpc17xx_gpio.h&quot;"/>
+    <tok fileIndex="0" linenr="4" column="1" str="#"/>
+    <tok fileIndex="0" linenr="4" column="2" str="include"/>
+    <tok fileIndex="0" linenr="4" column="10" str="&quot;lpc17xx_timer.h&quot;"/>
+    <tok fileIndex="0" linenr="5" column="1" str="#"/>
+    <tok fileIndex="0" linenr="5" column="2" str="include"/>
+    <tok fileIndex="0" linenr="5" column="10" str="&quot;song.h&quot;"/>
+    <tok fileIndex="0" linenr="9" column="1" str="#"/>
+    <tok fileIndex="0" linenr="9" column="2" str="define"/>
+    <tok fileIndex="0" linenr="9" column="9" str="NOTE_PIN_HIGH"/>
+    <tok fileIndex="0" linenr="9" column="22" str="("/>
+    <tok fileIndex="0" linenr="9" column="23" str=")"/>
+    <tok fileIndex="0" linenr="9" column="25" str="GPIO_SetValue"/>
+    <tok fileIndex="0" linenr="9" column="38" str="("/>
+    <tok fileIndex="0" linenr="9" column="39" str="0"/>
+    <tok fileIndex="0" linenr="9" column="40" str=","/>
+    <tok fileIndex="0" linenr="9" column="42" str="1"/>
+    <tok fileIndex="0" linenr="9" column="43" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="9" column="45" str="26"/>
+    <tok fileIndex="0" linenr="9" column="47" str=")"/>
+    <tok fileIndex="0" linenr="9" column="48" str=";"/>
+    <tok fileIndex="0" linenr="10" column="1" str="#"/>
+    <tok fileIndex="0" linenr="10" column="2" str="define"/>
+    <tok fileIndex="0" linenr="10" column="9" str="NOTE_PIN_LOW"/>
+    <tok fileIndex="0" linenr="10" column="21" str="("/>
+    <tok fileIndex="0" linenr="10" column="22" str=")"/>
+    <tok fileIndex="0" linenr="10" column="25" str="GPIO_ClearValue"/>
+    <tok fileIndex="0" linenr="10" column="40" str="("/>
+    <tok fileIndex="0" linenr="10" column="41" str="0"/>
+    <tok fileIndex="0" linenr="10" column="42" str=","/>
+    <tok fileIndex="0" linenr="10" column="44" str="1"/>
+    <tok fileIndex="0" linenr="10" column="45" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="10" column="47" str="26"/>
+    <tok fileIndex="0" linenr="10" column="49" str=")"/>
+    <tok fileIndex="0" linenr="10" column="50" str=";"/>
+    <tok fileIndex="0" linenr="14" column="1" str="static"/>
+    <tok fileIndex="0" linenr="14" column="8" str="uint32_t"/>
+    <tok fileIndex="0" linenr="14" column="17" str="notes"/>
+    <tok fileIndex="0" linenr="14" column="22" str="["/>
+    <tok fileIndex="0" linenr="14" column="23" str="]"/>
+    <tok fileIndex="0" linenr="14" column="25" str="="/>
+    <tok fileIndex="0" linenr="14" column="27" str="{"/>
+    <tok fileIndex="0" linenr="15" column="9" str="2272"/>
+    <tok fileIndex="0" linenr="15" column="13" str=","/>
+    <tok fileIndex="0" linenr="15" column="15" str="// A - 440 Hz"/>
+    <tok fileIndex="0" linenr="16" column="9" str="2024"/>
+    <tok fileIndex="0" linenr="16" column="13" str=","/>
+    <tok fileIndex="0" linenr="16" column="15" str="// B - 494 Hz"/>
+    <tok fileIndex="0" linenr="17" column="9" str="3816"/>
+    <tok fileIndex="0" linenr="17" column="13" str=","/>
+    <tok fileIndex="0" linenr="17" column="15" str="// C - 262 Hz"/>
+    <tok fileIndex="0" linenr="18" column="9" str="3401"/>
+    <tok fileIndex="0" linenr="18" column="13" str=","/>
+    <tok fileIndex="0" linenr="18" column="15" str="// D - 294 Hz"/>
+    <tok fileIndex="0" linenr="19" column="9" str="3030"/>
+    <tok fileIndex="0" linenr="19" column="13" str=","/>
+    <tok fileIndex="0" linenr="19" column="15" str="// E - 330 Hz"/>
+    <tok fileIndex="0" linenr="20" column="9" str="2865"/>
+    <tok fileIndex="0" linenr="20" column="13" str=","/>
+    <tok fileIndex="0" linenr="20" column="15" str="// F - 349 Hz"/>
+    <tok fileIndex="0" linenr="21" column="9" str="2551"/>
+    <tok fileIndex="0" linenr="21" column="13" str=","/>
+    <tok fileIndex="0" linenr="21" column="15" str="// G - 392 Hz"/>
+    <tok fileIndex="0" linenr="22" column="9" str="1136"/>
+    <tok fileIndex="0" linenr="22" column="13" str=","/>
+    <tok fileIndex="0" linenr="22" column="15" str="// a - 880 Hz"/>
+    <tok fileIndex="0" linenr="23" column="9" str="1012"/>
+    <tok fileIndex="0" linenr="23" column="13" str=","/>
+    <tok fileIndex="0" linenr="23" column="15" str="// b - 988 Hz"/>
+    <tok fileIndex="0" linenr="24" column="9" str="1912"/>
+    <tok fileIndex="0" linenr="24" column="13" str=","/>
+    <tok fileIndex="0" linenr="24" column="15" str="// c - 523 Hz"/>
+    <tok fileIndex="0" linenr="25" column="9" str="1703"/>
+    <tok fileIndex="0" linenr="25" column="13" str=","/>
+    <tok fileIndex="0" linenr="25" column="15" str="// d - 587 Hz"/>
+    <tok fileIndex="0" linenr="26" column="9" str="1517"/>
+    <tok fileIndex="0" linenr="26" column="13" str=","/>
+    <tok fileIndex="0" linenr="26" column="15" str="// e - 659 Hz"/>
+    <tok fileIndex="0" linenr="27" column="9" str="1432"/>
+    <tok fileIndex="0" linenr="27" column="13" str=","/>
+    <tok fileIndex="0" linenr="27" column="15" str="// f - 698 Hz"/>
+    <tok fileIndex="0" linenr="28" column="9" str="1275"/>
+    <tok fileIndex="0" linenr="28" column="13" str=","/>
+    <tok fileIndex="0" linenr="28" column="15" str="// g - 784 Hz"/>
+    <tok fileIndex="0" linenr="29" column="1" str="}"/>
+    <tok fileIndex="0" linenr="29" column="2" str=";"/>
+    <tok fileIndex="0" linenr="31" column="1" str="static"/>
+    <tok fileIndex="0" linenr="31" column="8" str="const"/>
+    <tok fileIndex="0" linenr="31" column="14" str="char"/>
+    <tok fileIndex="0" linenr="31" column="19" str="*"/>
+    <tok fileIndex="0" linenr="31" column="20" str="songs"/>
+    <tok fileIndex="0" linenr="31" column="25" str="["/>
+    <tok fileIndex="0" linenr="31" column="26" str="]"/>
+    <tok fileIndex="0" linenr="31" column="28" str="="/>
+    <tok fileIndex="0" linenr="31" column="30" str="{"/>
+    <tok fileIndex="0" linenr="32" column="4" str="&quot;E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,E2,D2,D2,E2,D4,G4,E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,G2,G2,F2,D2,C8,&quot;"/>
+    <tok fileIndex="0" linenr="32" column="153" str=","/>
+    <tok fileIndex="0" linenr="34" column="4" str="&quot;D4,B4,B4,A4,A4,G4,E4,D4.D2,E4,E4,A4,F4,D8.D4,d4,d4,c4,c4,B4,G4,E4.E2,F4,F4,A4,A4,G8,&quot;"/>
+    <tok fileIndex="0" linenr="34" column="90" str=","/>
+    <tok fileIndex="0" linenr="36" column="4" str="&quot;G2,A2,G2,E8.G2,A2,G2,E8.d4.d2,B8,c4,c2,G8,A4,A2,c2,B2,A2,G2,A2,G2,E8,&quot;"/>
+    <tok fileIndex="0" linenr="36" column="75" str=","/>
+    <tok fileIndex="0" linenr="38" column="4" str="&quot;C1,D4,C2,C2,D4,C2,C2,F3,F1,E2,E2,F4.E1,D4,E2,F2,D4,E2,F2,G3,B1,G2,B2,G4.F1,E4,D2,C2,E4,D2,C2,D3,C1,C2,F2,A4.c1,B2,G2,A2,F2,G2,E2,F2,D2,C3,A1,C2,G2,F4,&quot;"/>
+    <tok fileIndex="0" linenr="38" column="156" str=","/>
+    <tok fileIndex="0" linenr="40" column="4" str="&quot;A1,B2,c2,A3,A1,A2,B2,A2,F2,G4,G2,A2,G2,E2,F4,F2,G2,F2,D2,E4,E2,F2,E2,C2,E4,E2,F2,A2,c2,d4.c1,B2,F2,B4,B2,c2,B2,E2,A4.&quot;"/>
+    <tok fileIndex="0" linenr="40" column="123" str=","/>
+    <tok fileIndex="0" linenr="42" column="4" str="&quot;E2,E2,E2,D2,E2,G2,B3,G1,E2,E2,G2,E2,E4,D2,D2,F2,F2,A2,A2,F2,F2,G3,G1,E2,E2,G2,E2,E4,D4,E2,E2,E2,D2,G2,A2,B4,c2,B2,A2,G2,F2,E2,G3,F1,F8,E4,&quot;"/>
+    <tok fileIndex="0" linenr="42" column="144" str=","/>
+    <tok fileIndex="0" linenr="44" column="4" str="&quot;A2,A1,B1,A2,F2,F1,G1,F2,E2,E1,F1,E1,C1,D1,E1,F1,G1,A2,A2,A1,B1,A2,E2,A1,B1,c2,d2,F2,G2,A4_D1,D1,D1,E1,F1,E1,D1,E1,F2,D2,E1,E1,E1,F1,G1,F1,E1,F1,G2,E2,F1,G1,A2,G1,F1,G1,A1,B2,A1,G1,A1,B1,c2,B1,A1,d2,d2,&quot;"/>
+    <tok fileIndex="0" linenr="44" column="207" str=","/>
+    <tok fileIndex="0" linenr="45" column="1" str="}"/>
+    <tok fileIndex="0" linenr="45" column="2" str=";"/>
+    <tok fileIndex="0" linenr="48" column="1" str="static"/>
+    <tok fileIndex="0" linenr="48" column="8" str="void"/>
+    <tok fileIndex="0" linenr="48" column="13" str="playNote"/>
+    <tok fileIndex="0" linenr="48" column="21" str="("/>
+    <tok fileIndex="0" linenr="48" column="22" str="uint32_t"/>
+    <tok fileIndex="0" linenr="48" column="31" str="note"/>
+    <tok fileIndex="0" linenr="48" column="35" str=","/>
+    <tok fileIndex="0" linenr="48" column="37" str="uint32_t"/>
+    <tok fileIndex="0" linenr="48" column="46" str="durationMs"/>
+    <tok fileIndex="0" linenr="48" column="56" str=")"/>
+    <tok fileIndex="0" linenr="48" column="58" str="{"/>
+    <tok fileIndex="0" linenr="50" column="5" str="uint32_t"/>
+    <tok fileIndex="0" linenr="50" column="14" str="t"/>
+    <tok fileIndex="0" linenr="50" column="16" str="="/>
+    <tok fileIndex="0" linenr="50" column="18" str="0"/>
+    <tok fileIndex="0" linenr="50" column="19" str=";"/>
+    <tok fileIndex="0" linenr="52" column="5" str="if"/>
+    <tok fileIndex="0" linenr="52" column="8" str="("/>
+    <tok fileIndex="0" linenr="52" column="9" str="note"/>
+    <tok fileIndex="0" linenr="52" column="14" str="&gt;"/>
+    <tok fileIndex="0" linenr="52" column="16" str="0"/>
+    <tok fileIndex="0" linenr="52" column="17" str=")"/>
+    <tok fileIndex="0" linenr="52" column="19" str="{"/>
+    <tok fileIndex="0" linenr="54" column="9" str="while"/>
+    <tok fileIndex="0" linenr="54" column="15" str="("/>
+    <tok fileIndex="0" linenr="54" column="16" str="t"/>
+    <tok fileIndex="0" linenr="54" column="18" str="&lt;"/>
+    <tok fileIndex="0" linenr="54" column="20" str="("/>
+    <tok fileIndex="0" linenr="54" column="21" str="durationMs"/>
+    <tok fileIndex="0" linenr="54" column="31" str="*"/>
+    <tok fileIndex="0" linenr="54" column="32" str="1000"/>
+    <tok fileIndex="0" linenr="54" column="36" str=")"/>
+    <tok fileIndex="0" linenr="54" column="37" str=")"/>
+    <tok fileIndex="0" linenr="54" column="39" str="{"/>
+    <tok fileIndex="0" linenr="55" column="13" str="NOTE_PIN_HIGH"/>
+    <tok fileIndex="0" linenr="55" column="26" str="("/>
+    <tok fileIndex="0" linenr="55" column="27" str=")"/>
+    <tok fileIndex="0" linenr="55" column="28" str=";"/>
+    <tok fileIndex="0" linenr="56" column="13" str="Timer0_us_Wait"/>
+    <tok fileIndex="0" linenr="56" column="27" str="("/>
+    <tok fileIndex="0" linenr="56" column="28" str="note"/>
+    <tok fileIndex="0" linenr="56" column="33" str="/"/>
+    <tok fileIndex="0" linenr="56" column="35" str="2"/>
+    <tok fileIndex="0" linenr="56" column="36" str=")"/>
+    <tok fileIndex="0" linenr="56" column="37" str=";"/>
+    <tok fileIndex="0" linenr="57" column="13" str="//delay32Us(0, note / 2);"/>
+    <tok fileIndex="0" linenr="59" column="13" str="NOTE_PIN_LOW"/>
+    <tok fileIndex="0" linenr="59" column="25" str="("/>
+    <tok fileIndex="0" linenr="59" column="26" str=")"/>
+    <tok fileIndex="0" linenr="59" column="27" str=";"/>
+    <tok fileIndex="0" linenr="60" column="13" str="Timer0_us_Wait"/>
+    <tok fileIndex="0" linenr="60" column="27" str="("/>
+    <tok fileIndex="0" linenr="60" column="28" str="note"/>
+    <tok fileIndex="0" linenr="60" column="33" str="/"/>
+    <tok fileIndex="0" linenr="60" column="35" str="2"/>
+    <tok fileIndex="0" linenr="60" column="36" str=")"/>
+    <tok fileIndex="0" linenr="60" column="37" str=";"/>
+    <tok fileIndex="0" linenr="61" column="13" str="//delay32Us(0, note / 2);"/>
+    <tok fileIndex="0" linenr="63" column="13" str="t"/>
+    <tok fileIndex="0" linenr="63" column="15" str="+="/>
+    <tok fileIndex="0" linenr="63" column="18" str="note"/>
+    <tok fileIndex="0" linenr="63" column="22" str=";"/>
+    <tok fileIndex="0" linenr="64" column="9" str="}"/>
+    <tok fileIndex="0" linenr="66" column="5" str="}"/>
+    <tok fileIndex="0" linenr="67" column="5" str="else"/>
+    <tok fileIndex="0" linenr="67" column="10" str="{"/>
+    <tok fileIndex="0" linenr="68" column="6" str="Timer0_Wait"/>
+    <tok fileIndex="0" linenr="68" column="17" str="("/>
+    <tok fileIndex="0" linenr="68" column="18" str="durationMs"/>
+    <tok fileIndex="0" linenr="68" column="28" str=")"/>
+    <tok fileIndex="0" linenr="68" column="29" str=";"/>
+    <tok fileIndex="0" linenr="69" column="9" str="//delay32Ms(0, durationMs);"/>
+    <tok fileIndex="0" linenr="70" column="5" str="}"/>
+    <tok fileIndex="0" linenr="71" column="1" str="}"/>
+    <tok fileIndex="0" linenr="73" column="1" str="static"/>
+    <tok fileIndex="0" linenr="73" column="8" str="uint32_t"/>
+    <tok fileIndex="0" linenr="73" column="17" str="getNote"/>
+    <tok fileIndex="0" linenr="73" column="24" str="("/>
+    <tok fileIndex="0" linenr="73" column="25" str="uint8_t"/>
+    <tok fileIndex="0" linenr="73" column="33" str="ch"/>
+    <tok fileIndex="0" linenr="73" column="35" str=")"/>
+    <tok fileIndex="0" linenr="74" column="1" str="{"/>
+    <tok fileIndex="0" linenr="75" column="5" str="if"/>
+    <tok fileIndex="0" linenr="75" column="8" str="("/>
+    <tok fileIndex="0" linenr="75" column="9" str="ch"/>
+    <tok fileIndex="0" linenr="75" column="12" str="&gt;="/>
+    <tok fileIndex="0" linenr="75" column="15" str="&apos;A&apos;"/>
+    <tok fileIndex="0" linenr="75" column="19" str="&amp;&amp;"/>
+    <tok fileIndex="0" linenr="75" column="22" str="ch"/>
+    <tok fileIndex="0" linenr="75" column="25" str="&lt;="/>
+    <tok fileIndex="0" linenr="75" column="28" str="&apos;G&apos;"/>
+    <tok fileIndex="0" linenr="75" column="31" str=")"/>
+    <tok fileIndex="0" linenr="76" column="9" str="return"/>
+    <tok fileIndex="0" linenr="76" column="16" str="notes"/>
+    <tok fileIndex="0" linenr="76" column="21" str="["/>
+    <tok fileIndex="0" linenr="76" column="22" str="ch"/>
+    <tok fileIndex="0" linenr="76" column="25" str="-"/>
+    <tok fileIndex="0" linenr="76" column="27" str="&apos;A&apos;"/>
+    <tok fileIndex="0" linenr="76" column="30" str="]"/>
+    <tok fileIndex="0" linenr="76" column="31" str=";"/>
+    <tok fileIndex="0" linenr="78" column="5" str="if"/>
+    <tok fileIndex="0" linenr="78" column="8" str="("/>
+    <tok fileIndex="0" linenr="78" column="9" str="ch"/>
+    <tok fileIndex="0" linenr="78" column="12" str="&gt;="/>
+    <tok fileIndex="0" linenr="78" column="15" str="&apos;a&apos;"/>
+    <tok fileIndex="0" linenr="78" column="19" str="&amp;&amp;"/>
+    <tok fileIndex="0" linenr="78" column="22" str="ch"/>
+    <tok fileIndex="0" linenr="78" column="25" str="&lt;="/>
+    <tok fileIndex="0" linenr="78" column="28" str="&apos;g&apos;"/>
+    <tok fileIndex="0" linenr="78" column="31" str=")"/>
+    <tok fileIndex="0" linenr="79" column="9" str="return"/>
+    <tok fileIndex="0" linenr="79" column="16" str="notes"/>
+    <tok fileIndex="0" linenr="79" column="21" str="["/>
+    <tok fileIndex="0" linenr="79" column="22" str="ch"/>
+    <tok fileIndex="0" linenr="79" column="25" str="-"/>
+    <tok fileIndex="0" linenr="79" column="27" str="&apos;a&apos;"/>
+    <tok fileIndex="0" linenr="79" column="31" str="+"/>
+    <tok fileIndex="0" linenr="79" column="33" str="7"/>
+    <tok fileIndex="0" linenr="79" column="34" str="]"/>
+    <tok fileIndex="0" linenr="79" column="35" str=";"/>
+    <tok fileIndex="0" linenr="81" column="5" str="return"/>
+    <tok fileIndex="0" linenr="81" column="12" str="0"/>
+    <tok fileIndex="0" linenr="81" column="13" str=";"/>
+    <tok fileIndex="0" linenr="82" column="1" str="}"/>
+    <tok fileIndex="0" linenr="84" column="1" str="static"/>
+    <tok fileIndex="0" linenr="84" column="8" str="uint32_t"/>
+    <tok fileIndex="0" linenr="84" column="17" str="getDuration"/>
+    <tok fileIndex="0" linenr="84" column="28" str="("/>
+    <tok fileIndex="0" linenr="84" column="29" str="uint8_t"/>
+    <tok fileIndex="0" linenr="84" column="37" str="ch"/>
+    <tok fileIndex="0" linenr="84" column="39" str=")"/>
+    <tok fileIndex="0" linenr="85" column="1" str="{"/>
+    <tok fileIndex="0" linenr="86" column="5" str="if"/>
+    <tok fileIndex="0" linenr="86" column="8" str="("/>
+    <tok fileIndex="0" linenr="86" column="9" str="ch"/>
+    <tok fileIndex="0" linenr="86" column="12" str="&lt;"/>
+    <tok fileIndex="0" linenr="86" column="14" str="&apos;0&apos;"/>
+    <tok fileIndex="0" linenr="86" column="18" str="||"/>
+    <tok fileIndex="0" linenr="86" column="21" str="ch"/>
+    <tok fileIndex="0" linenr="86" column="24" str="&gt;"/>
+    <tok fileIndex="0" linenr="86" column="26" str="&apos;9&apos;"/>
+    <tok fileIndex="0" linenr="86" column="29" str=")"/>
+    <tok fileIndex="0" linenr="87" column="9" str="return"/>
+    <tok fileIndex="0" linenr="87" column="16" str="400"/>
+    <tok fileIndex="0" linenr="87" column="19" str=";"/>
+    <tok fileIndex="0" linenr="89" column="5" str="/* number of ms */"/>
+    <tok fileIndex="0" linenr="91" column="5" str="return"/>
+    <tok fileIndex="0" linenr="91" column="12" str="("/>
+    <tok fileIndex="0" linenr="91" column="13" str="ch"/>
+    <tok fileIndex="0" linenr="91" column="16" str="-"/>
+    <tok fileIndex="0" linenr="91" column="18" str="&apos;0&apos;"/>
+    <tok fileIndex="0" linenr="91" column="21" str=")"/>
+    <tok fileIndex="0" linenr="91" column="23" str="*"/>
+    <tok fileIndex="0" linenr="91" column="25" str="200"/>
+    <tok fileIndex="0" linenr="91" column="28" str=";"/>
+    <tok fileIndex="0" linenr="92" column="1" str="}"/>
+    <tok fileIndex="0" linenr="94" column="1" str="static"/>
+    <tok fileIndex="0" linenr="94" column="8" str="uint32_t"/>
+    <tok fileIndex="0" linenr="94" column="17" str="getPause"/>
+    <tok fileIndex="0" linenr="94" column="25" str="("/>
+    <tok fileIndex="0" linenr="94" column="26" str="uint8_t"/>
+    <tok fileIndex="0" linenr="94" column="34" str="ch"/>
+    <tok fileIndex="0" linenr="94" column="36" str=")"/>
+    <tok fileIndex="0" linenr="95" column="1" str="{"/>
+    <tok fileIndex="0" linenr="96" column="5" str="switch"/>
+    <tok fileIndex="0" linenr="96" column="12" str="("/>
+    <tok fileIndex="0" linenr="96" column="13" str="ch"/>
+    <tok fileIndex="0" linenr="96" column="15" str=")"/>
+    <tok fileIndex="0" linenr="96" column="17" str="{"/>
+    <tok fileIndex="0" linenr="97" column="5" str="case"/>
+    <tok fileIndex="0" linenr="97" column="10" str="&apos;+&apos;"/>
+    <tok fileIndex="0" linenr="97" column="13" str=":"/>
+    <tok fileIndex="0" linenr="98" column="9" str="return"/>
+    <tok fileIndex="0" linenr="98" column="16" str="0"/>
+    <tok fileIndex="0" linenr="98" column="17" str=";"/>
+    <tok fileIndex="0" linenr="99" column="5" str="case"/>
+    <tok fileIndex="0" linenr="99" column="10" str="&apos;,&apos;"/>
+    <tok fileIndex="0" linenr="99" column="13" str=":"/>
+    <tok fileIndex="0" linenr="100" column="9" str="return"/>
+    <tok fileIndex="0" linenr="100" column="16" str="5"/>
+    <tok fileIndex="0" linenr="100" column="17" str=";"/>
+    <tok fileIndex="0" linenr="101" column="5" str="case"/>
+    <tok fileIndex="0" linenr="101" column="10" str="&apos;.&apos;"/>
+    <tok fileIndex="0" linenr="101" column="13" str=":"/>
+    <tok fileIndex="0" linenr="102" column="9" str="return"/>
+    <tok fileIndex="0" linenr="102" column="16" str="20"/>
+    <tok fileIndex="0" linenr="102" column="18" str=";"/>
+    <tok fileIndex="0" linenr="103" column="5" str="case"/>
+    <tok fileIndex="0" linenr="103" column="10" str="&apos;_&apos;"/>
+    <tok fileIndex="0" linenr="103" column="13" str=":"/>
+    <tok fileIndex="0" linenr="104" column="9" str="return"/>
+    <tok fileIndex="0" linenr="104" column="16" str="30"/>
+    <tok fileIndex="0" linenr="104" column="18" str=";"/>
+    <tok fileIndex="0" linenr="105" column="5" str="default"/>
+    <tok fileIndex="0" linenr="105" column="12" str=":"/>
+    <tok fileIndex="0" linenr="106" column="9" str="return"/>
+    <tok fileIndex="0" linenr="106" column="16" str="5"/>
+    <tok fileIndex="0" linenr="106" column="17" str=";"/>
+    <tok fileIndex="0" linenr="107" column="5" str="}"/>
+    <tok fileIndex="0" linenr="108" column="1" str="}"/>
+    <tok fileIndex="0" linenr="110" column="1" str="static"/>
+    <tok fileIndex="0" linenr="110" column="8" str="void"/>
+    <tok fileIndex="0" linenr="110" column="13" str="playSong"/>
+    <tok fileIndex="0" linenr="110" column="21" str="("/>
+    <tok fileIndex="0" linenr="110" column="22" str="uint8_t"/>
+    <tok fileIndex="0" linenr="110" column="30" str="*"/>
+    <tok fileIndex="0" linenr="110" column="31" str="song"/>
+    <tok fileIndex="0" linenr="110" column="35" str=")"/>
+    <tok fileIndex="0" linenr="110" column="37" str="{"/>
+    <tok fileIndex="0" linenr="111" column="5" str="uint32_t"/>
+    <tok fileIndex="0" linenr="111" column="14" str="note"/>
+    <tok fileIndex="0" linenr="111" column="19" str="="/>
+    <tok fileIndex="0" linenr="111" column="21" str="0"/>
+    <tok fileIndex="0" linenr="111" column="22" str=";"/>
+    <tok fileIndex="0" linenr="112" column="5" str="uint32_t"/>
+    <tok fileIndex="0" linenr="112" column="14" str="dur"/>
+    <tok fileIndex="0" linenr="112" column="19" str="="/>
+    <tok fileIndex="0" linenr="112" column="21" str="0"/>
+    <tok fileIndex="0" linenr="112" column="22" str=";"/>
+    <tok fileIndex="0" linenr="113" column="5" str="uint32_t"/>
+    <tok fileIndex="0" linenr="113" column="14" str="pause"/>
+    <tok fileIndex="0" linenr="113" column="20" str="="/>
+    <tok fileIndex="0" linenr="113" column="22" str="0"/>
+    <tok fileIndex="0" linenr="113" column="23" str=";"/>
+    <tok fileIndex="0" linenr="115" column="5" str="/*x     * A song is a collection of tones where each tone isx     * a note, duration and pause, e.g.x     *x     * &quot;E2,F4,&quot;x     */"/>
+    <tok fileIndex="0" linenr="122" column="5" str="while"/>
+    <tok fileIndex="0" linenr="122" column="10" str="("/>
+    <tok fileIndex="0" linenr="122" column="11" str="*"/>
+    <tok fileIndex="0" linenr="122" column="12" str="song"/>
+    <tok fileIndex="0" linenr="122" column="17" str="!="/>
+    <tok fileIndex="0" linenr="122" column="20" str="&apos;\0&apos;"/>
+    <tok fileIndex="0" linenr="122" column="24" str=")"/>
+    <tok fileIndex="0" linenr="122" column="26" str="{"/>
+    <tok fileIndex="0" linenr="123" column="9" str="note"/>
+    <tok fileIndex="0" linenr="123" column="14" str="="/>
+    <tok fileIndex="0" linenr="123" column="16" str="getNote"/>
+    <tok fileIndex="0" linenr="123" column="23" str="("/>
+    <tok fileIndex="0" linenr="123" column="24" str="*"/>
+    <tok fileIndex="0" linenr="123" column="25" str="song"/>
+    <tok fileIndex="0" linenr="123" column="29" str="++"/>
+    <tok fileIndex="0" linenr="123" column="31" str=")"/>
+    <tok fileIndex="0" linenr="123" column="32" str=";"/>
+    <tok fileIndex="0" linenr="124" column="9" str="if"/>
+    <tok fileIndex="0" linenr="124" column="12" str="("/>
+    <tok fileIndex="0" linenr="124" column="13" str="*"/>
+    <tok fileIndex="0" linenr="124" column="14" str="song"/>
+    <tok fileIndex="0" linenr="124" column="19" str="=="/>
+    <tok fileIndex="0" linenr="124" column="22" str="&apos;\0&apos;"/>
+    <tok fileIndex="0" linenr="124" column="26" str=")"/>
+    <tok fileIndex="0" linenr="125" column="13" str="break"/>
+    <tok fileIndex="0" linenr="125" column="18" str=";"/>
+    <tok fileIndex="0" linenr="126" column="9" str="dur"/>
+    <tok fileIndex="0" linenr="126" column="14" str="="/>
+    <tok fileIndex="0" linenr="126" column="16" str="getDuration"/>
+    <tok fileIndex="0" linenr="126" column="27" str="("/>
+    <tok fileIndex="0" linenr="126" column="28" str="*"/>
+    <tok fileIndex="0" linenr="126" column="29" str="song"/>
+    <tok fileIndex="0" linenr="126" column="33" str="++"/>
+    <tok fileIndex="0" linenr="126" column="35" str=")"/>
+    <tok fileIndex="0" linenr="126" column="36" str=";"/>
+    <tok fileIndex="0" linenr="127" column="9" str="if"/>
+    <tok fileIndex="0" linenr="127" column="12" str="("/>
+    <tok fileIndex="0" linenr="127" column="13" str="*"/>
+    <tok fileIndex="0" linenr="127" column="14" str="song"/>
+    <tok fileIndex="0" linenr="127" column="19" str="=="/>
+    <tok fileIndex="0" linenr="127" column="22" str="&apos;\0&apos;"/>
+    <tok fileIndex="0" linenr="127" column="26" str=")"/>
+    <tok fileIndex="0" linenr="128" column="13" str="break"/>
+    <tok fileIndex="0" linenr="128" column="18" str=";"/>
+    <tok fileIndex="0" linenr="129" column="9" str="pause"/>
+    <tok fileIndex="0" linenr="129" column="15" str="="/>
+    <tok fileIndex="0" linenr="129" column="17" str="getPause"/>
+    <tok fileIndex="0" linenr="129" column="25" str="("/>
+    <tok fileIndex="0" linenr="129" column="26" str="*"/>
+    <tok fileIndex="0" linenr="129" column="27" str="song"/>
+    <tok fileIndex="0" linenr="129" column="31" str="++"/>
+    <tok fileIndex="0" linenr="129" column="33" str=")"/>
+    <tok fileIndex="0" linenr="129" column="34" str=";"/>
+    <tok fileIndex="0" linenr="131" column="9" str="playNote"/>
+    <tok fileIndex="0" linenr="131" column="17" str="("/>
+    <tok fileIndex="0" linenr="131" column="18" str="note"/>
+    <tok fileIndex="0" linenr="131" column="22" str=","/>
+    <tok fileIndex="0" linenr="131" column="24" str="dur"/>
+    <tok fileIndex="0" linenr="131" column="27" str=")"/>
+    <tok fileIndex="0" linenr="131" column="28" str=";"/>
+    <tok fileIndex="0" linenr="132" column="9" str="//delay32Ms(0, pause);"/>
+    <tok fileIndex="0" linenr="133" column="9" str="Timer0_Wait"/>
+    <tok fileIndex="0" linenr="133" column="20" str="("/>
+    <tok fileIndex="0" linenr="133" column="21" str="pause"/>
+    <tok fileIndex="0" linenr="133" column="26" str=")"/>
+    <tok fileIndex="0" linenr="133" column="27" str=";"/>
+    <tok fileIndex="0" linenr="135" column="5" str="}"/>
+    <tok fileIndex="0" linenr="136" column="1" str="}"/>
+    <tok fileIndex="0" linenr="138" column="1" str="//"/>
+    <tok fileIndex="0" linenr="139" column="1" str="//int main (void) {"/>
+    <tok fileIndex="0" linenr="140" column="1" str="//"/>
+    <tok fileIndex="0" linenr="141" column="1" str="//    int i = 0;"/>
+    <tok fileIndex="0" linenr="142" column="1" str="//"/>
+    <tok fileIndex="0" linenr="143" column="1" str="//    GPIO_SetDir(2, 1&lt;&lt;0, 1);"/>
+    <tok fileIndex="0" linenr="144" column="1" str="//    GPIO_SetDir(2, 1&lt;&lt;1, 1);"/>
+    <tok fileIndex="0" linenr="145" column="1" str="//"/>
+    <tok fileIndex="0" linenr="146" column="1" str="//    GPIO_SetDir(0, 1&lt;&lt;27, 1);"/>
+    <tok fileIndex="0" linenr="147" column="1" str="//    GPIO_SetDir(0, 1&lt;&lt;28, 1);"/>
+    <tok fileIndex="0" linenr="148" column="1" str="//    GPIO_SetDir(2, 1&lt;&lt;13, 1);"/>
+    <tok fileIndex="0" linenr="149" column="1" str="//    GPIO_SetDir(0, 1&lt;&lt;26, 1);"/>
+    <tok fileIndex="0" linenr="150" column="1" str="//"/>
+    <tok fileIndex="0" linenr="151" column="1" str="//    GPIO_ClearValue(0, 1&lt;&lt;27); //LM4811-clk"/>
+    <tok fileIndex="0" linenr="152" column="1" str="//    GPIO_ClearValue(0, 1&lt;&lt;28); //LM4811-up/dn"/>
+    <tok fileIndex="0" linenr="153" column="1" str="//    GPIO_ClearValue(2, 1&lt;&lt;13); //LM4811-shutdn"/>
+    <tok fileIndex="0" linenr="154" column="1" str="//"/>
+    <tok fileIndex="0" linenr="155" column="1" str="//    for (i = 0; i &lt; sizeof(songs)/ sizeof(uint8_t*); i++) {"/>
+    <tok fileIndex="0" linenr="156" column="1" str="//        playSong((uint8_t*)songs[i]);"/>
+    <tok fileIndex="0" linenr="157" column="1" str="//        Timer0_Wait(3000);"/>
+    <tok fileIndex="0" linenr="158" column="1" str="//    }"/>
+    <tok fileIndex="0" linenr="159" column="1" str="//"/>
+    <tok fileIndex="0" linenr="160" column="1" str="//    while(1);"/>
+    <tok fileIndex="0" linenr="161" column="1" str="//"/>
+    <tok fileIndex="0" linenr="162" column="1" str="//"/>
+    <tok fileIndex="0" linenr="163" column="1" str="//    return 0;"/>
+    <tok fileIndex="0" linenr="164" column="1" str="//"/>
+    <tok fileIndex="0" linenr="165" column="1" str="//}"/>
+  </rawtokens>
+  <suppressions>
+  </suppressions>
+<dump cfg="">
+  <standards>
+    <c version="c11"/>
+    <cpp version="c++20"/>
+  </standards>
+  <directivelist>
+    <directive file="song.c" linenr="2" str="#include &quot;lpc17xx_pinsel.h&quot;"/>
+    <directive file="song.c" linenr="3" str="#include &quot;lpc17xx_gpio.h&quot;"/>
+    <directive file="song.c" linenr="4" str="#include &quot;lpc17xx_timer.h&quot;"/>
+    <directive file="song.c" linenr="5" str="#include &quot;song.h&quot;"/>
+    <directive file="song.c" linenr="9" str="#define NOTE_PIN_HIGH() GPIO_SetValue(0, 1&lt;&lt;26);"/>
+    <directive file="song.c" linenr="10" str="#define NOTE_PIN_LOW() GPIO_ClearValue(0, 1&lt;&lt;26);"/>
+    <directive file="song.h" linenr="8" str="#ifndef SONG_H_"/>
+    <directive file="song.h" linenr="9" str="#define SONG_H_"/>
+    <directive file="song.h" linenr="18" str="#endif"/>
+  </directivelist>
+  <macro-usage>
+    <macro name="NOTE_PIN_HIGH" file="song.c" line="9" column="9" usefile="song.c" useline="55" usecolumn="13" is-known-value="true"/>
+    <macro name="NOTE_PIN_LOW" file="song.c" line="10" column="9" usefile="song.c" useline="59" usecolumn="13" is-known-value="true"/>
+  </macro-usage>
+  <tokenlist>
+    <token id="0x5621e3264110" file="song.h" linenr="11" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e326f580" file="song.h" linenr="11" column="8" str="void" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e326ed10" file="song.h" linenr="11" column="13" str="playNote" scope="0x5621e3372050" type="name" function="0x5621e3363b90"/>
+    <token id="0x5621e325fdb0" file="song.h" linenr="11" column="21" str="(" scope="0x5621e3372050" link="0x5621e325f9f0" valueType-type="void" valueType-reference="None"/>
+    <token id="0x5621e3252da0" file="song.h" linenr="11" column="22" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3252820" file="song.h" linenr="11" column="31" str="note" scope="0x5621e3372050" type="name" varId="1"/>
+    <token id="0x5621e3269860" file="song.h" linenr="11" column="35" str="," scope="0x5621e3372050"/>
+    <token id="0x5621e325f7c0" file="song.h" linenr="11" column="37" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325f8b0" file="song.h" linenr="11" column="46" str="durationMs" scope="0x5621e3372050" type="name" varId="2"/>
+    <token id="0x5621e325f9f0" file="song.h" linenr="11" column="56" str=")" scope="0x5621e3372050" link="0x5621e325fdb0"/>
+    <token id="0x5621e33614d0" file="song.h" linenr="11" column="57" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e33615c0" file="song.h" linenr="12" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325f460" file="song.h" linenr="12" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325f550" file="song.h" linenr="12" column="17" str="getNote" scope="0x5621e3372050" type="name" function="0x5621e32638d0"/>
+    <token id="0x5621e325f640" file="song.h" linenr="12" column="24" str="(" scope="0x5621e3372050" link="0x5621e325f3d0" values="0x5621e337d4a0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e325f280" file="song.h" linenr="12" column="25" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325f370" file="song.h" linenr="12" column="33" str="ch" scope="0x5621e3372050" type="name" varId="3"/>
+    <token id="0x5621e325f3d0" file="song.h" linenr="12" column="35" str=")" scope="0x5621e3372050" link="0x5621e325f640"/>
+    <token id="0x5621e3261cf0" file="song.h" linenr="12" column="36" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3261e40" file="song.h" linenr="13" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3261f30" file="song.h" linenr="13" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3262020" file="song.h" linenr="13" column="17" str="getDuration" scope="0x5621e3372050" type="name" function="0x5621e3263bd0"/>
+    <token id="0x5621e32612a0" file="song.h" linenr="13" column="28" str="(" scope="0x5621e3372050" link="0x5621e32610c0" values="0x5621e337db30" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3261390" file="song.h" linenr="13" column="29" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e32613f0" file="song.h" linenr="13" column="37" str="ch" scope="0x5621e3372050" type="name" varId="4"/>
+    <token id="0x5621e32610c0" file="song.h" linenr="13" column="39" str=")" scope="0x5621e3372050" link="0x5621e32612a0"/>
+    <token id="0x5621e33607c0" file="song.h" linenr="13" column="40" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3360820" file="song.h" linenr="14" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3360920" file="song.h" linenr="14" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3360980" file="song.h" linenr="14" column="17" str="getPause" scope="0x5621e3372050" type="name" function="0x5621e3263b20"/>
+    <token id="0x5621e3360a80" file="song.h" linenr="14" column="25" str="(" scope="0x5621e3372050" link="0x5621e3360c60" values="0x5621e337e3f0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3261b10" file="song.h" linenr="14" column="26" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3360b70" file="song.h" linenr="14" column="34" str="ch" scope="0x5621e3372050" type="name" varId="5"/>
+    <token id="0x5621e3360c60" file="song.h" linenr="14" column="36" str=")" scope="0x5621e3372050" link="0x5621e3360a80"/>
+    <token id="0x5621e3360cc0" file="song.h" linenr="14" column="37" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3360db0" file="song.h" linenr="15" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3360ea0" file="song.h" linenr="15" column="8" str="void" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3360f00" file="song.h" linenr="15" column="13" str="playSong" scope="0x5621e3372050" type="name" function="0x5621e3262260"/>
+    <token id="0x5621e3361000" file="song.h" linenr="15" column="21" str="(" scope="0x5621e3372050" link="0x5621e3361240" valueType-type="void" valueType-reference="None"/>
+    <token id="0x5621e32618a0" file="song.h" linenr="15" column="22" str="uint8_t" scope="0x5621e3372050" type="name" astParent="0x5621e33610f0"/>
+    <token id="0x5621e33610f0" file="song.h" linenr="15" column="30" str="*" scope="0x5621e3372050" type="op" isArithmeticalOp="true" astOperand1="0x5621e32618a0" astOperand2="0x5621e33611e0"/>
+    <token id="0x5621e33611e0" file="song.h" linenr="15" column="31" str="song" scope="0x5621e3372050" type="name" varId="6" astParent="0x5621e33610f0"/>
+    <token id="0x5621e3361240" file="song.h" linenr="15" column="35" str=")" scope="0x5621e3372050" link="0x5621e3361000"/>
+    <token id="0x5621e3361330" file="song.h" linenr="15" column="36" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3361420" file="song.c" linenr="14" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e33616b0" file="song.c" linenr="14" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3261630" file="song.c" linenr="14" column="17" str="notes" scope="0x5621e3372050" type="name" varId="7" variable="0x5621e3371fe0" astParent="0x5621e33617a0" valueType-type="int" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e33617a0" file="song.c" linenr="14" column="22" str="[" scope="0x5621e3372050" link="0x5621e3361890" astParent="0x5621e33618f0" astOperand1="0x5621e3261630" astOperand2="0x5621e3362d60" valueType-type="int" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e3362d60" file="song.c" linenr="14" column="0" str="14" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3260130" astParent="0x5621e33617a0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3361890" file="song.c" linenr="14" column="23" str="]" scope="0x5621e3372050" link="0x5621e33617a0"/>
+    <token id="0x5621e33618f0" file="song.c" linenr="14" column="25" str="=" scope="0x5621e3372050" type="op" isAssignmentOp="true" astOperand1="0x5621e33617a0" astOperand2="0x5621e33619e0" valueType-type="int" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e33619e0" file="song.c" linenr="14" column="27" str="{" scope="0x5621e3372050" link="0x5621e3362dc0" astParent="0x5621e33618f0" astOperand1="0x5621e3362c00"/>
+    <token id="0x5621e3361ad0" file="song.c" linenr="15" column="9" str="2272" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e32616d0" astParent="0x5621e3361b30" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3361b30" file="song.c" linenr="15" column="13" str="," scope="0x5621e3372050" astParent="0x5621e325d9b0" astOperand1="0x5621e3361ad0" astOperand2="0x5621e3361c30"/>
+    <token id="0x5621e3361c30" file="song.c" linenr="16" column="9" str="2024" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3261bb0" astParent="0x5621e3361b30" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e325d9b0" file="song.c" linenr="16" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3361e10" astOperand1="0x5621e3361b30" astOperand2="0x5621e3361d20"/>
+    <token id="0x5621e3361d20" file="song.c" linenr="17" column="9" str="3816" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3366b70" astParent="0x5621e325d9b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3361e10" file="song.c" linenr="17" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3361f60" astOperand1="0x5621e325d9b0" astOperand2="0x5621e3361e70"/>
+    <token id="0x5621e3361e70" file="song.c" linenr="18" column="9" str="3401" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3260f80" astParent="0x5621e3361e10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3361f60" file="song.c" linenr="18" column="13" str="," scope="0x5621e3372050" astParent="0x5621e33620b0" astOperand1="0x5621e3361e10" astOperand2="0x5621e3362050"/>
+    <token id="0x5621e3362050" file="song.c" linenr="19" column="9" str="3030" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3269b00" astParent="0x5621e3361f60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33620b0" file="song.c" linenr="19" column="13" str="," scope="0x5621e3372050" astParent="0x5621e325d740" astOperand1="0x5621e3361f60" astOperand2="0x5621e33621b0"/>
+    <token id="0x5621e33621b0" file="song.c" linenr="20" column="9" str="2865" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e325f920" astParent="0x5621e33620b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e325d740" file="song.c" linenr="20" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3362390" astOperand1="0x5621e33620b0" astOperand2="0x5621e33622a0"/>
+    <token id="0x5621e33622a0" file="song.c" linenr="21" column="9" str="2551" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e325fbd0" astParent="0x5621e325d740" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362390" file="song.c" linenr="21" column="13" str="," scope="0x5621e3372050" astParent="0x5621e33624e0" astOperand1="0x5621e325d740" astOperand2="0x5621e33623f0"/>
+    <token id="0x5621e33623f0" file="song.c" linenr="22" column="9" str="1136" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3253670" astParent="0x5621e3362390" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33624e0" file="song.c" linenr="22" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3362630" astOperand1="0x5621e3362390" astOperand2="0x5621e33625d0"/>
+    <token id="0x5621e33625d0" file="song.c" linenr="23" column="9" str="1012" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3363840" astParent="0x5621e33624e0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362630" file="song.c" linenr="23" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3362790" astOperand1="0x5621e33624e0" astOperand2="0x5621e3362730"/>
+    <token id="0x5621e3362730" file="song.c" linenr="24" column="9" str="1912" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3269d10" astParent="0x5621e3362630" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362790" file="song.c" linenr="24" column="13" str="," scope="0x5621e3372050" astParent="0x5621e325c7f0" astOperand1="0x5621e3362630" astOperand2="0x5621e3362890"/>
+    <token id="0x5621e3362890" file="song.c" linenr="25" column="9" str="1703" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e3261940" astParent="0x5621e3362790" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e325c7f0" file="song.c" linenr="25" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3362a10" astOperand1="0x5621e3362790" astOperand2="0x5621e325c850"/>
+    <token id="0x5621e325c850" file="song.c" linenr="26" column="9" str="1517" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e325fea0" astParent="0x5621e325c7f0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362a10" file="song.c" linenr="26" column="13" str="," scope="0x5621e3372050" astParent="0x5621e3362c00" astOperand1="0x5621e325c7f0" astOperand2="0x5621e3362b00"/>
+    <token id="0x5621e3362b00" file="song.c" linenr="27" column="9" str="1432" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e325fbb0" astParent="0x5621e3362a10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362c00" file="song.c" linenr="27" column="13" str="," scope="0x5621e3372050" astParent="0x5621e33619e0" astOperand1="0x5621e3362a10" astOperand2="0x5621e3362c60"/>
+    <token id="0x5621e3362c60" file="song.c" linenr="28" column="9" str="1275" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e325d570" astParent="0x5621e3362c00" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3362dc0" file="song.c" linenr="29" column="1" str="}" scope="0x5621e3372050" link="0x5621e33619e0"/>
+    <token id="0x5621e3362ec0" file="song.c" linenr="29" column="2" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3362f20" file="song.c" linenr="31" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3363020" file="song.c" linenr="31" column="8" str="const" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325bb80" file="song.c" linenr="31" column="14" str="char" scope="0x5621e3372050" type="name" astParent="0x5621e325bbe0"/>
+    <token id="0x5621e325bbe0" file="song.c" linenr="31" column="19" str="*" scope="0x5621e3372050" type="op" isArithmeticalOp="true" astParent="0x5621e33633f0" astOperand1="0x5621e325bb80" astOperand2="0x5621e3363290" valueType-type="char" valueType-sign="signed" valueType-pointer="2" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e33631a0" file="song.c" linenr="31" column="20" str="songs" scope="0x5621e3372050" type="name" varId="8" variable="0x5621e3373a70" astParent="0x5621e3363290" valueType-type="char" valueType-sign="signed" valueType-pointer="2" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e3363290" file="song.c" linenr="31" column="25" str="[" scope="0x5621e3372050" link="0x5621e3363390" astParent="0x5621e325bbe0" astOperand1="0x5621e33631a0" astOperand2="0x5621e325abd0" valueType-type="char" valueType-sign="signed" valueType-pointer="2" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e325abd0" file="song.c" linenr="31" column="0" str="7" scope="0x5621e3372050" type="number" isInt="true" values="0x5621e32611f0" astParent="0x5621e3363290" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3363390" file="song.c" linenr="31" column="26" str="]" scope="0x5621e3372050" link="0x5621e3363290"/>
+    <token id="0x5621e33633f0" file="song.c" linenr="31" column="28" str="=" scope="0x5621e3372050" type="op" isAssignmentOp="true" astOperand1="0x5621e325bbe0" astOperand2="0x5621e33634f0" valueType-type="char" valueType-sign="signed" valueType-pointer="2" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e33634f0" file="song.c" linenr="31" column="30" str="{" scope="0x5621e3372050" link="0x5621e33640b0" astParent="0x5621e33633f0" astOperand1="0x5621e3363e00"/>
+    <token id="0x5621e33635f0" file="song.c" linenr="32" column="4" str="&quot;E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,E2,D2,D2,E2,D4,G4,E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,G2,G2,F2,D2,C8,&quot;" scope="0x5621e3372050" type="string" strlen="147" values="0x5621e337ce90" astParent="0x5621e325b870" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e325b870" file="song.c" linenr="32" column="153" str="," scope="0x5621e3372050" astParent="0x5621e33636e0" astOperand1="0x5621e33635f0" astOperand2="0x5621e3363740"/>
+    <token id="0x5621e3363740" file="song.c" linenr="34" column="4" str="&quot;D4,B4,B4,A4,A4,G4,E4,D4.D2,E4,E4,A4,F4,D8.D4,d4,d4,c4,c4,B4,G4,E4.E2,F4,F4,A4,A4,G8,&quot;" scope="0x5621e3372050" type="string" strlen="84" values="0x5621e337cf60" astParent="0x5621e325b870" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e33636e0" file="song.c" linenr="34" column="90" str="," scope="0x5621e3372050" astParent="0x5621e3363950" astOperand1="0x5621e325b870" astOperand2="0x5621e3363860"/>
+    <token id="0x5621e3363860" file="song.c" linenr="36" column="4" str="&quot;G2,A2,G2,E8.G2,A2,G2,E8.d4.d2,B8,c4,c2,G8,A4,A2,c2,B2,A2,G2,A2,G2,E8,&quot;" scope="0x5621e3372050" type="string" strlen="69" values="0x5621e337d030" astParent="0x5621e33636e0" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e3363950" file="song.c" linenr="36" column="75" str="," scope="0x5621e3372050" astParent="0x5621e3269e90" astOperand1="0x5621e33636e0" astOperand2="0x5621e33639b0"/>
+    <token id="0x5621e33639b0" file="song.c" linenr="38" column="4" str="&quot;C1,D4,C2,C2,D4,C2,C2,F3,F1,E2,E2,F4.E1,D4,E2,F2,D4,E2,F2,G3,B1,G2,B2,G4.F1,E4,D2,C2,E4,D2,C2,D3,C1,C2,F2,A4.c1,B2,G2,A2,F2,G2,E2,F2,D2,C3,A1,C2,G2,F4,&quot;" scope="0x5621e3372050" type="string" strlen="150" values="0x5621e337d100" astParent="0x5621e3363950" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e3269e90" file="song.c" linenr="38" column="156" str="," scope="0x5621e3372050" astParent="0x5621e3363cb0" astOperand1="0x5621e3363950" astOperand2="0x5621e325aef0"/>
+    <token id="0x5621e325aef0" file="song.c" linenr="40" column="4" str="&quot;A1,B2,c2,A3,A1,A2,B2,A2,F2,G4,G2,A2,G2,E2,F4,F2,G2,F2,D2,E4,E2,F2,E2,C2,E4,E2,F2,A2,c2,d4.c1,B2,F2,B4,B2,c2,B2,E2,A4.&quot;" scope="0x5621e3372050" type="string" strlen="117" values="0x5621e337d1d0" astParent="0x5621e3269e90" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e3363cb0" file="song.c" linenr="40" column="123" str="," scope="0x5621e3372050" astParent="0x5621e3363e00" astOperand1="0x5621e3269e90" astOperand2="0x5621e3363d10"/>
+    <token id="0x5621e3363d10" file="song.c" linenr="42" column="4" str="&quot;E2,E2,E2,D2,E2,G2,B3,G1,E2,E2,G2,E2,E4,D2,D2,F2,F2,A2,A2,F2,F2,G3,G1,E2,E2,G2,E2,E4,D4,E2,E2,E2,D2,G2,A2,B4,c2,B2,A2,G2,F2,E2,G3,F1,F8,E4,&quot;" scope="0x5621e3372050" type="string" strlen="138" values="0x5621e337d2a0" astParent="0x5621e3363cb0" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e3363e00" file="song.c" linenr="42" column="144" str="," scope="0x5621e3372050" astParent="0x5621e33634f0" astOperand1="0x5621e3363cb0" astOperand2="0x5621e325ab70"/>
+    <token id="0x5621e325ab70" file="song.c" linenr="44" column="4" str="&quot;A2,A1,B1,A2,F2,F1,G1,F2,E2,E1,F1,E1,C1,D1,E1,F1,G1,A2,A2,A1,B1,A2,E2,A1,B1,c2,d2,F2,G2,A4_D1,D1,D1,E1,F1,E1,D1,E1,F2,D2,E1,E1,E1,F1,G1,F1,E1,F1,G2,E2,F1,G1,A2,G1,F1,G1,A1,B2,A1,G1,A1,B1,c2,B1,A1,d2,d2,&quot;" scope="0x5621e3372050" type="string" strlen="201" values="0x5621e337d370" astParent="0x5621e3363e00" valueType-type="char" valueType-pointer="1" valueType-constness="1" valueType-reference="None"/>
+    <token id="0x5621e33640b0" file="song.c" linenr="45" column="1" str="}" scope="0x5621e3372050" link="0x5621e33634f0"/>
+    <token id="0x5621e33641a0" file="song.c" linenr="45" column="2" str=";" scope="0x5621e3372050"/>
+    <token id="0x5621e3364200" file="song.c" linenr="48" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3364300" file="song.c" linenr="48" column="8" str="void" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3364360" file="song.c" linenr="48" column="13" str="playNote" scope="0x5621e3372050" type="name" function="0x5621e3363b90"/>
+    <token id="0x5621e3364460" file="song.c" linenr="48" column="21" str="(" scope="0x5621e3372050" link="0x5621e3364780" valueType-type="void" valueType-reference="None"/>
+    <token id="0x5621e33644c0" file="song.c" linenr="48" column="22" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e33645c0" file="song.c" linenr="48" column="31" str="note" scope="0x5621e3372050" type="name" varId="9" variable="0x5621e3373f80" values="0x5621e337d440" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3364620" file="song.c" linenr="48" column="35" str="," scope="0x5621e3372050"/>
+    <token id="0x5621e3364720" file="song.c" linenr="48" column="37" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325d480" file="song.c" linenr="48" column="46" str="durationMs" scope="0x5621e3372050" type="name" varId="10" variable="0x5621e3374060" values="0x5621e337e3d0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3364780" file="song.c" linenr="48" column="56" str=")" scope="0x5621e3372050" link="0x5621e3364460"/>
+    <token id="0x5621e3364870" file="song.c" linenr="48" column="58" str="{" scope="0x5621e33721e0" link="0x5621e3367e40"/>
+    <token id="0x5621e3364960" file="song.c" linenr="50" column="5" str="uint32_t" scope="0x5621e33721e0" type="name"/>
+    <token id="0x5621e3364a50" file="song.c" linenr="50" column="14" str="t" scope="0x5621e33721e0" type="name" varId="11" variable="0x5621e3373c00" values="0x5621e337d460" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3364b40" file="song.c" linenr="50" column="16" str=";" scope="0x5621e33721e0" isSplittedVarDeclEq="true"/>
+    <token id="0x5621e3371850" file="song.c" linenr="50" column="14" str="t" scope="0x5621e33721e0" type="name" varId="11" variable="0x5621e3373c00" values="0x5621e337d480" astParent="0x5621e3371940" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3371940" file="song.c" linenr="50" column="16" str="=" scope="0x5621e33721e0" type="op" isAssignmentOp="true" values="0x5621e325f6b0" astOperand1="0x5621e3371850" astOperand2="0x5621e3364ba0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3364ba0" file="song.c" linenr="50" column="18" str="0" scope="0x5621e33721e0" type="number" isInt="true" values="0x5621e3256880" astParent="0x5621e3371940" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3364ca0" file="song.c" linenr="50" column="19" str=";" scope="0x5621e33721e0"/>
+    <token id="0x5621e3364d00" file="song.c" linenr="52" column="5" str="if" scope="0x5621e33721e0" type="name" astParent="0x5621e3364e00"/>
+    <token id="0x5621e3364e00" file="song.c" linenr="52" column="8" str="(" scope="0x5621e33721e0" link="0x5621e33650c0" astOperand1="0x5621e3364d00" astOperand2="0x5621e3364f60"/>
+    <token id="0x5621e3364e60" file="song.c" linenr="52" column="9" str="note" scope="0x5621e33721e0" type="name" varId="9" variable="0x5621e3373f80" values="0x5621e337d860" astParent="0x5621e3364f60" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3364f60" file="song.c" linenr="52" column="14" str="&gt;" scope="0x5621e33721e0" type="op" isComparisonOp="true" astParent="0x5621e3364e00" astOperand1="0x5621e3364e60" astOperand2="0x5621e3364fc0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e3364fc0" file="song.c" linenr="52" column="16" str="0" scope="0x5621e33721e0" type="number" isInt="true" values="0x5621e325f440" astParent="0x5621e3364f60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33650c0" file="song.c" linenr="52" column="17" str=")" scope="0x5621e33721e0" link="0x5621e3364e00"/>
+    <token id="0x5621e3365120" file="song.c" linenr="52" column="19" str="{" scope="0x5621e3372370" link="0x5621e33677e0"/>
+    <token id="0x5621e3365220" file="song.c" linenr="54" column="9" str="while" scope="0x5621e3372370" type="name" astParent="0x5621e3365280"/>
+    <token id="0x5621e3365280" file="song.c" linenr="54" column="15" str="(" scope="0x5621e3372370" link="0x5621e3365800" astOperand1="0x5621e3365220" astOperand2="0x5621e325f120"/>
+    <token id="0x5621e3365380" file="song.c" linenr="54" column="16" str="t" scope="0x5621e3372370" type="name" varId="11" variable="0x5621e3373c00" values="0x5621e337d800" astParent="0x5621e325f120" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e325f120" file="song.c" linenr="54" column="18" str="&lt;" scope="0x5621e3372370" type="op" isComparisonOp="true" astParent="0x5621e3365280" astOperand1="0x5621e3365380" astOperand2="0x5621e33655c0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e3365470" file="song.c" linenr="54" column="20" str="(" scope="0x5621e3372370" link="0x5621e33657a0"/>
+    <token id="0x5621e3365560" file="song.c" linenr="54" column="21" str="durationMs" scope="0x5621e3372370" type="name" varId="10" variable="0x5621e3374060" values="0x5621e337e5d0" astParent="0x5621e33655c0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33655c0" file="song.c" linenr="54" column="31" str="*" scope="0x5621e3372370" type="op" isArithmeticalOp="true" values="0x5621e337e5b0" astParent="0x5621e325f120" astOperand1="0x5621e3365560" astOperand2="0x5621e33656b0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33656b0" file="song.c" linenr="54" column="32" str="1000" scope="0x5621e3372370" type="number" isInt="true" values="0x5621e325ed10" astParent="0x5621e33655c0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33657a0" file="song.c" linenr="54" column="36" str=")" scope="0x5621e3372370" link="0x5621e3365470"/>
+    <token id="0x5621e3365800" file="song.c" linenr="54" column="37" str=")" scope="0x5621e3372370" link="0x5621e3365280"/>
+    <token id="0x5621e3365900" file="song.c" linenr="54" column="39" str="{" scope="0x5621e3372500" link="0x5621e33676f0"/>
+    <token id="0x5621e3365960" file="song.c" linenr="55" column="13" str="GPIO_SetValue" scope="0x5621e3372500" type="name" isExpandedMacro="true" astParent="0x5621e3365c70"/>
+    <token id="0x5621e3365c70" file="song.c" linenr="55" column="13" str="(" scope="0x5621e3372500" isExpandedMacro="true" link="0x5621e33661b0" astOperand1="0x5621e3365960" astOperand2="0x5621e3365e30"/>
+    <token id="0x5621e3365d50" file="song.c" linenr="55" column="13" str="0" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e3261e20" astParent="0x5621e3365e30" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3365e30" file="song.c" linenr="55" column="13" str="," scope="0x5621e3372500" isExpandedMacro="true" astParent="0x5621e3365c70" astOperand1="0x5621e3365d50" astOperand2="0x5621e3365ff0"/>
+    <token id="0x5621e3365f10" file="song.c" linenr="55" column="13" str="1" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e3262090" astParent="0x5621e3365ff0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3365ff0" file="song.c" linenr="55" column="13" str="&lt;&lt;" scope="0x5621e3372500" type="op" isArithmeticalOp="true" isExpandedMacro="true" values="0x5621e337a9c0" astParent="0x5621e3365e30" astOperand1="0x5621e3365f10" astOperand2="0x5621e33660d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33660d0" file="song.c" linenr="55" column="13" str="26" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e3261460" astParent="0x5621e3365ff0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33661b0" file="song.c" linenr="55" column="13" str=")" scope="0x5621e3372500" isExpandedMacro="true" link="0x5621e3365c70"/>
+    <token id="0x5621e3366290" file="song.c" linenr="55" column="13" str=";" scope="0x5621e3372500" isExpandedMacro="true"/>
+    <token id="0x5621e3365bc0" file="song.c" linenr="56" column="13" str="Timer0_us_Wait" scope="0x5621e3372500" type="name" astParent="0x5621e3365b10"/>
+    <token id="0x5621e3365b10" file="song.c" linenr="56" column="27" str="(" scope="0x5621e3372500" link="0x5621e33665b0" astOperand1="0x5621e3365bc0" astOperand2="0x5621e3366450"/>
+    <token id="0x5621e3365a60" file="song.c" linenr="56" column="28" str="note" scope="0x5621e3372500" type="name" varId="9" variable="0x5621e3373f80" values="0x5621e337e670" astParent="0x5621e3366450" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3366450" file="song.c" linenr="56" column="33" str="/" scope="0x5621e3372500" type="op" isArithmeticalOp="true" values="0x5621e337e950" astParent="0x5621e3365b10" astOperand1="0x5621e3365a60" astOperand2="0x5621e33664b0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33664b0" file="song.c" linenr="56" column="35" str="2" scope="0x5621e3372500" type="number" isInt="true" values="0x5621e337a9a0" astParent="0x5621e3366450" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33665b0" file="song.c" linenr="56" column="36" str=")" scope="0x5621e3372500" link="0x5621e3365b10"/>
+    <token id="0x5621e3366610" file="song.c" linenr="56" column="37" str=";" scope="0x5621e3372500"/>
+    <token id="0x5621e3366710" file="song.c" linenr="59" column="13" str="GPIO_ClearValue" scope="0x5621e3372500" type="name" isExpandedMacro="true" astParent="0x5621e3366a00"/>
+    <token id="0x5621e3366a00" file="song.c" linenr="59" column="13" str="(" scope="0x5621e3372500" isExpandedMacro="true" link="0x5621e3366f40" astOperand1="0x5621e3366710" astOperand2="0x5621e3366bc0"/>
+    <token id="0x5621e325b5a0" file="song.c" linenr="59" column="13" str="0" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e337a980" astParent="0x5621e3366bc0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3366bc0" file="song.c" linenr="59" column="13" str="," scope="0x5621e3372500" isExpandedMacro="true" astParent="0x5621e3366a00" astOperand1="0x5621e325b5a0" astOperand2="0x5621e3366d80"/>
+    <token id="0x5621e3366ca0" file="song.c" linenr="59" column="13" str="1" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e337aa70" astParent="0x5621e3366d80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3366d80" file="song.c" linenr="59" column="13" str="&lt;&lt;" scope="0x5621e3372500" type="op" isArithmeticalOp="true" isExpandedMacro="true" values="0x5621e337acb0" astParent="0x5621e3366bc0" astOperand1="0x5621e3366ca0" astOperand2="0x5621e3366e60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3366e60" file="song.c" linenr="59" column="13" str="26" scope="0x5621e3372500" type="number" isInt="true" isExpandedMacro="true" values="0x5621e337ab90" astParent="0x5621e3366d80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3366f40" file="song.c" linenr="59" column="13" str=")" scope="0x5621e3372500" isExpandedMacro="true" link="0x5621e3366a00"/>
+    <token id="0x5621e3367020" file="song.c" linenr="59" column="13" str=";" scope="0x5621e3372500" isExpandedMacro="true"/>
+    <token id="0x5621e3366920" file="song.c" linenr="60" column="13" str="Timer0_us_Wait" scope="0x5621e3372500" type="name" astParent="0x5621e3366870"/>
+    <token id="0x5621e3366870" file="song.c" linenr="60" column="27" str="(" scope="0x5621e3372500" link="0x5621e3367340" astOperand1="0x5621e3366920" astOperand2="0x5621e33671e0"/>
+    <token id="0x5621e3366770" file="song.c" linenr="60" column="28" str="note" scope="0x5621e3372500" type="name" varId="9" variable="0x5621e3373f80" values="0x5621e337db10" astParent="0x5621e33671e0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33671e0" file="song.c" linenr="60" column="33" str="/" scope="0x5621e3372500" type="op" isArithmeticalOp="true" values="0x5621e337ea20" astParent="0x5621e3366870" astOperand1="0x5621e3366770" astOperand2="0x5621e3367240" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3367240" file="song.c" linenr="60" column="35" str="2" scope="0x5621e3372500" type="number" isInt="true" values="0x5621e337add0" astParent="0x5621e33671e0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3367340" file="song.c" linenr="60" column="36" str=")" scope="0x5621e3372500" link="0x5621e3366870"/>
+    <token id="0x5621e33673a0" file="song.c" linenr="60" column="37" str=";" scope="0x5621e3372500"/>
+    <token id="0x5621e33674a0" file="song.c" linenr="63" column="13" str="t" scope="0x5621e3372500" type="name" varId="11" variable="0x5621e3373c00" values="0x5621e337eba0" astParent="0x5621e3367500" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3367500" file="song.c" linenr="63" column="15" str="+=" scope="0x5621e3372500" type="op" isAssignmentOp="true" values="0x5621e337ed40" astOperand1="0x5621e33674a0" astOperand2="0x5621e3367600" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3367600" file="song.c" linenr="63" column="18" str="note" scope="0x5621e3372500" type="name" varId="9" variable="0x5621e3373f80" values="0x5621e337ee10" astParent="0x5621e3367500" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e325d020" file="song.c" linenr="63" column="22" str=";" scope="0x5621e3372500"/>
+    <token id="0x5621e33676f0" file="song.c" linenr="64" column="9" str="}" scope="0x5621e3372500" link="0x5621e3365900"/>
+    <token id="0x5621e33677e0" file="song.c" linenr="66" column="5" str="}" scope="0x5621e3372370" link="0x5621e3365120"/>
+    <token id="0x5621e3367840" file="song.c" linenr="67" column="5" str="else" scope="0x5621e33721e0" type="name"/>
+    <token id="0x5621e3367930" file="song.c" linenr="67" column="10" str="{" scope="0x5621e3372690" link="0x5621e3367d40"/>
+    <token id="0x5621e3367a20" file="song.c" linenr="68" column="6" str="Timer0_Wait" scope="0x5621e3372690" type="name" astParent="0x5621e3367a80"/>
+    <token id="0x5621e3367a80" file="song.c" linenr="68" column="17" str="(" scope="0x5621e3372690" link="0x5621e3367be0" astOperand1="0x5621e3367a20" astOperand2="0x5621e3367b80"/>
+    <token id="0x5621e3367b80" file="song.c" linenr="68" column="18" str="durationMs" scope="0x5621e3372690" type="name" varId="10" variable="0x5621e3374060" values="0x5621e337eee0" astParent="0x5621e3367a80" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3367be0" file="song.c" linenr="68" column="28" str=")" scope="0x5621e3372690" link="0x5621e3367a80"/>
+    <token id="0x5621e3367ce0" file="song.c" linenr="68" column="29" str=";" scope="0x5621e3372690"/>
+    <token id="0x5621e3367d40" file="song.c" linenr="70" column="5" str="}" scope="0x5621e3372690" link="0x5621e3367930"/>
+    <token id="0x5621e3367e40" file="song.c" linenr="71" column="1" str="}" scope="0x5621e33721e0" link="0x5621e3364870"/>
+    <token id="0x5621e3367ea0" file="song.c" linenr="73" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3367fa0" file="song.c" linenr="73" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3368000" file="song.c" linenr="73" column="17" str="getNote" scope="0x5621e3372050" type="name" function="0x5621e32638d0"/>
+    <token id="0x5621e3368100" file="song.c" linenr="73" column="24" str="(" scope="0x5621e3372050" link="0x5621e33682c0" values="0x5621e337efb0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368160" file="song.c" linenr="73" column="25" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e3368260" file="song.c" linenr="73" column="33" str="ch" scope="0x5621e3372050" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f080" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33682c0" file="song.c" linenr="73" column="35" str=")" scope="0x5621e3372050" link="0x5621e3368100"/>
+    <token id="0x5621e33683c0" file="song.c" linenr="74" column="1" str="{" scope="0x5621e3372820" link="0x5621e336a0a0"/>
+    <token id="0x5621e3368420" file="song.c" linenr="75" column="5" str="if" scope="0x5621e3372820" type="name" astParent="0x5621e3368520"/>
+    <token id="0x5621e3368520" file="song.c" linenr="75" column="8" str="(" scope="0x5621e3372820" link="0x5621e3368aa0" astOperand1="0x5621e3368420" astOperand2="0x5621e33687e0"/>
+    <token id="0x5621e3368580" file="song.c" linenr="75" column="9" str="ch" scope="0x5621e3372820" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f150" astParent="0x5621e3368680" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368680" file="song.c" linenr="75" column="12" str="&gt;=" scope="0x5621e3372820" type="op" isComparisonOp="true" values="0x5621e3279f30" astParent="0x5621e33687e0" astOperand1="0x5621e3368580" astOperand2="0x5621e33686e0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e33686e0" file="song.c" linenr="75" column="15" str="&apos;A&apos;" scope="0x5621e3372820" type="char" values="0x5621e325f940" astParent="0x5621e3368680" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e33687e0" file="song.c" linenr="75" column="19" str="&amp;&amp;" scope="0x5621e3372820" type="op" isLogicalOp="true" astParent="0x5621e3368520" astOperand1="0x5621e3368680" astOperand2="0x5621e3368940" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e3368840" file="song.c" linenr="75" column="22" str="ch" scope="0x5621e3372820" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f220" astParent="0x5621e3368940" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368940" file="song.c" linenr="75" column="25" str="&lt;=" scope="0x5621e3372820" type="op" isComparisonOp="true" values="0x5621e327a050" astParent="0x5621e33687e0" astOperand1="0x5621e3368840" astOperand2="0x5621e33689a0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e33689a0" file="song.c" linenr="75" column="28" str="&apos;G&apos;" scope="0x5621e3372820" type="char" values="0x5621e337acd0" astParent="0x5621e3368940" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3368aa0" file="song.c" linenr="75" column="31" str=")" scope="0x5621e3372820" link="0x5621e3368520"/>
+    <token id="0x5621e3371370" file="song.c" linenr="75" column="0" str="{" scope="0x5621e33729b0" link="0x5621e3262e30"/>
+    <token id="0x5621e3368b00" file="song.c" linenr="76" column="9" str="return" scope="0x5621e33729b0" type="name" values="0x5621e337f2f0" astOperand1="0x5621e325c4d0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368c00" file="song.c" linenr="76" column="16" str="notes" scope="0x5621e33729b0" type="name" varId="7" variable="0x5621e3371fe0" astParent="0x5621e325c4d0" valueType-type="int" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e325c4d0" file="song.c" linenr="76" column="21" str="[" scope="0x5621e33729b0" link="0x5621e3368f30" values="0x5621e337f3c0" astParent="0x5621e3368b00" astOperand1="0x5621e3368c00" astOperand2="0x5621e3368de0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368cf0" file="song.c" linenr="76" column="22" str="ch" scope="0x5621e33729b0" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f490" astParent="0x5621e3368de0" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3368de0" file="song.c" linenr="76" column="25" str="-" scope="0x5621e33729b0" type="op" isArithmeticalOp="true" values="0x5621e337f560" astParent="0x5621e325c4d0" astOperand1="0x5621e3368cf0" astOperand2="0x5621e3368e40" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3368e40" file="song.c" linenr="76" column="27" str="&apos;A&apos;" scope="0x5621e33729b0" type="char" values="0x5621e337abb0" astParent="0x5621e3368de0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3368f30" file="song.c" linenr="76" column="30" str="]" scope="0x5621e33729b0" link="0x5621e325c4d0"/>
+    <token id="0x5621e3369020" file="song.c" linenr="76" column="31" str=";" scope="0x5621e33729b0"/>
+    <token id="0x5621e3262e30" file="song.c" linenr="76" column="0" str="}" scope="0x5621e33729b0" link="0x5621e3371370"/>
+    <token id="0x5621e3369080" file="song.c" linenr="78" column="5" str="if" scope="0x5621e3372820" type="name" astParent="0x5621e3369180"/>
+    <token id="0x5621e3369180" file="song.c" linenr="78" column="8" str="(" scope="0x5621e3372820" link="0x5621e3369700" astOperand1="0x5621e3369080" astOperand2="0x5621e3369440"/>
+    <token id="0x5621e33691e0" file="song.c" linenr="78" column="9" str="ch" scope="0x5621e3372820" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f630" astParent="0x5621e33692e0" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33692e0" file="song.c" linenr="78" column="12" str="&gt;=" scope="0x5621e3372820" type="op" isComparisonOp="true" values="0x5621e3279fd0" astParent="0x5621e3369440" astOperand1="0x5621e33691e0" astOperand2="0x5621e3369340" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e3369340" file="song.c" linenr="78" column="15" str="&apos;a&apos;" scope="0x5621e3372820" type="char" values="0x5621e337aa90" astParent="0x5621e33692e0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369440" file="song.c" linenr="78" column="19" str="&amp;&amp;" scope="0x5621e3372820" type="op" isLogicalOp="true" astParent="0x5621e3369180" astOperand1="0x5621e33692e0" astOperand2="0x5621e33695a0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e33694a0" file="song.c" linenr="78" column="22" str="ch" scope="0x5621e3372820" type="name" varId="12" variable="0x5621e3374140" values="0x5621e337f700" astParent="0x5621e33695a0" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33695a0" file="song.c" linenr="78" column="25" str="&lt;=" scope="0x5621e3372820" type="op" isComparisonOp="true" values="0x5621e327a0b0" astParent="0x5621e3369440" astOperand1="0x5621e33694a0" astOperand2="0x5621e3369600" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e3369600" file="song.c" linenr="78" column="28" str="&apos;g&apos;" scope="0x5621e3372820" type="char" values="0x5621e337a9e0" astParent="0x5621e33695a0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369700" file="song.c" linenr="78" column="31" str=")" scope="0x5621e3372820" link="0x5621e3369180"/>
+    <token id="0x5621e3262f20" file="song.c" linenr="78" column="0" str="{" scope="0x5621e3372b40" link="0x5621e3263010"/>
+    <token id="0x5621e3369760" file="song.c" linenr="79" column="9" str="return" scope="0x5621e3372b40" type="name" values="0x5621e3277370" astOperand1="0x5621e33698c0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3369860" file="song.c" linenr="79" column="16" str="notes" scope="0x5621e3372b40" type="name" varId="7" variable="0x5621e3371fe0" astParent="0x5621e33698c0" valueType-type="int" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e33698c0" file="song.c" linenr="79" column="21" str="[" scope="0x5621e3372b40" link="0x5621e3369ce0" values="0x5621e3277440" astParent="0x5621e3369760" astOperand1="0x5621e3369860" astOperand2="0x5621e3369b80" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33699c0" file="song.c" linenr="79" column="22" str="ch" scope="0x5621e3372b40" type="name" varId="12" variable="0x5621e3374140" values="0x5621e3277510" astParent="0x5621e3369a20" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3369a20" file="song.c" linenr="79" column="25" str="-" scope="0x5621e3372b40" type="op" isArithmeticalOp="true" values="0x5621e32775e0" astParent="0x5621e3369b80" astOperand1="0x5621e33699c0" astOperand2="0x5621e3369b20" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369b20" file="song.c" linenr="79" column="27" str="&apos;a&apos;" scope="0x5621e3372b40" type="char" values="0x5621e337a960" astParent="0x5621e3369a20" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369b80" file="song.c" linenr="79" column="31" str="+" scope="0x5621e3372b40" type="op" isArithmeticalOp="true" values="0x5621e32776b0" astParent="0x5621e33698c0" astOperand1="0x5621e3369a20" astOperand2="0x5621e3369c80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369c80" file="song.c" linenr="79" column="33" str="7" scope="0x5621e3372b40" type="number" isInt="true" values="0x5621e337a940" astParent="0x5621e3369b80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369ce0" file="song.c" linenr="79" column="34" str="]" scope="0x5621e3372b40" link="0x5621e33698c0"/>
+    <token id="0x5621e3369de0" file="song.c" linenr="79" column="35" str=";" scope="0x5621e3372b40"/>
+    <token id="0x5621e3263010" file="song.c" linenr="79" column="0" str="}" scope="0x5621e3372b40" link="0x5621e3262f20"/>
+    <token id="0x5621e3369e40" file="song.c" linenr="81" column="5" str="return" scope="0x5621e3372820" type="name" values="0x5621e3277780" astOperand1="0x5621e3369f40" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3369f40" file="song.c" linenr="81" column="12" str="0" scope="0x5621e3372820" type="number" isInt="true" values="0x5621e337bb10" astParent="0x5621e3369e40" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3369fa0" file="song.c" linenr="81" column="13" str=";" scope="0x5621e3372820"/>
+    <token id="0x5621e336a0a0" file="song.c" linenr="82" column="1" str="}" scope="0x5621e3372820" link="0x5621e33683c0"/>
+    <token id="0x5621e336a100" file="song.c" linenr="84" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e336a200" file="song.c" linenr="84" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325e2e0" file="song.c" linenr="84" column="17" str="getDuration" scope="0x5621e3372050" type="name" function="0x5621e3263bd0"/>
+    <token id="0x5621e336a2f0" file="song.c" linenr="84" column="28" str="(" scope="0x5621e3372050" link="0x5621e336a4d0" values="0x5621e3277850" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336a3e0" file="song.c" linenr="84" column="29" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325e340" file="song.c" linenr="84" column="37" str="ch" scope="0x5621e3372050" type="name" varId="13" variable="0x5621e3374220" values="0x5621e3277920" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336a4d0" file="song.c" linenr="84" column="39" str=")" scope="0x5621e3372050" link="0x5621e336a2f0"/>
+    <token id="0x5621e336a5c0" file="song.c" linenr="85" column="1" str="{" scope="0x5621e3372cd0" link="0x5621e336b5a0"/>
+    <token id="0x5621e336a6b0" file="song.c" linenr="86" column="5" str="if" scope="0x5621e3372cd0" type="name" astParent="0x5621e336a710"/>
+    <token id="0x5621e336a710" file="song.c" linenr="86" column="8" str="(" scope="0x5621e3372cd0" link="0x5621e336ad00" astOperand1="0x5621e336a6b0" astOperand2="0x5621e336aa40"/>
+    <token id="0x5621e336a800" file="song.c" linenr="86" column="9" str="ch" scope="0x5621e3372cd0" type="name" varId="13" variable="0x5621e3374220" values="0x5621e32779f0" astParent="0x5621e336a860" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336a860" file="song.c" linenr="86" column="12" str="&lt;" scope="0x5621e3372cd0" type="op" isComparisonOp="true" astParent="0x5621e336aa40" astOperand1="0x5621e336a800" astOperand2="0x5621e336a950" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e336a950" file="song.c" linenr="86" column="14" str="&apos;0&apos;" scope="0x5621e3372cd0" type="char" values="0x5621e337bbe0" astParent="0x5621e336a860" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336aa40" file="song.c" linenr="86" column="18" str="||" scope="0x5621e3372cd0" type="op" isLogicalOp="true" astParent="0x5621e336a710" astOperand1="0x5621e336a860" astOperand2="0x5621e336aba0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e336aaa0" file="song.c" linenr="86" column="21" str="ch" scope="0x5621e3372cd0" type="name" varId="13" variable="0x5621e3374220" values="0x5621e3277ac0" astParent="0x5621e336aba0" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336aba0" file="song.c" linenr="86" column="24" str="&gt;" scope="0x5621e3372cd0" type="op" isComparisonOp="true" values="0x5621e3279f90" astParent="0x5621e336aa40" astOperand1="0x5621e336aaa0" astOperand2="0x5621e336ac00" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e336ac00" file="song.c" linenr="86" column="26" str="&apos;9&apos;" scope="0x5621e3372cd0" type="char" values="0x5621e337bcb0" astParent="0x5621e336aba0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336ad00" file="song.c" linenr="86" column="29" str=")" scope="0x5621e3372cd0" link="0x5621e336a710"/>
+    <token id="0x5621e3263100" file="song.c" linenr="86" column="0" str="{" scope="0x5621e3372e60" link="0x5621e32631f0"/>
+    <token id="0x5621e336ad60" file="song.c" linenr="87" column="9" str="return" scope="0x5621e3372e60" type="name" values="0x5621e3277b90" astOperand1="0x5621e336ae60" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ae60" file="song.c" linenr="87" column="16" str="400" scope="0x5621e3372e60" type="number" isInt="true" values="0x5621e337bd80" astParent="0x5621e336ad60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336aec0" file="song.c" linenr="87" column="19" str=";" scope="0x5621e3372e60"/>
+    <token id="0x5621e32631f0" file="song.c" linenr="87" column="0" str="}" scope="0x5621e3372e60" link="0x5621e3263100"/>
+    <token id="0x5621e336afc0" file="song.c" linenr="91" column="5" str="return" scope="0x5621e3372cd0" type="name" values="0x5621e3277c60" astOperand1="0x5621e336b3e0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336b020" file="song.c" linenr="91" column="12" str="(" scope="0x5621e3372cd0" link="0x5621e336b2e0"/>
+    <token id="0x5621e336b120" file="song.c" linenr="91" column="13" str="ch" scope="0x5621e3372cd0" type="name" varId="13" variable="0x5621e3374220" values="0x5621e3277d30" astParent="0x5621e336b180" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336b180" file="song.c" linenr="91" column="16" str="-" scope="0x5621e3372cd0" type="op" isArithmeticalOp="true" values="0x5621e3277e00" astParent="0x5621e336b3e0" astOperand1="0x5621e336b120" astOperand2="0x5621e336b280" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336b280" file="song.c" linenr="91" column="18" str="&apos;0&apos;" scope="0x5621e3372cd0" type="char" values="0x5621e337be50" astParent="0x5621e336b180" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336b2e0" file="song.c" linenr="91" column="21" str=")" scope="0x5621e3372cd0" link="0x5621e336b020"/>
+    <token id="0x5621e336b3e0" file="song.c" linenr="91" column="23" str="*" scope="0x5621e3372cd0" type="op" isArithmeticalOp="true" values="0x5621e3277ed0" astParent="0x5621e336afc0" astOperand1="0x5621e336b180" astOperand2="0x5621e336b440" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336b440" file="song.c" linenr="91" column="25" str="200" scope="0x5621e3372cd0" type="number" isInt="true" values="0x5621e337bf20" astParent="0x5621e336b3e0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336b540" file="song.c" linenr="91" column="28" str=";" scope="0x5621e3372cd0"/>
+    <token id="0x5621e336b5a0" file="song.c" linenr="92" column="1" str="}" scope="0x5621e3372cd0" link="0x5621e336a5c0"/>
+    <token id="0x5621e336b6a0" file="song.c" linenr="94" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e336b700" file="song.c" linenr="94" column="8" str="uint32_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e336b800" file="song.c" linenr="94" column="17" str="getPause" scope="0x5621e3372050" type="name" function="0x5621e3263b20"/>
+    <token id="0x5621e336b860" file="song.c" linenr="94" column="25" str="(" scope="0x5621e3372050" link="0x5621e336ba50" values="0x5621e3277fa0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336b960" file="song.c" linenr="94" column="26" str="uint8_t" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e325ec40" file="song.c" linenr="94" column="34" str="ch" scope="0x5621e3372050" type="name" varId="14" variable="0x5621e3374300" values="0x5621e3278070" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ba50" file="song.c" linenr="94" column="36" str=")" scope="0x5621e3372050" link="0x5621e336b860"/>
+    <token id="0x5621e336bb40" file="song.c" linenr="95" column="1" str="{" scope="0x5621e3372ff0" link="0x5621e336d3e0"/>
+    <token id="0x5621e325eca0" file="song.c" linenr="96" column="5" str="switch" scope="0x5621e3372ff0" type="name" astParent="0x5621e336bc30"/>
+    <token id="0x5621e336bc30" file="song.c" linenr="96" column="12" str="(" scope="0x5621e3372ff0" link="0x5621e336be10" astOperand1="0x5621e325eca0" astOperand2="0x5621e336bd20"/>
+    <token id="0x5621e336bd20" file="song.c" linenr="96" column="13" str="ch" scope="0x5621e3372ff0" type="name" varId="14" variable="0x5621e3374300" values="0x5621e3278140" astParent="0x5621e336bc30" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336be10" file="song.c" linenr="96" column="15" str=")" scope="0x5621e3372ff0" link="0x5621e336bc30"/>
+    <token id="0x5621e336be70" file="song.c" linenr="96" column="17" str="{" scope="0x5621e3373180" link="0x5621e336d380"/>
+    <token id="0x5621e336bf60" file="song.c" linenr="97" column="5" str="case" scope="0x5621e3373180" type="name" astOperand1="0x5621e336bfc0"/>
+    <token id="0x5621e336bfc0" file="song.c" linenr="97" column="10" str="&apos;+&apos;" scope="0x5621e3373180" type="char" values="0x5621e337bff0" astParent="0x5621e336bf60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336c0b0" file="song.c" linenr="97" column="13" str=":" scope="0x5621e3373180"/>
+    <token id="0x5621e32636a0" file="song.c" linenr="97" column="0" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336c1a0" file="song.c" linenr="98" column="9" str="return" scope="0x5621e3373180" type="name" values="0x5621e3278210" astOperand1="0x5621e336c200" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336c200" file="song.c" linenr="98" column="16" str="0" scope="0x5621e3373180" type="number" isInt="true" values="0x5621e337c0c0" astParent="0x5621e336c1a0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336c300" file="song.c" linenr="98" column="17" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336c360" file="song.c" linenr="99" column="5" str="case" scope="0x5621e3373180" type="name" astOperand1="0x5621e336c460"/>
+    <token id="0x5621e336c460" file="song.c" linenr="99" column="10" str="&apos;,&apos;" scope="0x5621e3373180" type="char" values="0x5621e337c190" astParent="0x5621e336c360" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336c4c0" file="song.c" linenr="99" column="13" str=":" scope="0x5621e3373180"/>
+    <token id="0x5621e3371490" file="song.c" linenr="99" column="0" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336c5c0" file="song.c" linenr="100" column="9" str="return" scope="0x5621e3373180" type="name" values="0x5621e32782e0" astOperand1="0x5621e336c620" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336c620" file="song.c" linenr="100" column="16" str="5" scope="0x5621e3373180" type="number" isInt="true" values="0x5621e337c260" astParent="0x5621e336c5c0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336c720" file="song.c" linenr="100" column="17" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336c780" file="song.c" linenr="101" column="5" str="case" scope="0x5621e3373180" type="name" astOperand1="0x5621e336c880"/>
+    <token id="0x5621e336c880" file="song.c" linenr="101" column="10" str="&apos;.&apos;" scope="0x5621e3373180" type="char" values="0x5621e337c330" astParent="0x5621e336c780" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336c8e0" file="song.c" linenr="101" column="13" str=":" scope="0x5621e3373180"/>
+    <token id="0x5621e3371580" file="song.c" linenr="101" column="0" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336c9e0" file="song.c" linenr="102" column="9" str="return" scope="0x5621e3373180" type="name" values="0x5621e32783b0" astOperand1="0x5621e336ca40" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ca40" file="song.c" linenr="102" column="16" str="20" scope="0x5621e3373180" type="number" isInt="true" values="0x5621e337c400" astParent="0x5621e336c9e0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336cb40" file="song.c" linenr="102" column="18" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336cba0" file="song.c" linenr="103" column="5" str="case" scope="0x5621e3373180" type="name" astOperand1="0x5621e336cca0"/>
+    <token id="0x5621e336cca0" file="song.c" linenr="103" column="10" str="&apos;_&apos;" scope="0x5621e3373180" type="char" values="0x5621e337c4d0" astParent="0x5621e336cba0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336cd00" file="song.c" linenr="103" column="13" str=":" scope="0x5621e3373180"/>
+    <token id="0x5621e3371670" file="song.c" linenr="103" column="0" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336ce00" file="song.c" linenr="104" column="9" str="return" scope="0x5621e3373180" type="name" values="0x5621e3278480" astOperand1="0x5621e336ce60" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ce60" file="song.c" linenr="104" column="16" str="30" scope="0x5621e3373180" type="number" isInt="true" values="0x5621e337c5a0" astParent="0x5621e336ce00" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336cf60" file="song.c" linenr="104" column="18" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336cfc0" file="song.c" linenr="105" column="5" str="default" scope="0x5621e3373180" type="name"/>
+    <token id="0x5621e336d0c0" file="song.c" linenr="105" column="12" str=":" scope="0x5621e3373180"/>
+    <token id="0x5621e3371760" file="song.c" linenr="105" column="0" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336d120" file="song.c" linenr="106" column="9" str="return" scope="0x5621e3373180" type="name" values="0x5621e3278550" astOperand1="0x5621e336d220" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336d220" file="song.c" linenr="106" column="16" str="5" scope="0x5621e3373180" type="number" isInt="true" values="0x5621e337c670" astParent="0x5621e336d120" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336d280" file="song.c" linenr="106" column="17" str=";" scope="0x5621e3373180"/>
+    <token id="0x5621e336d380" file="song.c" linenr="107" column="5" str="}" scope="0x5621e3373180" link="0x5621e336be70"/>
+    <token id="0x5621e336d3e0" file="song.c" linenr="108" column="1" str="}" scope="0x5621e3372ff0" link="0x5621e336bb40"/>
+    <token id="0x5621e336d4e0" file="song.c" linenr="110" column="1" str="static" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e336d540" file="song.c" linenr="110" column="8" str="void" scope="0x5621e3372050" type="name"/>
+    <token id="0x5621e336d640" file="song.c" linenr="110" column="13" str="playSong" scope="0x5621e3372050" type="name" function="0x5621e3262260"/>
+    <token id="0x5621e336d6a0" file="song.c" linenr="110" column="21" str="(" scope="0x5621e3372050" link="0x5621e336d960" valueType-type="void" valueType-reference="None"/>
+    <token id="0x5621e336d7a0" file="song.c" linenr="110" column="22" str="uint8_t" scope="0x5621e3372050" type="name" astParent="0x5621e336d800"/>
+    <token id="0x5621e336d800" file="song.c" linenr="110" column="30" str="*" scope="0x5621e3372050" type="op" isArithmeticalOp="true" astOperand1="0x5621e336d7a0" astOperand2="0x5621e336d900"/>
+    <token id="0x5621e336d900" file="song.c" linenr="110" column="31" str="song" scope="0x5621e3372050" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336d800" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336d960" file="song.c" linenr="110" column="35" str=")" scope="0x5621e3372050" link="0x5621e336d6a0"/>
+    <token id="0x5621e336da60" file="song.c" linenr="110" column="37" str="{" scope="0x5621e3373310" link="0x5621e3371270"/>
+    <token id="0x5621e336dac0" file="song.c" linenr="111" column="5" str="uint32_t" scope="0x5621e3373310" type="name"/>
+    <token id="0x5621e336dbc0" file="song.c" linenr="111" column="14" str="note" scope="0x5621e3373310" type="name" varId="16" variable="0x5621e3373ce0" values="0x5621e3278620" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3260e90" file="song.c" linenr="111" column="19" str=";" scope="0x5621e3373310" isSplittedVarDeclEq="true"/>
+    <token id="0x5621e3371a30" file="song.c" linenr="111" column="14" str="note" scope="0x5621e3373310" type="name" varId="16" variable="0x5621e3373ce0" values="0x5621e32786f0" astParent="0x5621e3371b20" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3371b20" file="song.c" linenr="111" column="19" str="=" scope="0x5621e3373310" type="op" isAssignmentOp="true" values="0x5621e337c810" astOperand1="0x5621e3371a30" astOperand2="0x5621e336dc20" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336dc20" file="song.c" linenr="111" column="21" str="0" scope="0x5621e3373310" type="number" isInt="true" values="0x5621e337c740" astParent="0x5621e3371b20" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336dd10" file="song.c" linenr="111" column="22" str=";" scope="0x5621e3373310"/>
+    <token id="0x5621e336de00" file="song.c" linenr="112" column="5" str="uint32_t" scope="0x5621e3373310" type="name"/>
+    <token id="0x5621e336def0" file="song.c" linenr="112" column="14" str="dur" scope="0x5621e3373310" type="name" varId="17" variable="0x5621e3373dc0" values="0x5621e32787c0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336dfe0" file="song.c" linenr="112" column="19" str=";" scope="0x5621e3373310" isSplittedVarDeclEq="true"/>
+    <token id="0x5621e3371c10" file="song.c" linenr="112" column="14" str="dur" scope="0x5621e3373310" type="name" varId="17" variable="0x5621e3373dc0" values="0x5621e3278890" astParent="0x5621e3371d00" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3371d00" file="song.c" linenr="112" column="19" str="=" scope="0x5621e3373310" type="op" isAssignmentOp="true" values="0x5621e337c9b0" astOperand1="0x5621e3371c10" astOperand2="0x5621e336e040" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336e040" file="song.c" linenr="112" column="21" str="0" scope="0x5621e3373310" type="number" isInt="true" values="0x5621e337c8e0" astParent="0x5621e3371d00" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336e140" file="song.c" linenr="112" column="22" str=";" scope="0x5621e3373310"/>
+    <token id="0x5621e336e1a0" file="song.c" linenr="113" column="5" str="uint32_t" scope="0x5621e3373310" type="name"/>
+    <token id="0x5621e336e2a0" file="song.c" linenr="113" column="14" str="pause" scope="0x5621e3373310" type="name" varId="18" variable="0x5621e3373ea0" values="0x5621e3278960" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336e300" file="song.c" linenr="113" column="20" str=";" scope="0x5621e3373310" isSplittedVarDeclEq="true"/>
+    <token id="0x5621e3371df0" file="song.c" linenr="113" column="14" str="pause" scope="0x5621e3373310" type="name" varId="18" variable="0x5621e3373ea0" values="0x5621e3278a30" astParent="0x5621e3371ee0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3371ee0" file="song.c" linenr="113" column="20" str="=" scope="0x5621e3373310" type="op" isAssignmentOp="true" values="0x5621e337cb50" astOperand1="0x5621e3371df0" astOperand2="0x5621e336e400" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336e400" file="song.c" linenr="113" column="22" str="0" scope="0x5621e3373310" type="number" isInt="true" values="0x5621e337ca80" astParent="0x5621e3371ee0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336e460" file="song.c" linenr="113" column="23" str=";" scope="0x5621e3373310"/>
+    <token id="0x5621e336e560" file="song.c" linenr="122" column="5" str="while" scope="0x5621e3373310" type="name" astParent="0x5621e336e5c0"/>
+    <token id="0x5621e336e5c0" file="song.c" linenr="122" column="10" str="(" scope="0x5621e3373310" link="0x5621e336e980" astOperand1="0x5621e336e560" astOperand2="0x5621e336e820"/>
+    <token id="0x5621e336e6c0" file="song.c" linenr="122" column="11" str="*" scope="0x5621e3373310" type="op" isArithmeticalOp="true" values="0x5621e3278b00" astParent="0x5621e336e820" astOperand1="0x5621e336e720" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336e720" file="song.c" linenr="122" column="12" str="song" scope="0x5621e3373310" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336e6c0" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336e820" file="song.c" linenr="122" column="17" str="!=" scope="0x5621e3373310" type="op" isComparisonOp="true" astParent="0x5621e336e5c0" astOperand1="0x5621e336e6c0" astOperand2="0x5621e336e880" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e336e880" file="song.c" linenr="122" column="20" str="&apos;\0&apos;" scope="0x5621e3373310" type="char" values="0x5621e337cc20" astParent="0x5621e336e820" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336e980" file="song.c" linenr="122" column="24" str=")" scope="0x5621e3373310" link="0x5621e336e5c0"/>
+    <token id="0x5621e336e9e0" file="song.c" linenr="122" column="26" str="{" scope="0x5621e33734a0" link="0x5621e3371210"/>
+    <token id="0x5621e336eae0" file="song.c" linenr="123" column="9" str="note" scope="0x5621e33734a0" type="name" varId="16" variable="0x5621e3373ce0" values="0x5621e3278bd0" astParent="0x5621e336eb40" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336eb40" file="song.c" linenr="123" column="14" str="=" scope="0x5621e33734a0" type="op" isAssignmentOp="true" values="0x5621e3278ca0" astOperand1="0x5621e336eae0" astOperand2="0x5621e336eca0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ec40" file="song.c" linenr="123" column="16" str="getNote" scope="0x5621e33734a0" type="name" function="0x5621e32638d0" astParent="0x5621e336eca0"/>
+    <token id="0x5621e336eca0" file="song.c" linenr="123" column="23" str="(" scope="0x5621e33734a0" link="0x5621e336ef60" values="0x5621e3278d70" astParent="0x5621e336eb40" astOperand1="0x5621e336ec40" astOperand2="0x5621e336eda0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336eda0" file="song.c" linenr="123" column="24" str="*" scope="0x5621e33734a0" type="op" isArithmeticalOp="true" values="0x5621e3278e40" astParent="0x5621e336eca0" astOperand1="0x5621e336ef00" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ee00" file="song.c" linenr="123" column="25" str="song" scope="0x5621e33734a0" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336ef00" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336ef00" file="song.c" linenr="123" column="29" str="++" scope="0x5621e33734a0" type="op" astParent="0x5621e336eda0" astOperand1="0x5621e336ee00" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336ef60" file="song.c" linenr="123" column="31" str=")" scope="0x5621e33734a0" link="0x5621e336eca0"/>
+    <token id="0x5621e336f060" file="song.c" linenr="123" column="32" str=";" scope="0x5621e33734a0"/>
+    <token id="0x5621e336f0c0" file="song.c" linenr="124" column="9" str="if" scope="0x5621e33734a0" type="name" astParent="0x5621e336f1c0"/>
+    <token id="0x5621e336f1c0" file="song.c" linenr="124" column="12" str="(" scope="0x5621e33734a0" link="0x5621e336f4e0" astOperand1="0x5621e336f0c0" astOperand2="0x5621e336f380"/>
+    <token id="0x5621e336f220" file="song.c" linenr="124" column="13" str="*" scope="0x5621e33734a0" type="op" isArithmeticalOp="true" values="0x5621e3278f10" astParent="0x5621e336f380" astOperand1="0x5621e336f320" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336f320" file="song.c" linenr="124" column="14" str="song" scope="0x5621e33734a0" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336f220" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336f380" file="song.c" linenr="124" column="19" str="==" scope="0x5621e33734a0" type="op" isComparisonOp="true" astParent="0x5621e336f1c0" astOperand1="0x5621e336f220" astOperand2="0x5621e336f480" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e336f480" file="song.c" linenr="124" column="22" str="&apos;\0&apos;" scope="0x5621e33734a0" type="char" values="0x5621e337ccf0" astParent="0x5621e336f380" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e336f4e0" file="song.c" linenr="124" column="26" str=")" scope="0x5621e33734a0" link="0x5621e336f1c0"/>
+    <token id="0x5621e32632e0" file="song.c" linenr="124" column="0" str="{" scope="0x5621e3373630" link="0x5621e32633d0"/>
+    <token id="0x5621e336f5e0" file="song.c" linenr="125" column="13" str="break" scope="0x5621e3373630" type="name"/>
+    <token id="0x5621e336f640" file="song.c" linenr="125" column="18" str=";" scope="0x5621e3373630"/>
+    <token id="0x5621e32633d0" file="song.c" linenr="125" column="0" str="}" scope="0x5621e3373630" link="0x5621e32632e0"/>
+    <token id="0x5621e336f740" file="song.c" linenr="126" column="9" str="dur" scope="0x5621e33734a0" type="name" varId="17" variable="0x5621e3373dc0" values="0x5621e3278fe0" astParent="0x5621e336f7a0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336f7a0" file="song.c" linenr="126" column="14" str="=" scope="0x5621e33734a0" type="op" isAssignmentOp="true" values="0x5621e32790b0" astOperand1="0x5621e336f740" astOperand2="0x5621e336f900" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336f8a0" file="song.c" linenr="126" column="16" str="getDuration" scope="0x5621e33734a0" type="name" function="0x5621e3263bd0" astParent="0x5621e336f900"/>
+    <token id="0x5621e336f900" file="song.c" linenr="126" column="27" str="(" scope="0x5621e33734a0" link="0x5621e336fbc0" values="0x5621e3279180" astParent="0x5621e336f7a0" astOperand1="0x5621e336f8a0" astOperand2="0x5621e336fa00" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336fa00" file="song.c" linenr="126" column="28" str="*" scope="0x5621e33734a0" type="op" isArithmeticalOp="true" values="0x5621e3279250" astParent="0x5621e336f900" astOperand1="0x5621e336fb60" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336fa60" file="song.c" linenr="126" column="29" str="song" scope="0x5621e33734a0" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336fb60" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336fb60" file="song.c" linenr="126" column="33" str="++" scope="0x5621e33734a0" type="op" astParent="0x5621e336fa00" astOperand1="0x5621e336fa60" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336fbc0" file="song.c" linenr="126" column="35" str=")" scope="0x5621e33734a0" link="0x5621e336f900"/>
+    <token id="0x5621e336fcc0" file="song.c" linenr="126" column="36" str=";" scope="0x5621e33734a0"/>
+    <token id="0x5621e336fd20" file="song.c" linenr="127" column="9" str="if" scope="0x5621e33734a0" type="name" astParent="0x5621e336fe20"/>
+    <token id="0x5621e336fe20" file="song.c" linenr="127" column="12" str="(" scope="0x5621e33734a0" link="0x5621e3370140" astOperand1="0x5621e336fd20" astOperand2="0x5621e336ffe0"/>
+    <token id="0x5621e336fe80" file="song.c" linenr="127" column="13" str="*" scope="0x5621e33734a0" type="op" isArithmeticalOp="true" values="0x5621e3279320" astParent="0x5621e336ffe0" astOperand1="0x5621e336ff80" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e336ff80" file="song.c" linenr="127" column="14" str="song" scope="0x5621e33734a0" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e336fe80" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e336ffe0" file="song.c" linenr="127" column="19" str="==" scope="0x5621e33734a0" type="op" isComparisonOp="true" astParent="0x5621e336fe20" astOperand1="0x5621e336fe80" astOperand2="0x5621e33700e0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x5621e33700e0" file="song.c" linenr="127" column="22" str="&apos;\0&apos;" scope="0x5621e33734a0" type="char" values="0x5621e337cdc0" astParent="0x5621e336ffe0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x5621e3370140" file="song.c" linenr="127" column="26" str=")" scope="0x5621e33734a0" link="0x5621e336fe20"/>
+    <token id="0x5621e32634c0" file="song.c" linenr="127" column="0" str="{" scope="0x5621e33737c0" link="0x5621e32635b0"/>
+    <token id="0x5621e3370240" file="song.c" linenr="128" column="13" str="break" scope="0x5621e33737c0" type="name"/>
+    <token id="0x5621e3265010" file="song.c" linenr="128" column="18" str=";" scope="0x5621e33737c0"/>
+    <token id="0x5621e32635b0" file="song.c" linenr="128" column="0" str="}" scope="0x5621e33737c0" link="0x5621e32634c0"/>
+    <token id="0x5621e3265070" file="song.c" linenr="129" column="9" str="pause" scope="0x5621e33734a0" type="name" varId="18" variable="0x5621e3373ea0" values="0x5621e32793f0" astParent="0x5621e33703c0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33703c0" file="song.c" linenr="129" column="15" str="=" scope="0x5621e33734a0" type="op" isAssignmentOp="true" values="0x5621e32794c0" astOperand1="0x5621e3265070" astOperand2="0x5621e33705b0" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33704b0" file="song.c" linenr="129" column="17" str="getPause" scope="0x5621e33734a0" type="name" function="0x5621e3263b20" astParent="0x5621e33705b0"/>
+    <token id="0x5621e33705b0" file="song.c" linenr="129" column="25" str="(" scope="0x5621e33734a0" link="0x5621e3370870" values="0x5621e3279590" astParent="0x5621e33703c0" astOperand1="0x5621e33704b0" astOperand2="0x5621e3370610" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3370610" file="song.c" linenr="129" column="26" str="*" scope="0x5621e33734a0" type="op" isArithmeticalOp="true" values="0x5621e3279660" astParent="0x5621e33705b0" astOperand1="0x5621e3370770" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3370710" file="song.c" linenr="129" column="27" str="song" scope="0x5621e33734a0" type="name" varId="15" variable="0x5621e33743e0" astParent="0x5621e3370770" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e3370770" file="song.c" linenr="129" column="31" str="++" scope="0x5621e33734a0" type="op" astParent="0x5621e3370610" astOperand1="0x5621e3370710" valueType-type="char" valueType-sign="unsigned" valueType-pointer="1" valueType-reference="None"/>
+    <token id="0x5621e3370870" file="song.c" linenr="129" column="33" str=")" scope="0x5621e33734a0" link="0x5621e33705b0"/>
+    <token id="0x5621e33708d0" file="song.c" linenr="129" column="34" str=";" scope="0x5621e33734a0"/>
+    <token id="0x5621e33709d0" file="song.c" linenr="131" column="9" str="playNote" scope="0x5621e33734a0" type="name" function="0x5621e3363b90" astParent="0x5621e3370a30"/>
+    <token id="0x5621e3370a30" file="song.c" linenr="131" column="17" str="(" scope="0x5621e33734a0" link="0x5621e3370cf0" astOperand1="0x5621e33709d0" astOperand2="0x5621e3370b90" valueType-type="void" valueType-reference="None"/>
+    <token id="0x5621e3370b30" file="song.c" linenr="131" column="18" str="note" scope="0x5621e33734a0" type="name" varId="16" variable="0x5621e3373ce0" values="0x5621e3279730" astParent="0x5621e3370b90" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3370b90" file="song.c" linenr="131" column="22" str="," scope="0x5621e33734a0" astParent="0x5621e3370a30" astOperand1="0x5621e3370b30" astOperand2="0x5621e3370c90"/>
+    <token id="0x5621e3370c90" file="song.c" linenr="131" column="24" str="dur" scope="0x5621e33734a0" type="name" varId="17" variable="0x5621e3373dc0" values="0x5621e3279800" astParent="0x5621e3370b90" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e3370cf0" file="song.c" linenr="131" column="27" str=")" scope="0x5621e33734a0" link="0x5621e3370a30"/>
+    <token id="0x5621e3370df0" file="song.c" linenr="131" column="28" str=";" scope="0x5621e33734a0"/>
+    <token id="0x5621e3370e50" file="song.c" linenr="133" column="9" str="Timer0_Wait" scope="0x5621e33734a0" type="name" astParent="0x5621e3370f50"/>
+    <token id="0x5621e3370f50" file="song.c" linenr="133" column="20" str="(" scope="0x5621e33734a0" link="0x5621e33710b0" astOperand1="0x5621e3370e50" astOperand2="0x5621e3370fb0"/>
+    <token id="0x5621e3370fb0" file="song.c" linenr="133" column="21" str="pause" scope="0x5621e33734a0" type="name" varId="18" variable="0x5621e3373ea0" values="0x5621e32798d0" astParent="0x5621e3370f50" valueType-type="int" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x5621e33710b0" file="song.c" linenr="133" column="26" str=")" scope="0x5621e33734a0" link="0x5621e3370f50"/>
+    <token id="0x5621e3371110" file="song.c" linenr="133" column="27" str=";" scope="0x5621e33734a0"/>
+    <token id="0x5621e3371210" file="song.c" linenr="135" column="5" str="}" scope="0x5621e33734a0" link="0x5621e336e9e0"/>
+    <token id="0x5621e3371270" file="song.c" linenr="136" column="1" str="}" scope="0x5621e3373310" link="0x5621e336da60"/>
+  </tokenlist>
+  <scopes>
+    <scope id="0x5621e3372050" type="Global">
+      <functionList>
+        <function id="0x5621e3363b90" token="0x5621e3364360" tokenDef="0x5621e326ed10" name="playNote" type="Function" isStatic="true">
+          <arg nr="1" variable="0x5621e3373f80"/>
+          <arg nr="2" variable="0x5621e3374060"/>
+        </function>
+        <function id="0x5621e32638d0" token="0x5621e3368000" tokenDef="0x5621e325f550" name="getNote" type="Function" isStatic="true">
+          <arg nr="1" variable="0x5621e3374140"/>
+        </function>
+        <function id="0x5621e3263bd0" token="0x5621e325e2e0" tokenDef="0x5621e3262020" name="getDuration" type="Function" isStatic="true">
+          <arg nr="1" variable="0x5621e3374220"/>
+        </function>
+        <function id="0x5621e3263b20" token="0x5621e336b800" tokenDef="0x5621e3360980" name="getPause" type="Function" isStatic="true">
+          <arg nr="1" variable="0x5621e3374300"/>
+        </function>
+        <function id="0x5621e3262260" token="0x5621e336d640" tokenDef="0x5621e3360f00" name="playSong" type="Function" isStatic="true">
+          <arg nr="1" variable="0x5621e33743e0"/>
+        </function>
+      </functionList>
+      <varlist>
+        <var id="0x5621e3371fe0"/>
+        <var id="0x5621e3373a70"/>
+      </varlist>
+    </scope>
+    <scope id="0x5621e33721e0" type="Function" className="playNote" bodyStart="0x5621e3364870" bodyEnd="0x5621e3367e40" nestedIn="0x5621e3372050" function="0x5621e3363b90">
+      <varlist>
+        <var id="0x5621e3373c00"/>
+      </varlist>
+    </scope>
+    <scope id="0x5621e3372370" type="If" bodyStart="0x5621e3365120" bodyEnd="0x5621e33677e0" nestedIn="0x5621e33721e0"/>
+    <scope id="0x5621e3372500" type="While" bodyStart="0x5621e3365900" bodyEnd="0x5621e33676f0" nestedIn="0x5621e3372370"/>
+    <scope id="0x5621e3372690" type="Else" bodyStart="0x5621e3367930" bodyEnd="0x5621e3367d40" nestedIn="0x5621e33721e0"/>
+    <scope id="0x5621e3372820" type="Function" className="getNote" bodyStart="0x5621e33683c0" bodyEnd="0x5621e336a0a0" nestedIn="0x5621e3372050" function="0x5621e32638d0"/>
+    <scope id="0x5621e33729b0" type="If" bodyStart="0x5621e3371370" bodyEnd="0x5621e3262e30" nestedIn="0x5621e3372820"/>
+    <scope id="0x5621e3372b40" type="If" bodyStart="0x5621e3262f20" bodyEnd="0x5621e3263010" nestedIn="0x5621e3372820"/>
+    <scope id="0x5621e3372cd0" type="Function" className="getDuration" bodyStart="0x5621e336a5c0" bodyEnd="0x5621e336b5a0" nestedIn="0x5621e3372050" function="0x5621e3263bd0"/>
+    <scope id="0x5621e3372e60" type="If" bodyStart="0x5621e3263100" bodyEnd="0x5621e32631f0" nestedIn="0x5621e3372cd0"/>
+    <scope id="0x5621e3372ff0" type="Function" className="getPause" bodyStart="0x5621e336bb40" bodyEnd="0x5621e336d3e0" nestedIn="0x5621e3372050" function="0x5621e3263b20"/>
+    <scope id="0x5621e3373180" type="Switch" bodyStart="0x5621e336be70" bodyEnd="0x5621e336d380" nestedIn="0x5621e3372ff0"/>
+    <scope id="0x5621e3373310" type="Function" className="playSong" bodyStart="0x5621e336da60" bodyEnd="0x5621e3371270" nestedIn="0x5621e3372050" function="0x5621e3262260">
+      <varlist>
+        <var id="0x5621e3373ce0"/>
+        <var id="0x5621e3373dc0"/>
+        <var id="0x5621e3373ea0"/>
+      </varlist>
+    </scope>
+    <scope id="0x5621e33734a0" type="While" bodyStart="0x5621e336e9e0" bodyEnd="0x5621e3371210" nestedIn="0x5621e3373310"/>
+    <scope id="0x5621e3373630" type="If" bodyStart="0x5621e32632e0" bodyEnd="0x5621e32633d0" nestedIn="0x5621e33734a0"/>
+    <scope id="0x5621e33737c0" type="If" bodyStart="0x5621e32634c0" bodyEnd="0x5621e32635b0" nestedIn="0x5621e33734a0"/>
+  </scopes>
+  <variables>
+    <var id="0x5621e3371fe0" nameToken="0x5621e3261630" typeStartToken="0x5621e33616b0" typeEndToken="0x5621e33616b0" access="Global" scope="0x5621e3372050" constness="0" isArray="true" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="true" isVolatile="false"/>
+    <var id="0x5621e3373a70" nameToken="0x5621e33631a0" typeStartToken="0x5621e325bb80" typeEndToken="0x5621e325bbe0" access="Global" scope="0x5621e3372050" constness="1" isArray="true" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="true" isVolatile="false"/>
+    <var id="0x5621e3373c00" nameToken="0x5621e3364a50" typeStartToken="0x5621e3364960" typeEndToken="0x5621e3364960" access="Local" scope="0x5621e33721e0" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3373ce0" nameToken="0x5621e336dbc0" typeStartToken="0x5621e336dac0" typeEndToken="0x5621e336dac0" access="Local" scope="0x5621e3373310" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3373dc0" nameToken="0x5621e336def0" typeStartToken="0x5621e336de00" typeEndToken="0x5621e336de00" access="Local" scope="0x5621e3373310" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3373ea0" nameToken="0x5621e336e2a0" typeStartToken="0x5621e336e1a0" typeEndToken="0x5621e336e1a0" access="Local" scope="0x5621e3373310" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3373f80" nameToken="0x5621e33645c0" typeStartToken="0x5621e33644c0" typeEndToken="0x5621e33644c0" access="Argument" scope="0x5621e33721e0" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3374060" nameToken="0x5621e325d480" typeStartToken="0x5621e3364720" typeEndToken="0x5621e3364720" access="Argument" scope="0x5621e33721e0" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3374140" nameToken="0x5621e3368260" typeStartToken="0x5621e3368160" typeEndToken="0x5621e3368160" access="Argument" scope="0x5621e3372820" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3374220" nameToken="0x5621e325e340" typeStartToken="0x5621e336a3e0" typeEndToken="0x5621e336a3e0" access="Argument" scope="0x5621e3372cd0" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e3374300" nameToken="0x5621e325ec40" typeStartToken="0x5621e336b960" typeEndToken="0x5621e336b960" access="Argument" scope="0x5621e3372ff0" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x5621e33743e0" nameToken="0x5621e336d900" typeStartToken="0x5621e336d7a0" typeEndToken="0x5621e336d800" access="Argument" scope="0x5621e3373310" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="true" isReference="false" isStatic="false" isVolatile="false"/>
+  </variables>
+  <valueflow>
+    <values id="0x5621e337d4a0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337db30">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337e3f0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3260130">
+      <value intvalue="14" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32616d0">
+      <value intvalue="2272" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3261bb0">
+      <value intvalue="2024" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3366b70">
+      <value intvalue="3816" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3260f80">
+      <value intvalue="3401" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3269b00">
+      <value intvalue="3030" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e325f920">
+      <value intvalue="2865" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e325fbd0">
+      <value intvalue="2551" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3253670">
+      <value intvalue="1136" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3363840">
+      <value intvalue="1012" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3269d10">
+      <value intvalue="1912" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3261940">
+      <value intvalue="1703" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e325fea0">
+      <value intvalue="1517" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e325fbb0">
+      <value intvalue="1432" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e325d570">
+      <value intvalue="1275" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32611f0">
+      <value intvalue="7" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337ce90">
+      <value tokvalue="0x5621e33635f0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337cf60">
+      <value tokvalue="0x5621e3363740" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d030">
+      <value tokvalue="0x5621e3363860" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d100">
+      <value tokvalue="0x5621e33639b0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d1d0">
+      <value tokvalue="0x5621e325aef0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d2a0">
+      <value tokvalue="0x5621e3363d10" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d370">
+      <value tokvalue="0x5621e325ab70" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d440">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337e3d0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337d460">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337d480">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e325f6b0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3256880">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d860">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e325f440">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337d800">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Point" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337e5d0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337e5b0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e325ed10">
+      <value intvalue="1000" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3261e20">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3262090">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337a9c0">
+      <value intvalue="67108864" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3261460">
+      <value intvalue="26" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337e670">
+      <value symbolic="0x5621e33655c0" symbolic-delta="-1" bound="Upper" condition-line="54" possible="true" path="0"/>
+      <value symbolic="0x5621e33655c0" symbolic-delta="0" bound="Lower" condition-line="54" possible="true" path="0"/>
+      <value intvalue="0" bound="Upper" condition-line="52" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337e950">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337a9a0">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337a980">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337aa70">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337acb0">
+      <value intvalue="67108864" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337ab90">
+      <value intvalue="26" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337db10">
+      <value symbolic="0x5621e33655c0" symbolic-delta="-1" bound="Upper" condition-line="54" possible="true" path="0"/>
+      <value symbolic="0x5621e33655c0" symbolic-delta="0" bound="Lower" condition-line="54" possible="true" path="0"/>
+      <value intvalue="0" bound="Upper" condition-line="52" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337ea20">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337add0">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337eba0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337ed40">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337ee10">
+      <value intvalue="0" bound="Upper" condition-line="52" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337eee0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337efb0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337f080">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337f150">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="71" bound="Upper" condition-line="75" possible="true" path="0"/>
+      <value intvalue="72" bound="Lower" condition-line="75" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279f30">
+      <value intvalue="1" bound="Upper" condition-line="75" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e325f940">
+      <value intvalue="65" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337f220">
+      <value intvalue="65" bound="Lower" condition-line="75" possible="true" path="0"/>
+      <value intvalue="64" bound="Upper" condition-line="75" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e327a050">
+      <value intvalue="1" bound="Lower" condition-line="75" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337acd0">
+      <value intvalue="71" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337f2f0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337f3c0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337f490">
+      <value intvalue="65" bound="Lower" condition-line="75" possible="true" path="0"/>
+      <value intvalue="64" bound="Upper" condition-line="75" impossible="true" path="0"/>
+      <value intvalue="71" bound="Upper" condition-line="75" possible="true" path="0"/>
+      <value intvalue="72" bound="Lower" condition-line="75" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337f560">
+      <value intvalue="0" bound="Lower" condition-line="75" possible="true" path="0"/>
+      <value intvalue="-1" bound="Upper" condition-line="75" impossible="true" path="0"/>
+      <value intvalue="6" bound="Upper" condition-line="75" possible="true" path="0"/>
+      <value intvalue="7" bound="Lower" condition-line="75" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337abb0">
+      <value intvalue="65" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337f630">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="103" bound="Upper" condition-line="78" possible="true" path="0"/>
+      <value intvalue="104" bound="Lower" condition-line="78" possible="true" path="0"/>
+      <value intvalue="72" bound="Lower" condition-line="75" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279fd0">
+      <value intvalue="1" bound="Upper" condition-line="78" possible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="75" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337aa90">
+      <value intvalue="97" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337f700">
+      <value intvalue="97" bound="Lower" condition-line="78" possible="true" path="0"/>
+      <value intvalue="96" bound="Upper" condition-line="78" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e327a0b0">
+      <value intvalue="1" bound="Lower" condition-line="78" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337a9e0">
+      <value intvalue="103" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277370">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3277440">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3277510">
+      <value intvalue="97" bound="Lower" condition-line="78" possible="true" path="0"/>
+      <value intvalue="96" bound="Upper" condition-line="78" impossible="true" path="0"/>
+      <value intvalue="103" bound="Upper" condition-line="78" possible="true" path="0"/>
+      <value intvalue="104" bound="Lower" condition-line="78" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32775e0">
+      <value intvalue="0" bound="Lower" condition-line="78" possible="true" path="0"/>
+      <value intvalue="-1" bound="Upper" condition-line="78" impossible="true" path="0"/>
+      <value intvalue="6" bound="Upper" condition-line="78" possible="true" path="0"/>
+      <value intvalue="7" bound="Lower" condition-line="78" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337a960">
+      <value intvalue="97" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32776b0">
+      <value intvalue="7" bound="Lower" condition-line="78" possible="true" path="0"/>
+      <value intvalue="6" bound="Upper" condition-line="78" impossible="true" path="0"/>
+      <value intvalue="13" bound="Upper" condition-line="78" possible="true" path="0"/>
+      <value intvalue="14" bound="Lower" condition-line="78" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337a940">
+      <value intvalue="7" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277780">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bb10">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277850">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3277920">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32779f0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bbe0">
+      <value intvalue="48" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277ac0">
+      <value intvalue="47" bound="Upper" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="48" bound="Lower" condition-line="86" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279f90">
+      <value intvalue="0" bound="Lower" condition-line="86" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bcb0">
+      <value intvalue="57" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277b90">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bd80">
+      <value intvalue="400" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277c60">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3277d30">
+      <value intvalue="47" bound="Upper" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="48" bound="Lower" condition-line="86" possible="true" path="0"/>
+      <value intvalue="58" bound="Lower" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="57" bound="Upper" condition-line="86" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e3277e00">
+      <value intvalue="-1" bound="Upper" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="86" possible="true" path="0"/>
+      <value intvalue="10" bound="Lower" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="9" bound="Upper" condition-line="86" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337be50">
+      <value intvalue="48" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277ed0">
+      <value intvalue="-200" bound="Upper" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="86" possible="true" path="0"/>
+      <value intvalue="2000" bound="Lower" condition-line="86" impossible="true" path="0"/>
+      <value intvalue="1800" bound="Upper" condition-line="86" possible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bf20">
+      <value intvalue="200" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3277fa0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278070">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278140">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337bff0">
+      <value intvalue="43" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278210">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c0c0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337c190">
+      <value intvalue="44" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32782e0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c260">
+      <value intvalue="5" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337c330">
+      <value intvalue="46" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32783b0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c400">
+      <value intvalue="20" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337c4d0">
+      <value intvalue="95" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278480">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c5a0">
+      <value intvalue="30" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278550">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c670">
+      <value intvalue="5" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278620">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32786f0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c810">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337c740">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32787c0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278890">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337c9b0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337c8e0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278960">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278a30">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337cb50">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e337ca80">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278b00">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337cc20">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278bd0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278ca0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278d70">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278e40">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3278f10">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337ccf0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e3278fe0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32790b0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279180">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279250">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279320">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e337cdc0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x5621e32793f0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32794c0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279590">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279660">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279730">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e3279800">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x5621e32798d0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+  </valueflow>
+</dump>
+</dumps>

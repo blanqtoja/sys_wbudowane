@@ -1,0 +1,5 @@
+../src/song.c:48:13:playNote	24	static
+../src/song.c:73:17:getNote	16	static
+../src/song.c:84:17:getDuration	16	static
+../src/song.c:94:17:getPause	16	static
+../src/song.c:110:13:playSong	32	static

@@ -1,0 +1,981 @@
+<?xml version="1.0"?>
+<dumps>
+  <platform name="Native" char_bit="8" short_bit="16" int_bit="32" long_bit="64" long_long_bit="64" pointer_bit="64"/>
+  <rawtokens>
+    <file index="0" name="pwm.c"/>
+    <file index="1" name="pwm.h"/>
+    <tok fileIndex="0" linenr="1" column="1" str="/*x * pwm.cx *x *  Created on: 27 mar 2025x *      Author: jax */"/>
+    <tok fileIndex="0" linenr="9" column="1" str="#"/>
+    <tok fileIndex="0" linenr="9" column="2" str="include"/>
+    <tok fileIndex="0" linenr="9" column="10" str="&quot;LPC17xx.h&quot;"/>
+    <tok fileIndex="0" linenr="10" column="1" str="#"/>
+    <tok fileIndex="0" linenr="10" column="2" str="include"/>
+    <tok fileIndex="0" linenr="10" column="10" str="&quot;pwm.h&quot;"/>
+    <tok fileIndex="0" linenr="11" column="1" str="#"/>
+    <tok fileIndex="0" linenr="11" column="2" str="include"/>
+    <tok fileIndex="0" linenr="11" column="10" str="&quot;LPC17xx.h&quot;"/>
+    <tok fileIndex="0" linenr="13" column="1" str="void"/>
+    <tok fileIndex="0" linenr="13" column="6" str="PWM_Init"/>
+    <tok fileIndex="0" linenr="13" column="14" str="("/>
+    <tok fileIndex="0" linenr="13" column="15" str="void"/>
+    <tok fileIndex="0" linenr="13" column="19" str=")"/>
+    <tok fileIndex="0" linenr="13" column="21" str="{"/>
+    <tok fileIndex="0" linenr="14" column="5" str="// Wxxxxcz zasilanie dla PWM1"/>
+    <tok fileIndex="0" linenr="15" column="5" str="LPC_SC"/>
+    <tok fileIndex="0" linenr="15" column="11" str="-&gt;"/>
+    <tok fileIndex="0" linenr="15" column="13" str="PCONP"/>
+    <tok fileIndex="0" linenr="15" column="19" str="|="/>
+    <tok fileIndex="0" linenr="15" column="22" str="("/>
+    <tok fileIndex="0" linenr="15" column="23" str="1"/>
+    <tok fileIndex="0" linenr="15" column="25" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="15" column="28" str="6"/>
+    <tok fileIndex="0" linenr="15" column="29" str=")"/>
+    <tok fileIndex="0" linenr="15" column="30" str=";"/>
+    <tok fileIndex="0" linenr="15" column="33" str="// PCONP[6] = PWM1 // table 46."/>
+    <tok fileIndex="0" linenr="17" column="5" str="// led R jest podlaczony pod PIO1_9, w lpc widoczny jako P2.0 -&gt; port 2, kanal 0"/>
+    <tok fileIndex="0" linenr="18" column="5" str="// konfiguracja funkcji jako pwm 1.1 na P2.0"/>
+    <tok fileIndex="0" linenr="19" column="5" str="// LPC_PINCON-&gt;PINSEL4 |= (0b01);"/>
+    <tok fileIndex="0" linenr="21" column="5" str="// // konfiguracja funkcji jako pwm 1.2 na P2.1"/>
+    <tok fileIndex="0" linenr="22" column="5" str="// LPC_PINCON-&gt;PINSEL4 |= (0b01 &lt;&lt; 2);"/>
+    <tok fileIndex="0" linenr="24" column="5" str="// // konfiguracja funkcji jako pwm 1.3 na P2.2"/>
+    <tok fileIndex="0" linenr="25" column="5" str="// LPC_PINCON-&gt;PINSEL4 |= (0b01 &lt;&lt; 4);"/>
+    <tok fileIndex="0" linenr="27" column="5" str="LPC_PINCON"/>
+    <tok fileIndex="0" linenr="27" column="15" str="-&gt;"/>
+    <tok fileIndex="0" linenr="27" column="17" str="PINSEL4"/>
+    <tok fileIndex="0" linenr="27" column="25" str="&amp;="/>
+    <tok fileIndex="0" linenr="27" column="28" str="~"/>
+    <tok fileIndex="0" linenr="27" column="29" str="("/>
+    <tok fileIndex="0" linenr="27" column="30" str="0b11"/>
+    <tok fileIndex="0" linenr="27" column="35" str="|"/>
+    <tok fileIndex="0" linenr="27" column="37" str="("/>
+    <tok fileIndex="0" linenr="27" column="38" str="0b11"/>
+    <tok fileIndex="0" linenr="27" column="43" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="27" column="46" str="2"/>
+    <tok fileIndex="0" linenr="27" column="47" str=")"/>
+    <tok fileIndex="0" linenr="27" column="49" str="|"/>
+    <tok fileIndex="0" linenr="27" column="51" str="("/>
+    <tok fileIndex="0" linenr="27" column="52" str="0b11"/>
+    <tok fileIndex="0" linenr="27" column="57" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="27" column="60" str="4"/>
+    <tok fileIndex="0" linenr="27" column="61" str=")"/>
+    <tok fileIndex="0" linenr="27" column="62" str=")"/>
+    <tok fileIndex="0" linenr="27" column="63" str=";"/>
+    <tok fileIndex="0" linenr="27" column="66" str="// wyczysc bity 0xxx5"/>
+    <tok fileIndex="0" linenr="28" column="5" str="LPC_PINCON"/>
+    <tok fileIndex="0" linenr="28" column="15" str="-&gt;"/>
+    <tok fileIndex="0" linenr="28" column="17" str="PINSEL4"/>
+    <tok fileIndex="0" linenr="28" column="25" str="|="/>
+    <tok fileIndex="0" linenr="28" column="29" str="("/>
+    <tok fileIndex="0" linenr="28" column="30" str="0b01"/>
+    <tok fileIndex="0" linenr="28" column="35" str="|"/>
+    <tok fileIndex="0" linenr="28" column="37" str="("/>
+    <tok fileIndex="0" linenr="28" column="38" str="0b01"/>
+    <tok fileIndex="0" linenr="28" column="43" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="28" column="46" str="2"/>
+    <tok fileIndex="0" linenr="28" column="47" str=")"/>
+    <tok fileIndex="0" linenr="28" column="49" str="|"/>
+    <tok fileIndex="0" linenr="28" column="51" str="("/>
+    <tok fileIndex="0" linenr="28" column="52" str="0b01"/>
+    <tok fileIndex="0" linenr="28" column="57" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="28" column="60" str="4"/>
+    <tok fileIndex="0" linenr="28" column="61" str=")"/>
+    <tok fileIndex="0" linenr="28" column="62" str=")"/>
+    <tok fileIndex="0" linenr="28" column="63" str=";"/>
+    <tok fileIndex="0" linenr="28" column="66" str="// ustaw PWM1.1xxx1.3"/>
+    <tok fileIndex="0" linenr="31" column="5" str="// Ustaw tryb single edge"/>
+    <tok fileIndex="0" linenr="32" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="32" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="32" column="15" str="PCR"/>
+    <tok fileIndex="0" linenr="32" column="19" str="="/>
+    <tok fileIndex="0" linenr="32" column="21" str="("/>
+    <tok fileIndex="0" linenr="32" column="22" str="1"/>
+    <tok fileIndex="0" linenr="32" column="24" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="32" column="27" str="9"/>
+    <tok fileIndex="0" linenr="32" column="28" str=")"/>
+    <tok fileIndex="0" linenr="32" column="30" str="|"/>
+    <tok fileIndex="0" linenr="32" column="32" str="("/>
+    <tok fileIndex="0" linenr="32" column="33" str="1"/>
+    <tok fileIndex="0" linenr="32" column="35" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="32" column="38" str="10"/>
+    <tok fileIndex="0" linenr="32" column="40" str=")"/>
+    <tok fileIndex="0" linenr="32" column="42" str="|"/>
+    <tok fileIndex="0" linenr="32" column="44" str="("/>
+    <tok fileIndex="0" linenr="32" column="45" str="1"/>
+    <tok fileIndex="0" linenr="32" column="47" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="32" column="50" str="11"/>
+    <tok fileIndex="0" linenr="32" column="52" str=")"/>
+    <tok fileIndex="0" linenr="32" column="53" str=";"/>
+    <tok fileIndex="0" linenr="32" column="56" str="// Enable PWM1.1, 1.2, 1.3 output"/>
+    <tok fileIndex="0" linenr="34" column="5" str="// Ustaw czxxstotliwoxxxx (przy zaxxoxxeniu PCLK_PWM1 = 25 MHz)"/>
+    <tok fileIndex="0" linenr="35" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="35" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="35" column="15" str="PR"/>
+    <tok fileIndex="0" linenr="35" column="18" str="="/>
+    <tok fileIndex="0" linenr="35" column="20" str="0"/>
+    <tok fileIndex="0" linenr="35" column="21" str=";"/>
+    <tok fileIndex="0" linenr="35" column="31" str="// prescaler = 1"/>
+    <tok fileIndex="0" linenr="36" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="36" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="36" column="15" str="MR0"/>
+    <tok fileIndex="0" linenr="36" column="19" str="="/>
+    <tok fileIndex="0" linenr="36" column="21" str="255"/>
+    <tok fileIndex="0" linenr="36" column="24" str=";"/>
+    <tok fileIndex="0" linenr="36" column="31" str="// okres PWM = 255 cykli"/>
+    <tok fileIndex="0" linenr="37" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="37" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="37" column="15" str="MCR"/>
+    <tok fileIndex="0" linenr="37" column="19" str="="/>
+    <tok fileIndex="0" linenr="37" column="21" str="("/>
+    <tok fileIndex="0" linenr="37" column="22" str="1"/>
+    <tok fileIndex="0" linenr="37" column="24" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="37" column="27" str="1"/>
+    <tok fileIndex="0" linenr="37" column="28" str=")"/>
+    <tok fileIndex="0" linenr="37" column="29" str=";"/>
+    <tok fileIndex="0" linenr="37" column="31" str="// reset on MR0 (PWM cycle)"/>
+    <tok fileIndex="0" linenr="39" column="5" str="// Ustaw wypexxnienie kanaxxxxw (kolor #33ff88 = R:51, G:255, B:136)"/>
+    <tok fileIndex="0" linenr="40" column="1" str="//    LPC_PWM1-&gt;MR1 = 136;  // blue"/>
+    <tok fileIndex="0" linenr="41" column="1" str="//    LPC_PWM1-&gt;MR2 = 51;   // red"/>
+    <tok fileIndex="0" linenr="42" column="1" str="//    LPC_PWM1-&gt;MR3 = 255;  // green"/>
+    <tok fileIndex="0" linenr="44" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="44" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="44" column="15" str="MR1"/>
+    <tok fileIndex="0" linenr="44" column="19" str="="/>
+    <tok fileIndex="0" linenr="44" column="21" str="255"/>
+    <tok fileIndex="0" linenr="44" column="24" str=";"/>
+    <tok fileIndex="0" linenr="44" column="27" str="// r"/>
+    <tok fileIndex="0" linenr="45" column="2" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="45" column="10" str="-&gt;"/>
+    <tok fileIndex="0" linenr="45" column="12" str="MR2"/>
+    <tok fileIndex="0" linenr="45" column="16" str="="/>
+    <tok fileIndex="0" linenr="45" column="18" str="255"/>
+    <tok fileIndex="0" linenr="45" column="21" str=";"/>
+    <tok fileIndex="0" linenr="45" column="25" str="// g"/>
+    <tok fileIndex="0" linenr="46" column="2" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="46" column="10" str="-&gt;"/>
+    <tok fileIndex="0" linenr="46" column="12" str="MR3"/>
+    <tok fileIndex="0" linenr="46" column="16" str="="/>
+    <tok fileIndex="0" linenr="46" column="18" str="255"/>
+    <tok fileIndex="0" linenr="46" column="21" str=";"/>
+    <tok fileIndex="0" linenr="46" column="24" str="// b"/>
+    <tok fileIndex="0" linenr="49" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="49" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="49" column="15" str="LER"/>
+    <tok fileIndex="0" linenr="49" column="19" str="="/>
+    <tok fileIndex="0" linenr="49" column="21" str="("/>
+    <tok fileIndex="0" linenr="49" column="22" str="1"/>
+    <tok fileIndex="0" linenr="49" column="24" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="49" column="27" str="1"/>
+    <tok fileIndex="0" linenr="49" column="28" str=")"/>
+    <tok fileIndex="0" linenr="49" column="30" str="|"/>
+    <tok fileIndex="0" linenr="49" column="32" str="("/>
+    <tok fileIndex="0" linenr="49" column="33" str="1"/>
+    <tok fileIndex="0" linenr="49" column="35" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="49" column="38" str="2"/>
+    <tok fileIndex="0" linenr="49" column="39" str=")"/>
+    <tok fileIndex="0" linenr="49" column="41" str="|"/>
+    <tok fileIndex="0" linenr="49" column="43" str="("/>
+    <tok fileIndex="0" linenr="49" column="44" str="1"/>
+    <tok fileIndex="0" linenr="49" column="46" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="49" column="49" str="3"/>
+    <tok fileIndex="0" linenr="49" column="50" str=")"/>
+    <tok fileIndex="0" linenr="49" column="52" str="|"/>
+    <tok fileIndex="0" linenr="49" column="54" str="("/>
+    <tok fileIndex="0" linenr="49" column="55" str="1"/>
+    <tok fileIndex="0" linenr="49" column="57" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="49" column="60" str="0"/>
+    <tok fileIndex="0" linenr="49" column="61" str=")"/>
+    <tok fileIndex="0" linenr="49" column="62" str=";"/>
+    <tok fileIndex="0" linenr="49" column="65" str="// load MR0xxxMR3"/>
+    <tok fileIndex="0" linenr="51" column="5" str="// Wxxxxcz PWM"/>
+    <tok fileIndex="0" linenr="52" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="52" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="52" column="15" str="TCR"/>
+    <tok fileIndex="0" linenr="52" column="19" str="="/>
+    <tok fileIndex="0" linenr="52" column="21" str="("/>
+    <tok fileIndex="0" linenr="52" column="22" str="1"/>
+    <tok fileIndex="0" linenr="52" column="24" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="52" column="27" str="0"/>
+    <tok fileIndex="0" linenr="52" column="28" str=")"/>
+    <tok fileIndex="0" linenr="52" column="30" str="|"/>
+    <tok fileIndex="0" linenr="52" column="32" str="("/>
+    <tok fileIndex="0" linenr="52" column="33" str="1"/>
+    <tok fileIndex="0" linenr="52" column="35" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="52" column="38" str="3"/>
+    <tok fileIndex="0" linenr="52" column="39" str=")"/>
+    <tok fileIndex="0" linenr="52" column="40" str=";"/>
+    <tok fileIndex="0" linenr="52" column="43" str="// enable counter and PWM mode"/>
+    <tok fileIndex="0" linenr="53" column="1" str="}"/>
+    <tok fileIndex="0" linenr="55" column="1" str="// Funkcja do ustawiania koloru RGB (wartosci 0-255)"/>
+    <tok fileIndex="0" linenr="56" column="1" str="void"/>
+    <tok fileIndex="0" linenr="56" column="6" str="PWM_SetColor"/>
+    <tok fileIndex="0" linenr="56" column="18" str="("/>
+    <tok fileIndex="0" linenr="56" column="19" str="uint8_t"/>
+    <tok fileIndex="0" linenr="56" column="27" str="red"/>
+    <tok fileIndex="0" linenr="56" column="30" str=","/>
+    <tok fileIndex="0" linenr="56" column="32" str="uint8_t"/>
+    <tok fileIndex="0" linenr="56" column="40" str="green"/>
+    <tok fileIndex="0" linenr="56" column="45" str=","/>
+    <tok fileIndex="0" linenr="56" column="47" str="uint8_t"/>
+    <tok fileIndex="0" linenr="56" column="55" str="blue"/>
+    <tok fileIndex="0" linenr="56" column="59" str=")"/>
+    <tok fileIndex="0" linenr="56" column="61" str="{"/>
+    <tok fileIndex="0" linenr="57" column="5" str="if"/>
+    <tok fileIndex="0" linenr="57" column="7" str="("/>
+    <tok fileIndex="0" linenr="57" column="9" str="red"/>
+    <tok fileIndex="0" linenr="57" column="13" str="&lt;"/>
+    <tok fileIndex="0" linenr="57" column="15" str="0"/>
+    <tok fileIndex="0" linenr="57" column="17" str="||"/>
+    <tok fileIndex="0" linenr="57" column="20" str="red"/>
+    <tok fileIndex="0" linenr="57" column="24" str="&gt;"/>
+    <tok fileIndex="0" linenr="57" column="26" str="255"/>
+    <tok fileIndex="0" linenr="57" column="30" str=")"/>
+    <tok fileIndex="0" linenr="57" column="32" str="return"/>
+    <tok fileIndex="0" linenr="57" column="38" str=";"/>
+    <tok fileIndex="0" linenr="58" column="5" str="if"/>
+    <tok fileIndex="0" linenr="58" column="7" str="("/>
+    <tok fileIndex="0" linenr="58" column="9" str="green"/>
+    <tok fileIndex="0" linenr="58" column="15" str="&lt;"/>
+    <tok fileIndex="0" linenr="58" column="17" str="0"/>
+    <tok fileIndex="0" linenr="58" column="19" str="||"/>
+    <tok fileIndex="0" linenr="58" column="22" str="green"/>
+    <tok fileIndex="0" linenr="58" column="28" str="&gt;"/>
+    <tok fileIndex="0" linenr="58" column="30" str="255"/>
+    <tok fileIndex="0" linenr="58" column="34" str=")"/>
+    <tok fileIndex="0" linenr="58" column="36" str="return"/>
+    <tok fileIndex="0" linenr="58" column="42" str=";"/>
+    <tok fileIndex="0" linenr="59" column="5" str="if"/>
+    <tok fileIndex="0" linenr="59" column="7" str="("/>
+    <tok fileIndex="0" linenr="59" column="9" str="blue"/>
+    <tok fileIndex="0" linenr="59" column="14" str="&lt;"/>
+    <tok fileIndex="0" linenr="59" column="16" str="0"/>
+    <tok fileIndex="0" linenr="59" column="18" str="||"/>
+    <tok fileIndex="0" linenr="59" column="21" str="red"/>
+    <tok fileIndex="0" linenr="59" column="25" str="&gt;"/>
+    <tok fileIndex="0" linenr="59" column="27" str="255"/>
+    <tok fileIndex="0" linenr="59" column="31" str=")"/>
+    <tok fileIndex="0" linenr="59" column="33" str="return"/>
+    <tok fileIndex="0" linenr="59" column="39" str=";"/>
+    <tok fileIndex="0" linenr="61" column="1" str="//    LPC_PWM1-&gt;MR1 = blue;"/>
+    <tok fileIndex="0" linenr="62" column="1" str="//    LPC_PWM1-&gt;MR2 = red;"/>
+    <tok fileIndex="0" linenr="63" column="1" str="//    LPC_PWM1-&gt;MR3 = green;"/>
+    <tok fileIndex="0" linenr="64" column="1" str="//"/>
+    <tok fileIndex="0" linenr="65" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="65" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="65" column="15" str="MR1"/>
+    <tok fileIndex="0" linenr="65" column="19" str="="/>
+    <tok fileIndex="0" linenr="65" column="21" str="red"/>
+    <tok fileIndex="0" linenr="65" column="24" str=";"/>
+    <tok fileIndex="0" linenr="66" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="66" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="66" column="15" str="MR2"/>
+    <tok fileIndex="0" linenr="66" column="19" str="="/>
+    <tok fileIndex="0" linenr="66" column="21" str="green"/>
+    <tok fileIndex="0" linenr="66" column="26" str=";"/>
+    <tok fileIndex="0" linenr="67" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="67" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="67" column="15" str="MR3"/>
+    <tok fileIndex="0" linenr="67" column="19" str="="/>
+    <tok fileIndex="0" linenr="67" column="21" str="blue"/>
+    <tok fileIndex="0" linenr="67" column="25" str=";"/>
+    <tok fileIndex="0" linenr="69" column="5" str="LPC_PWM1"/>
+    <tok fileIndex="0" linenr="69" column="13" str="-&gt;"/>
+    <tok fileIndex="0" linenr="69" column="15" str="LER"/>
+    <tok fileIndex="0" linenr="69" column="19" str="="/>
+    <tok fileIndex="0" linenr="69" column="21" str="("/>
+    <tok fileIndex="0" linenr="69" column="22" str="1"/>
+    <tok fileIndex="0" linenr="69" column="24" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="69" column="27" str="1"/>
+    <tok fileIndex="0" linenr="69" column="28" str=")"/>
+    <tok fileIndex="0" linenr="69" column="30" str="|"/>
+    <tok fileIndex="0" linenr="69" column="32" str="("/>
+    <tok fileIndex="0" linenr="69" column="33" str="1"/>
+    <tok fileIndex="0" linenr="69" column="35" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="69" column="38" str="2"/>
+    <tok fileIndex="0" linenr="69" column="39" str=")"/>
+    <tok fileIndex="0" linenr="69" column="41" str="|"/>
+    <tok fileIndex="0" linenr="69" column="43" str="("/>
+    <tok fileIndex="0" linenr="69" column="44" str="1"/>
+    <tok fileIndex="0" linenr="69" column="46" str="&lt;&lt;"/>
+    <tok fileIndex="0" linenr="69" column="49" str="3"/>
+    <tok fileIndex="0" linenr="69" column="50" str=")"/>
+    <tok fileIndex="0" linenr="69" column="51" str=";"/>
+    <tok fileIndex="0" linenr="69" column="54" str="// zaktualizuj MR1xxxMR3"/>
+    <tok fileIndex="0" linenr="70" column="1" str="}"/>
+  </rawtokens>
+  <suppressions>
+  </suppressions>
+<dump cfg="">
+  <standards>
+    <c version="c11"/>
+    <cpp version="c++20"/>
+  </standards>
+  <directivelist>
+    <directive file="pwm.c" linenr="9" str="#include &quot;LPC17xx.h&quot;"/>
+    <directive file="pwm.c" linenr="10" str="#include &quot;pwm.h&quot;"/>
+    <directive file="pwm.c" linenr="11" str="#include &quot;LPC17xx.h&quot;"/>
+    <directive file="pwm.h" linenr="8" str="#ifndef PWM_H_"/>
+    <directive file="pwm.h" linenr="9" str="#define PWM_H_"/>
+    <directive file="pwm.h" linenr="14" str="#endif"/>
+  </directivelist>
+  <tokenlist>
+    <token id="0x556c99468b40" file="pwm.h" linenr="11" column="1" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c99474210" file="pwm.h" linenr="11" column="6" str="PWM_Init" scope="0x556c99454590" type="name" function="0x556c9945c850"/>
+    <token id="0x556c99465070" file="pwm.h" linenr="11" column="14" str="(" scope="0x556c99454590" link="0x556c9946f0e0" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c99458c80" file="pwm.h" linenr="11" column="15" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9946f0e0" file="pwm.h" linenr="11" column="19" str=")" scope="0x556c99454590" link="0x556c99465070"/>
+    <token id="0x556c9946d980" file="pwm.h" linenr="11" column="20" str=";" scope="0x556c99454590"/>
+    <token id="0x556c9946f2f0" file="pwm.h" linenr="12" column="1" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9946a260" file="pwm.h" linenr="12" column="6" str="PWM_SetColor" scope="0x556c99454590" type="name" function="0x556c9945c7a0"/>
+    <token id="0x556c994760b0" file="pwm.h" linenr="12" column="18" str="(" scope="0x556c99454590" link="0x556c9946d560" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c99469050" file="pwm.h" linenr="12" column="19" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9946e5b0" file="pwm.h" linenr="12" column="27" str="red" scope="0x556c99454590" type="name" varId="1"/>
+    <token id="0x556c99468a10" file="pwm.h" linenr="12" column="30" str="," scope="0x556c99454590"/>
+    <token id="0x556c9946dc40" file="pwm.h" linenr="12" column="32" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c99468d90" file="pwm.h" linenr="12" column="40" str="green" scope="0x556c99454590" type="name" varId="2"/>
+    <token id="0x556c9946dd70" file="pwm.h" linenr="12" column="45" str="," scope="0x556c99454590"/>
+    <token id="0x556c99467ff0" file="pwm.h" linenr="12" column="47" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c994674f0" file="pwm.h" linenr="12" column="55" str="blue" scope="0x556c99454590" type="name" varId="3"/>
+    <token id="0x556c9946d560" file="pwm.h" linenr="12" column="59" str=")" scope="0x556c99454590" link="0x556c994760b0"/>
+    <token id="0x556c994716d0" file="pwm.h" linenr="12" column="60" str=";" scope="0x556c99454590"/>
+    <token id="0x556c9946e030" file="pwm.c" linenr="13" column="1" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9946ca10" file="pwm.c" linenr="13" column="6" str="PWM_Init" scope="0x556c99454590" type="name" function="0x556c9945c850"/>
+    <token id="0x556c9946de70" file="pwm.c" linenr="13" column="14" str="(" scope="0x556c99454590" link="0x556c9946eb60" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c9946cfb0" file="pwm.c" linenr="13" column="15" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9946eb60" file="pwm.c" linenr="13" column="19" str=")" scope="0x556c99454590" link="0x556c9946de70"/>
+    <token id="0x556c9946f710" file="pwm.c" linenr="13" column="21" str="{" scope="0x556c99454a80" link="0x556c9945f970"/>
+    <token id="0x556c99455360" file="pwm.c" linenr="15" column="5" str="LPC_SC" scope="0x556c99454a80" type="name" astParent="0x556c99455250"/>
+    <token id="0x556c99455250" file="pwm.c" linenr="15" column="11" str="." scope="0x556c99454a80" astParent="0x556c99458690" astOperand1="0x556c99455360" astOperand2="0x556c99468c00" originalName="->"/>
+    <token id="0x556c99468c00" file="pwm.c" linenr="15" column="13" str="PCONP" scope="0x556c99454a80" type="name" astParent="0x556c99455250"/>
+    <token id="0x556c99458690" file="pwm.c" linenr="15" column="19" str="|=" scope="0x556c99454a80" type="op" isAssignmentOp="true" astOperand1="0x556c99455250" astOperand2="0x556c99455050"/>
+    <token id="0x556c99458780" file="pwm.c" linenr="15" column="22" str="(" scope="0x556c99454a80" link="0x556c99454e50"/>
+    <token id="0x556c994588c0" file="pwm.c" linenr="15" column="23" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c9946c890" astParent="0x556c99455050" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99455050" file="pwm.c" linenr="15" column="25" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c9946a4b0" astParent="0x556c99458690" astOperand1="0x556c994588c0" astOperand2="0x556c99455140" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99455140" file="pwm.c" linenr="15" column="28" str="6" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99474040" astParent="0x556c99455050" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99454e50" file="pwm.c" linenr="15" column="29" str=")" scope="0x556c99454a80" link="0x556c99458780"/>
+    <token id="0x556c99454f40" file="pwm.c" linenr="15" column="30" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c99458330" file="pwm.c" linenr="27" column="5" str="LPC_PINCON" scope="0x556c99454a80" type="name" astParent="0x556c99458420"/>
+    <token id="0x556c99458420" file="pwm.c" linenr="27" column="15" str="." scope="0x556c99454a80" astParent="0x556c99458150" astOperand1="0x556c99458330" astOperand2="0x556c99458510" originalName="->"/>
+    <token id="0x556c99458510" file="pwm.c" linenr="27" column="17" str="PINSEL4" scope="0x556c99454a80" type="name" astParent="0x556c99458420"/>
+    <token id="0x556c99458150" file="pwm.c" linenr="27" column="25" str="&amp;=" scope="0x556c99454a80" type="op" isAssignmentOp="true" astOperand1="0x556c99458420" astOperand2="0x556c99458240"/>
+    <token id="0x556c99458240" file="pwm.c" linenr="27" column="28" str="~" scope="0x556c99454a80" type="op" values="0x556c99455340" astParent="0x556c99458150" astOperand1="0x556c99459f90" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c994582a0" file="pwm.c" linenr="27" column="29" str="(" scope="0x556c99454a80" link="0x556c9945a7a0"/>
+    <token id="0x556c9945abc0" file="pwm.c" linenr="27" column="30" str="0b11" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99469f80" astParent="0x556c9945ad10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945ad10" file="pwm.c" linenr="27" column="35" str="|" scope="0x556c99454a80" type="op" values="0x556c99455030" astParent="0x556c99459f90" astOperand1="0x556c9945abc0" astOperand2="0x556c9945a170" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945ae00" file="pwm.c" linenr="27" column="37" str="(" scope="0x556c99454a80" link="0x556c9945a2c0"/>
+    <token id="0x556c9945aef0" file="pwm.c" linenr="27" column="38" str="0b11" scope="0x556c99454a80" type="number" isInt="true" values="0x556c994718f0" astParent="0x556c9945a170" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a170" file="pwm.c" linenr="27" column="43" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c994566b0" astParent="0x556c9945ad10" astOperand1="0x556c9945aef0" astOperand2="0x556c9945a260" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a260" file="pwm.c" linenr="27" column="46" str="2" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99456920" astParent="0x556c9945a170" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a2c0" file="pwm.c" linenr="27" column="47" str=")" scope="0x556c99454a80" link="0x556c9945ae00"/>
+    <token id="0x556c99459f90" file="pwm.c" linenr="27" column="49" str="|" scope="0x556c99454a80" type="op" values="0x556c99455230" astParent="0x556c99458240" astOperand1="0x556c9945ad10" astOperand2="0x556c9945aa10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a830" file="pwm.c" linenr="27" column="51" str="(" scope="0x556c99454a80" link="0x556c9945a740"/>
+    <token id="0x556c9945a920" file="pwm.c" linenr="27" column="52" str="0b11" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99455830" astParent="0x556c9945aa10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945aa10" file="pwm.c" linenr="27" column="57" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c9946a680" astParent="0x556c99459f90" astOperand1="0x556c9945a920" astOperand2="0x556c9945a650" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a650" file="pwm.c" linenr="27" column="60" str="4" scope="0x556c99454a80" type="number" isInt="true" values="0x556c994738d0" astParent="0x556c9945aa10" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945a740" file="pwm.c" linenr="27" column="61" str=")" scope="0x556c99454a80" link="0x556c9945a830"/>
+    <token id="0x556c9945a7a0" file="pwm.c" linenr="27" column="62" str=")" scope="0x556c99454a80" link="0x556c994582a0"/>
+    <token id="0x556c9945a470" file="pwm.c" linenr="27" column="63" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c994566d0" file="pwm.c" linenr="28" column="5" str="LPC_PINCON" scope="0x556c99454a80" type="name" astParent="0x556c994567c0"/>
+    <token id="0x556c994567c0" file="pwm.c" linenr="28" column="15" str="." scope="0x556c99454a80" astParent="0x556c994564f0" astOperand1="0x556c994566d0" astOperand2="0x556c994568b0" originalName="->"/>
+    <token id="0x556c994568b0" file="pwm.c" linenr="28" column="17" str="PINSEL4" scope="0x556c99454a80" type="name" astParent="0x556c994567c0"/>
+    <token id="0x556c994564f0" file="pwm.c" linenr="28" column="25" str="|=" scope="0x556c99454a80" type="op" isAssignmentOp="true" astOperand1="0x556c994567c0" astOperand2="0x556c994562a0"/>
+    <token id="0x556c994565e0" file="pwm.c" linenr="28" column="29" str="(" scope="0x556c99454a80" link="0x556c99455850"/>
+    <token id="0x556c99456640" file="pwm.c" linenr="28" column="30" str="0b01" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99455450" astParent="0x556c99455590" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99455590" file="pwm.c" linenr="28" column="35" str="|" scope="0x556c99454a80" type="op" values="0x556c99459000" astParent="0x556c994562a0" astOperand1="0x556c99456640" astOperand2="0x556c994557d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99455680" file="pwm.c" linenr="28" column="37" str="(" scope="0x556c99454a80" link="0x556c994561b0"/>
+    <token id="0x556c99455770" file="pwm.c" linenr="28" column="38" str="0b01" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99468ff0" astParent="0x556c994557d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c994557d0" file="pwm.c" linenr="28" column="43" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99458580" astParent="0x556c99455590" astOperand1="0x556c99455770" astOperand2="0x556c994560c0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c994560c0" file="pwm.c" linenr="28" column="46" str="2" scope="0x556c99454a80" type="number" isInt="true" values="0x556c9946fc70" astParent="0x556c994557d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c994561b0" file="pwm.c" linenr="28" column="47" str=")" scope="0x556c99454a80" link="0x556c99455680"/>
+    <token id="0x556c994562a0" file="pwm.c" linenr="28" column="49" str="|" scope="0x556c99454a80" type="op" values="0x556c994709a0" astParent="0x556c994564f0" astOperand1="0x556c99455590" astOperand2="0x556c99457d80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99456390" file="pwm.c" linenr="28" column="51" str="(" scope="0x556c99454a80" link="0x556c99457f60"/>
+    <token id="0x556c99457c90" file="pwm.c" linenr="28" column="52" str="0b01" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99458c40" astParent="0x556c99457d80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457d80" file="pwm.c" linenr="28" column="57" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c9946ee00" astParent="0x556c994562a0" astOperand1="0x556c99457c90" astOperand2="0x556c99457e70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457e70" file="pwm.c" linenr="28" column="60" str="4" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99470140" astParent="0x556c99457d80" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457f60" file="pwm.c" linenr="28" column="61" str=")" scope="0x556c99454a80" link="0x556c99456390"/>
+    <token id="0x556c99455850" file="pwm.c" linenr="28" column="62" str=")" scope="0x556c99454a80" link="0x556c994565e0"/>
+    <token id="0x556c99455940" file="pwm.c" linenr="28" column="63" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c99455a30" file="pwm.c" linenr="32" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c99455b20"/>
+    <token id="0x556c99455b20" file="pwm.c" linenr="32" column="13" str="." scope="0x556c99454a80" astParent="0x556c99455d00" astOperand1="0x556c99455a30" astOperand2="0x556c99455c10" originalName="->"/>
+    <token id="0x556c99455c10" file="pwm.c" linenr="32" column="15" str="PCR" scope="0x556c99454a80" type="name" astParent="0x556c99455b20"/>
+    <token id="0x556c99455d00" file="pwm.c" linenr="32" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99566be0" astOperand1="0x556c99455b20" astOperand2="0x556c994572a0"/>
+    <token id="0x556c99455df0" file="pwm.c" linenr="32" column="21" str="(" scope="0x556c99454a80" link="0x556c99456bb0"/>
+    <token id="0x556c99455ee0" file="pwm.c" linenr="32" column="22" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99454d40" astParent="0x556c994569d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c994569d0" file="pwm.c" linenr="32" column="24" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99647fc0" astParent="0x556c99456ca0" astOperand1="0x556c99455ee0" astOperand2="0x556c99456ac0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99456ac0" file="pwm.c" linenr="32" column="27" str="9" scope="0x556c99454a80" type="number" isInt="true" values="0x556c9946df70" astParent="0x556c994569d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99456bb0" file="pwm.c" linenr="32" column="28" str=")" scope="0x556c99454a80" link="0x556c99455df0"/>
+    <token id="0x556c99456ca0" file="pwm.c" linenr="32" column="30" str="|" scope="0x556c99454a80" type="op" values="0x556c995667d0" astParent="0x556c994572a0" astOperand1="0x556c994569d0" astOperand2="0x556c99456f70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99456d90" file="pwm.c" linenr="32" column="32" str="(" scope="0x556c99454a80" link="0x556c99457150"/>
+    <token id="0x556c99456e80" file="pwm.c" linenr="32" column="33" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566560" astParent="0x556c99456f70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99456f70" file="pwm.c" linenr="32" column="35" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99566700" astParent="0x556c99456ca0" astOperand1="0x556c99456e80" astOperand2="0x556c99457060" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457060" file="pwm.c" linenr="32" column="38" str="10" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566630" astParent="0x556c99456f70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457150" file="pwm.c" linenr="32" column="40" str=")" scope="0x556c99454a80" link="0x556c99456d90"/>
+    <token id="0x556c994572a0" file="pwm.c" linenr="32" column="42" str="|" scope="0x556c99454a80" type="op" values="0x556c99566b10" astParent="0x556c99455d00" astOperand1="0x556c99456ca0" astOperand2="0x556c99457570" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457390" file="pwm.c" linenr="32" column="44" str="(" scope="0x556c99454a80" link="0x556c99457750"/>
+    <token id="0x556c99457480" file="pwm.c" linenr="32" column="45" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995668a0" astParent="0x556c99457570" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457570" file="pwm.c" linenr="32" column="47" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99566a40" astParent="0x556c994572a0" astOperand1="0x556c99457480" astOperand2="0x556c99457660" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457660" file="pwm.c" linenr="32" column="50" str="11" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566970" astParent="0x556c99457570" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99457750" file="pwm.c" linenr="32" column="52" str=")" scope="0x556c99454a80" link="0x556c99457390"/>
+    <token id="0x556c99457840" file="pwm.c" linenr="32" column="53" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c99457930" file="pwm.c" linenr="35" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c99457a20"/>
+    <token id="0x556c99457a20" file="pwm.c" linenr="35" column="13" str="." scope="0x556c99454a80" astParent="0x556c99457b70" astOperand1="0x556c99457930" astOperand2="0x556c99457b10" originalName="->"/>
+    <token id="0x556c99457b10" file="pwm.c" linenr="35" column="15" str="PR" scope="0x556c99454a80" type="name" astParent="0x556c99457a20"/>
+    <token id="0x556c99457b70" file="pwm.c" linenr="35" column="18" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99566d80" astOperand1="0x556c99457a20" astOperand2="0x556c99459190"/>
+    <token id="0x556c99459190" file="pwm.c" linenr="35" column="20" str="0" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566cb0" astParent="0x556c99457b70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99459280" file="pwm.c" linenr="35" column="21" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c99459370" file="pwm.c" linenr="36" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c99459460"/>
+    <token id="0x556c99459460" file="pwm.c" linenr="36" column="13" str="." scope="0x556c99454a80" astParent="0x556c99459640" astOperand1="0x556c99459370" astOperand2="0x556c99459550" originalName="->"/>
+    <token id="0x556c99459550" file="pwm.c" linenr="36" column="15" str="MR0" scope="0x556c99454a80" type="name" astParent="0x556c99459460"/>
+    <token id="0x556c99459640" file="pwm.c" linenr="36" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99566f20" astOperand1="0x556c99459460" astOperand2="0x556c99459730"/>
+    <token id="0x556c99459730" file="pwm.c" linenr="36" column="21" str="255" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566e50" astParent="0x556c99459640" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99459820" file="pwm.c" linenr="36" column="24" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c99459910" file="pwm.c" linenr="37" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c99459a00"/>
+    <token id="0x556c99459a00" file="pwm.c" linenr="37" column="13" str="." scope="0x556c99454a80" astParent="0x556c99459be0" astOperand1="0x556c99459910" astOperand2="0x556c99459af0" originalName="->"/>
+    <token id="0x556c99459af0" file="pwm.c" linenr="37" column="15" str="MCR" scope="0x556c99454a80" type="name" astParent="0x556c99459a00"/>
+    <token id="0x556c99459be0" file="pwm.c" linenr="37" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99567260" astOperand1="0x556c99459a00" astOperand2="0x556c9945b260"/>
+    <token id="0x556c99459cd0" file="pwm.c" linenr="37" column="22" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99566ff0" astParent="0x556c9945b260" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945b260" file="pwm.c" linenr="37" column="24" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99567190" astParent="0x556c99459be0" astOperand1="0x556c99459cd0" astOperand2="0x556c9945b350" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945b350" file="pwm.c" linenr="37" column="27" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995670c0" astParent="0x556c9945b260" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945b440" file="pwm.c" linenr="37" column="29" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945b620" file="pwm.c" linenr="44" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c9945b710"/>
+    <token id="0x556c9945b710" file="pwm.c" linenr="44" column="13" str="." scope="0x556c99454a80" astParent="0x556c9945b8f0" astOperand1="0x556c9945b620" astOperand2="0x556c9945b800" originalName="->"/>
+    <token id="0x556c9945b800" file="pwm.c" linenr="44" column="15" str="MR1" scope="0x556c99454a80" type="name" astParent="0x556c9945b710"/>
+    <token id="0x556c9945b8f0" file="pwm.c" linenr="44" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99567400" astOperand1="0x556c9945b710" astOperand2="0x556c9945b9e0"/>
+    <token id="0x556c9945b9e0" file="pwm.c" linenr="44" column="21" str="255" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567330" astParent="0x556c9945b8f0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945bad0" file="pwm.c" linenr="44" column="24" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945bbc0" file="pwm.c" linenr="45" column="2" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c9945bcb0"/>
+    <token id="0x556c9945bcb0" file="pwm.c" linenr="45" column="10" str="." scope="0x556c99454a80" astParent="0x556c9945be90" astOperand1="0x556c9945bbc0" astOperand2="0x556c9945bda0" originalName="->"/>
+    <token id="0x556c9945bda0" file="pwm.c" linenr="45" column="12" str="MR2" scope="0x556c99454a80" type="name" astParent="0x556c9945bcb0"/>
+    <token id="0x556c9945be90" file="pwm.c" linenr="45" column="16" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c995675a0" astOperand1="0x556c9945bcb0" astOperand2="0x556c9945bf80"/>
+    <token id="0x556c9945bf80" file="pwm.c" linenr="45" column="18" str="255" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995674d0" astParent="0x556c9945be90" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945c070" file="pwm.c" linenr="45" column="21" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945c160" file="pwm.c" linenr="46" column="2" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c9945c250"/>
+    <token id="0x556c9945c250" file="pwm.c" linenr="46" column="10" str="." scope="0x556c99454a80" astParent="0x556c9945c430" astOperand1="0x556c9945c160" astOperand2="0x556c9945c340" originalName="->"/>
+    <token id="0x556c9945c340" file="pwm.c" linenr="46" column="12" str="MR3" scope="0x556c99454a80" type="name" astParent="0x556c9945c250"/>
+    <token id="0x556c9945c430" file="pwm.c" linenr="46" column="16" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99567740" astOperand1="0x556c9945c250" astOperand2="0x556c9945c520"/>
+    <token id="0x556c9945c520" file="pwm.c" linenr="46" column="18" str="255" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567670" astParent="0x556c9945c430" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945c610" file="pwm.c" linenr="46" column="21" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945d030" file="pwm.c" linenr="49" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c9945d120"/>
+    <token id="0x556c9945d120" file="pwm.c" linenr="49" column="13" str="." scope="0x556c99454a80" astParent="0x556c9945d300" astOperand1="0x556c9945d030" astOperand2="0x556c9945d210" originalName="->"/>
+    <token id="0x556c9945d210" file="pwm.c" linenr="49" column="15" str="LER" scope="0x556c99454a80" type="name" astParent="0x556c9945d120"/>
+    <token id="0x556c9945d300" file="pwm.c" linenr="49" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99568440" astOperand1="0x556c9945d120" astOperand2="0x556c9945e3e0"/>
+    <token id="0x556c9945d3f0" file="pwm.c" linenr="49" column="21" str="(" scope="0x556c99454a80" link="0x556c9945d7b0"/>
+    <token id="0x556c9945d4e0" file="pwm.c" linenr="49" column="22" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567810" astParent="0x556c9945d5d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945d5d0" file="pwm.c" linenr="49" column="24" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c995679b0" astParent="0x556c9945d8a0" astOperand1="0x556c9945d4e0" astOperand2="0x556c9945d6c0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945d6c0" file="pwm.c" linenr="49" column="27" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995678e0" astParent="0x556c9945d5d0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945d7b0" file="pwm.c" linenr="49" column="28" str=")" scope="0x556c99454a80" link="0x556c9945d3f0"/>
+    <token id="0x556c9945d8a0" file="pwm.c" linenr="49" column="30" str="|" scope="0x556c99454a80" type="op" values="0x556c99567cf0" astParent="0x556c9945de40" astOperand1="0x556c9945d5d0" astOperand2="0x556c9945db70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945d990" file="pwm.c" linenr="49" column="32" str="(" scope="0x556c99454a80" link="0x556c9945dd50"/>
+    <token id="0x556c9945da80" file="pwm.c" linenr="49" column="33" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567a80" astParent="0x556c9945db70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945db70" file="pwm.c" linenr="49" column="35" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99567c20" astParent="0x556c9945d8a0" astOperand1="0x556c9945da80" astOperand2="0x556c9945dc60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945dc60" file="pwm.c" linenr="49" column="38" str="2" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567b50" astParent="0x556c9945db70" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945dd50" file="pwm.c" linenr="49" column="39" str=")" scope="0x556c99454a80" link="0x556c9945d990"/>
+    <token id="0x556c9945de40" file="pwm.c" linenr="49" column="41" str="|" scope="0x556c99454a80" type="op" values="0x556c99568030" astParent="0x556c9945e3e0" astOperand1="0x556c9945d8a0" astOperand2="0x556c9945e110" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945df30" file="pwm.c" linenr="49" column="43" str="(" scope="0x556c99454a80" link="0x556c9945e2f0"/>
+    <token id="0x556c9945e020" file="pwm.c" linenr="49" column="44" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567dc0" astParent="0x556c9945e110" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e110" file="pwm.c" linenr="49" column="46" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99567f60" astParent="0x556c9945de40" astOperand1="0x556c9945e020" astOperand2="0x556c9945e200" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e200" file="pwm.c" linenr="49" column="49" str="3" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99567e90" astParent="0x556c9945e110" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e2f0" file="pwm.c" linenr="49" column="50" str=")" scope="0x556c99454a80" link="0x556c9945df30"/>
+    <token id="0x556c9945e3e0" file="pwm.c" linenr="49" column="52" str="|" scope="0x556c99454a80" type="op" values="0x556c99568370" astParent="0x556c9945d300" astOperand1="0x556c9945de40" astOperand2="0x556c9945e6b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e4d0" file="pwm.c" linenr="49" column="54" str="(" scope="0x556c99454a80" link="0x556c9945e890"/>
+    <token id="0x556c9945e5c0" file="pwm.c" linenr="49" column="55" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99568100" astParent="0x556c9945e6b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e6b0" file="pwm.c" linenr="49" column="57" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c995682a0" astParent="0x556c9945e3e0" astOperand1="0x556c9945e5c0" astOperand2="0x556c9945e7a0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e7a0" file="pwm.c" linenr="49" column="60" str="0" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995681d0" astParent="0x556c9945e6b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945e890" file="pwm.c" linenr="49" column="61" str=")" scope="0x556c99454a80" link="0x556c9945e4d0"/>
+    <token id="0x556c9945e980" file="pwm.c" linenr="49" column="62" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945ea70" file="pwm.c" linenr="52" column="5" str="LPC_PWM1" scope="0x556c99454a80" type="name" astParent="0x556c9945eb60"/>
+    <token id="0x556c9945eb60" file="pwm.c" linenr="52" column="13" str="." scope="0x556c99454a80" astParent="0x556c9945ed40" astOperand1="0x556c9945ea70" astOperand2="0x556c9945ec50" originalName="->"/>
+    <token id="0x556c9945ec50" file="pwm.c" linenr="52" column="15" str="TCR" scope="0x556c99454a80" type="name" astParent="0x556c9945eb60"/>
+    <token id="0x556c9945ed40" file="pwm.c" linenr="52" column="19" str="=" scope="0x556c99454a80" type="op" isAssignmentOp="true" values="0x556c99568ac0" astOperand1="0x556c9945eb60" astOperand2="0x556c9945f2e0"/>
+    <token id="0x556c9945ee30" file="pwm.c" linenr="52" column="21" str="(" scope="0x556c99454a80" link="0x556c9945f1f0"/>
+    <token id="0x556c9945ef20" file="pwm.c" linenr="52" column="22" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99568510" astParent="0x556c9945f010" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f010" file="pwm.c" linenr="52" column="24" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c995686b0" astParent="0x556c9945f2e0" astOperand1="0x556c9945ef20" astOperand2="0x556c9945f100" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f100" file="pwm.c" linenr="52" column="27" str="0" scope="0x556c99454a80" type="number" isInt="true" values="0x556c995685e0" astParent="0x556c9945f010" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f1f0" file="pwm.c" linenr="52" column="28" str=")" scope="0x556c99454a80" link="0x556c9945ee30"/>
+    <token id="0x556c9945f2e0" file="pwm.c" linenr="52" column="30" str="|" scope="0x556c99454a80" type="op" values="0x556c995689f0" astParent="0x556c9945ed40" astOperand1="0x556c9945f010" astOperand2="0x556c9945f5b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f3d0" file="pwm.c" linenr="52" column="32" str="(" scope="0x556c99454a80" link="0x556c9945f790"/>
+    <token id="0x556c9945f4c0" file="pwm.c" linenr="52" column="33" str="1" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99568780" astParent="0x556c9945f5b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f5b0" file="pwm.c" linenr="52" column="35" str="&lt;&lt;" scope="0x556c99454a80" type="op" isArithmeticalOp="true" values="0x556c99568920" astParent="0x556c9945f2e0" astOperand1="0x556c9945f4c0" astOperand2="0x556c9945f6a0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f6a0" file="pwm.c" linenr="52" column="38" str="3" scope="0x556c99454a80" type="number" isInt="true" values="0x556c99568850" astParent="0x556c9945f5b0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c9945f790" file="pwm.c" linenr="52" column="39" str=")" scope="0x556c99454a80" link="0x556c9945f3d0"/>
+    <token id="0x556c9945f880" file="pwm.c" linenr="52" column="40" str=";" scope="0x556c99454a80"/>
+    <token id="0x556c9945f970" file="pwm.c" linenr="53" column="1" str="}" scope="0x556c99454a80" link="0x556c9946f710"/>
+    <token id="0x556c9945fa60" file="pwm.c" linenr="56" column="1" str="void" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9945fb50" file="pwm.c" linenr="56" column="6" str="PWM_SetColor" scope="0x556c99454590" type="name" function="0x556c9945c7a0"/>
+    <token id="0x556c9945fc40" file="pwm.c" linenr="56" column="18" str="(" scope="0x556c99454590" link="0x556c99560980" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c9945fd30" file="pwm.c" linenr="56" column="19" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c9945fe20" file="pwm.c" linenr="56" column="27" str="red" scope="0x556c99454590" type="name" varId="4" variable="0x556c99458060" values="0x556c99569a90" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c9945ff10" file="pwm.c" linenr="56" column="30" str="," scope="0x556c99454590"/>
+    <token id="0x556c99460000" file="pwm.c" linenr="56" column="32" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c994600f0" file="pwm.c" linenr="56" column="40" str="green" scope="0x556c99454590" type="name" varId="5" variable="0x556c99454c10" values="0x556c99569b60" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c995607c0" file="pwm.c" linenr="56" column="45" str="," scope="0x556c99454590"/>
+    <token id="0x556c99560820" file="pwm.c" linenr="56" column="47" str="uint8_t" scope="0x556c99454590" type="name"/>
+    <token id="0x556c99560920" file="pwm.c" linenr="56" column="55" str="blue" scope="0x556c99454590" type="name" varId="6" variable="0x556c99461fb0" values="0x556c99569c30" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99560980" file="pwm.c" linenr="56" column="59" str=")" scope="0x556c99454590" link="0x556c9945fc40"/>
+    <token id="0x556c99560a80" file="pwm.c" linenr="56" column="61" str="{" scope="0x556c99461900" link="0x556c99563f20"/>
+    <token id="0x556c99560ae0" file="pwm.c" linenr="57" column="5" str="if" scope="0x556c99461900" type="name" astParent="0x556c99560be0"/>
+    <token id="0x556c99560be0" file="pwm.c" linenr="57" column="7" str="(" scope="0x556c99461900" link="0x556c99561160" astOperand1="0x556c99560ae0" astOperand2="0x556c99560ea0"/>
+    <token id="0x556c99560c40" file="pwm.c" linenr="57" column="9" str="red" scope="0x556c99461900" type="name" varId="4" variable="0x556c99458060" values="0x556c99569d00" astParent="0x556c99560d40" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99560d40" file="pwm.c" linenr="57" column="13" str="&lt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c994542c0" astParent="0x556c99560ea0" astOperand1="0x556c99560c40" astOperand2="0x556c99560da0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99560da0" file="pwm.c" linenr="57" column="15" str="0" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568b90" astParent="0x556c99560d40" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99560ea0" file="pwm.c" linenr="57" column="17" str="||" scope="0x556c99461900" type="op" isLogicalOp="true" values="0x556c99454470" astParent="0x556c99560be0" astOperand1="0x556c99560d40" astOperand2="0x556c99561000" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99560f00" file="pwm.c" linenr="57" column="20" str="red" scope="0x556c99461900" type="name" varId="4" variable="0x556c99458060" values="0x556c99569dd0" astParent="0x556c99561000" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99561000" file="pwm.c" linenr="57" column="24" str="&gt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c9956b3c0" astParent="0x556c99560ea0" astOperand1="0x556c99560f00" astOperand2="0x556c99561060" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99561060" file="pwm.c" linenr="57" column="26" str="255" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568c60" astParent="0x556c99561000" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99561160" file="pwm.c" linenr="57" column="30" str=")" scope="0x556c99461900" link="0x556c99560be0"/>
+    <token id="0x556c99455f40" file="pwm.c" linenr="57" column="0" str="{" scope="0x556c99461a90" link="0x556c99646400"/>
+    <token id="0x556c995611c0" file="pwm.c" linenr="57" column="32" str="return" scope="0x556c99461a90" type="name" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c995612c0" file="pwm.c" linenr="57" column="38" str=";" scope="0x556c99461a90"/>
+    <token id="0x556c99646400" file="pwm.c" linenr="57" column="0" str="}" scope="0x556c99461a90" link="0x556c99455f40"/>
+    <token id="0x556c99561320" file="pwm.c" linenr="58" column="5" str="if" scope="0x556c99461900" type="name" astParent="0x556c99561420"/>
+    <token id="0x556c99561420" file="pwm.c" linenr="58" column="7" str="(" scope="0x556c99461900" link="0x556c995619a0" astOperand1="0x556c99561320" astOperand2="0x556c995616e0"/>
+    <token id="0x556c99561480" file="pwm.c" linenr="58" column="9" str="green" scope="0x556c99461900" type="name" varId="5" variable="0x556c99454c10" values="0x556c99569ea0" astParent="0x556c99561580" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99561580" file="pwm.c" linenr="58" column="15" str="&lt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c9956b910" astParent="0x556c995616e0" astOperand1="0x556c99561480" astOperand2="0x556c995615e0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c995615e0" file="pwm.c" linenr="58" column="17" str="0" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568d30" astParent="0x556c99561580" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c995616e0" file="pwm.c" linenr="58" column="19" str="||" scope="0x556c99461900" type="op" isLogicalOp="true" values="0x556c9956b3e0" astParent="0x556c99561420" astOperand1="0x556c99561580" astOperand2="0x556c99561840" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99561740" file="pwm.c" linenr="58" column="22" str="green" scope="0x556c99461900" type="name" varId="5" variable="0x556c99454c10" values="0x556c99569f70" astParent="0x556c99561840" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99561840" file="pwm.c" linenr="58" column="28" str="&gt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c9956ba10" astParent="0x556c995616e0" astOperand1="0x556c99561740" astOperand2="0x556c995618a0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c995618a0" file="pwm.c" linenr="58" column="30" str="255" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568e00" astParent="0x556c99561840" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c995619a0" file="pwm.c" linenr="58" column="34" str=")" scope="0x556c99461900" link="0x556c99561420"/>
+    <token id="0x556c9945acb0" file="pwm.c" linenr="58" column="0" str="{" scope="0x556c99461c20" link="0x556c9945a080"/>
+    <token id="0x556c99561a00" file="pwm.c" linenr="58" column="36" str="return" scope="0x556c99461c20" type="name" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c99561b00" file="pwm.c" linenr="58" column="42" str=";" scope="0x556c99461c20"/>
+    <token id="0x556c9945a080" file="pwm.c" linenr="58" column="0" str="}" scope="0x556c99461c20" link="0x556c9945acb0"/>
+    <token id="0x556c99561b60" file="pwm.c" linenr="59" column="5" str="if" scope="0x556c99461900" type="name" astParent="0x556c99561c60"/>
+    <token id="0x556c99561c60" file="pwm.c" linenr="59" column="7" str="(" scope="0x556c99461900" link="0x556c995621e0" astOperand1="0x556c99561b60" astOperand2="0x556c99561f20"/>
+    <token id="0x556c99561cc0" file="pwm.c" linenr="59" column="9" str="blue" scope="0x556c99461900" type="name" varId="6" variable="0x556c99461fb0" values="0x556c9956a040" astParent="0x556c99561dc0" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99561dc0" file="pwm.c" linenr="59" column="14" str="&lt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c9956b9f0" astParent="0x556c99561f20" astOperand1="0x556c99561cc0" astOperand2="0x556c99561e20" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99561e20" file="pwm.c" linenr="59" column="16" str="0" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568ed0" astParent="0x556c99561dc0" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99561f20" file="pwm.c" linenr="59" column="18" str="||" scope="0x556c99461900" type="op" isLogicalOp="true" values="0x556c9956a7b0" astParent="0x556c99561c60" astOperand1="0x556c99561dc0" astOperand2="0x556c99562080" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c99561f80" file="pwm.c" linenr="59" column="21" str="red" scope="0x556c99461900" type="name" varId="4" variable="0x556c99458060" values="0x556c9956a110" astParent="0x556c99562080" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99562080" file="pwm.c" linenr="59" column="25" str="&gt;" scope="0x556c99461900" type="op" isComparisonOp="true" values="0x556c9956a7d0" astParent="0x556c99561f20" astOperand1="0x556c99561f80" astOperand2="0x556c995620e0" valueType-type="bool" valueType-reference="None"/>
+    <token id="0x556c995620e0" file="pwm.c" linenr="59" column="27" str="255" scope="0x556c99461900" type="number" isInt="true" values="0x556c99568fa0" astParent="0x556c99562080" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c995621e0" file="pwm.c" linenr="59" column="31" str=")" scope="0x556c99461900" link="0x556c99561c60"/>
+    <token id="0x556c9945a560" file="pwm.c" linenr="59" column="0" str="{" scope="0x556c99461db0" link="0x556c99457240"/>
+    <token id="0x556c99562240" file="pwm.c" linenr="59" column="33" str="return" scope="0x556c99461db0" type="name" valueType-type="void" valueType-reference="None"/>
+    <token id="0x556c99562340" file="pwm.c" linenr="59" column="39" str=";" scope="0x556c99461db0"/>
+    <token id="0x556c99457240" file="pwm.c" linenr="59" column="0" str="}" scope="0x556c99461db0" link="0x556c9945a560"/>
+    <token id="0x556c995623a0" file="pwm.c" linenr="65" column="5" str="LPC_PWM1" scope="0x556c99461900" type="name" astParent="0x556c995624a0"/>
+    <token id="0x556c995624a0" file="pwm.c" linenr="65" column="13" str="." scope="0x556c99461900" astParent="0x556c99562600" astOperand1="0x556c995623a0" astOperand2="0x556c99562500" originalName="->"/>
+    <token id="0x556c99562500" file="pwm.c" linenr="65" column="15" str="MR1" scope="0x556c99461900" type="name" astParent="0x556c995624a0"/>
+    <token id="0x556c99562600" file="pwm.c" linenr="65" column="19" str="=" scope="0x556c99461900" type="op" isAssignmentOp="true" values="0x556c9956a2b0" astOperand1="0x556c995624a0" astOperand2="0x556c99562660"/>
+    <token id="0x556c99562660" file="pwm.c" linenr="65" column="21" str="red" scope="0x556c99461900" type="name" varId="4" variable="0x556c99458060" values="0x556c9956a1e0" astParent="0x556c99562600" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99562760" file="pwm.c" linenr="65" column="24" str=";" scope="0x556c99461900"/>
+    <token id="0x556c995627c0" file="pwm.c" linenr="66" column="5" str="LPC_PWM1" scope="0x556c99461900" type="name" astParent="0x556c995628c0"/>
+    <token id="0x556c995628c0" file="pwm.c" linenr="66" column="13" str="." scope="0x556c99461900" astParent="0x556c99562a20" astOperand1="0x556c995627c0" astOperand2="0x556c99562920" originalName="->"/>
+    <token id="0x556c99562920" file="pwm.c" linenr="66" column="15" str="MR2" scope="0x556c99461900" type="name" astParent="0x556c995628c0"/>
+    <token id="0x556c99562a20" file="pwm.c" linenr="66" column="19" str="=" scope="0x556c99461900" type="op" isAssignmentOp="true" values="0x556c9956a450" astOperand1="0x556c995628c0" astOperand2="0x556c99562a80"/>
+    <token id="0x556c99562a80" file="pwm.c" linenr="66" column="21" str="green" scope="0x556c99461900" type="name" varId="5" variable="0x556c99454c10" values="0x556c9956a380" astParent="0x556c99562a20" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99562b80" file="pwm.c" linenr="66" column="26" str=";" scope="0x556c99461900"/>
+    <token id="0x556c99562be0" file="pwm.c" linenr="67" column="5" str="LPC_PWM1" scope="0x556c99461900" type="name" astParent="0x556c99562ce0"/>
+    <token id="0x556c99562ce0" file="pwm.c" linenr="67" column="13" str="." scope="0x556c99461900" astParent="0x556c99562e40" astOperand1="0x556c99562be0" astOperand2="0x556c99562d40" originalName="->"/>
+    <token id="0x556c99562d40" file="pwm.c" linenr="67" column="15" str="MR3" scope="0x556c99461900" type="name" astParent="0x556c99562ce0"/>
+    <token id="0x556c99562e40" file="pwm.c" linenr="67" column="19" str="=" scope="0x556c99461900" type="op" isAssignmentOp="true" values="0x556c9956a5f0" astOperand1="0x556c99562ce0" astOperand2="0x556c99562ea0"/>
+    <token id="0x556c99562ea0" file="pwm.c" linenr="67" column="21" str="blue" scope="0x556c99461900" type="name" varId="6" variable="0x556c99461fb0" values="0x556c9956a520" astParent="0x556c99562e40" valueType-type="char" valueType-sign="unsigned" valueType-reference="None"/>
+    <token id="0x556c99562fa0" file="pwm.c" linenr="67" column="25" str=";" scope="0x556c99461900"/>
+    <token id="0x556c99563000" file="pwm.c" linenr="69" column="5" str="LPC_PWM1" scope="0x556c99461900" type="name" astParent="0x556c99563100"/>
+    <token id="0x556c99563100" file="pwm.c" linenr="69" column="13" str="." scope="0x556c99461900" astParent="0x556c99563260" astOperand1="0x556c99563000" astOperand2="0x556c99563160" originalName="->"/>
+    <token id="0x556c99563160" file="pwm.c" linenr="69" column="15" str="LER" scope="0x556c99461900" type="name" astParent="0x556c99563100"/>
+    <token id="0x556c99563260" file="pwm.c" linenr="69" column="19" str="=" scope="0x556c99461900" type="op" isAssignmentOp="true" values="0x556c99569960" astOperand1="0x556c99563100" astOperand2="0x556c99563aa0"/>
+    <token id="0x556c995632c0" file="pwm.c" linenr="69" column="21" str="(" scope="0x556c99461900" link="0x556c99563580"/>
+    <token id="0x556c995633c0" file="pwm.c" linenr="69" column="22" str="1" scope="0x556c99461900" type="number" isInt="true" values="0x556c99569070" astParent="0x556c99563420" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563420" file="pwm.c" linenr="69" column="24" str="&lt;&lt;" scope="0x556c99461900" type="op" isArithmeticalOp="true" values="0x556c99569210" astParent="0x556c99563680" astOperand1="0x556c995633c0" astOperand2="0x556c99563520" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563520" file="pwm.c" linenr="69" column="27" str="1" scope="0x556c99461900" type="number" isInt="true" values="0x556c99569140" astParent="0x556c99563420" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563580" file="pwm.c" linenr="69" column="28" str=")" scope="0x556c99461900" link="0x556c995632c0"/>
+    <token id="0x556c99563680" file="pwm.c" linenr="69" column="30" str="|" scope="0x556c99461900" type="op" values="0x556c99569550" astParent="0x556c99563aa0" astOperand1="0x556c99563420" astOperand2="0x556c99563840" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c995636e0" file="pwm.c" linenr="69" column="32" str="(" scope="0x556c99461900" link="0x556c995639a0"/>
+    <token id="0x556c995637e0" file="pwm.c" linenr="69" column="33" str="1" scope="0x556c99461900" type="number" isInt="true" values="0x556c995692e0" astParent="0x556c99563840" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563840" file="pwm.c" linenr="69" column="35" str="&lt;&lt;" scope="0x556c99461900" type="op" isArithmeticalOp="true" values="0x556c99569480" astParent="0x556c99563680" astOperand1="0x556c995637e0" astOperand2="0x556c99563940" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563940" file="pwm.c" linenr="69" column="38" str="2" scope="0x556c99461900" type="number" isInt="true" values="0x556c995693b0" astParent="0x556c99563840" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c995639a0" file="pwm.c" linenr="69" column="39" str=")" scope="0x556c99461900" link="0x556c995636e0"/>
+    <token id="0x556c99563aa0" file="pwm.c" linenr="69" column="41" str="|" scope="0x556c99461900" type="op" values="0x556c99569890" astParent="0x556c99563260" astOperand1="0x556c99563680" astOperand2="0x556c99563c60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563b00" file="pwm.c" linenr="69" column="43" str="(" scope="0x556c99461900" link="0x556c99563dc0"/>
+    <token id="0x556c99563c00" file="pwm.c" linenr="69" column="44" str="1" scope="0x556c99461900" type="number" isInt="true" values="0x556c99569620" astParent="0x556c99563c60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563c60" file="pwm.c" linenr="69" column="46" str="&lt;&lt;" scope="0x556c99461900" type="op" isArithmeticalOp="true" values="0x556c995697c0" astParent="0x556c99563aa0" astOperand1="0x556c99563c00" astOperand2="0x556c99563d60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563d60" file="pwm.c" linenr="69" column="49" str="3" scope="0x556c99461900" type="number" isInt="true" values="0x556c995696f0" astParent="0x556c99563c60" valueType-type="int" valueType-sign="signed" valueType-reference="None"/>
+    <token id="0x556c99563dc0" file="pwm.c" linenr="69" column="50" str=")" scope="0x556c99461900" link="0x556c99563b00"/>
+    <token id="0x556c99563ec0" file="pwm.c" linenr="69" column="51" str=";" scope="0x556c99461900"/>
+    <token id="0x556c99563f20" file="pwm.c" linenr="70" column="1" str="}" scope="0x556c99461900" link="0x556c99560a80"/>
+  </tokenlist>
+  <scopes>
+    <scope id="0x556c99454590" type="Global">
+      <functionList>
+        <function id="0x556c9945c850" token="0x556c9946ca10" tokenDef="0x556c99474210" name="PWM_Init" type="Function"/>
+        <function id="0x556c9945c7a0" token="0x556c9945fb50" tokenDef="0x556c9946a260" name="PWM_SetColor" type="Function">
+          <arg nr="1" variable="0x556c99458060"/>
+          <arg nr="2" variable="0x556c99454c10"/>
+          <arg nr="3" variable="0x556c99461fb0"/>
+        </function>
+      </functionList>
+    </scope>
+    <scope id="0x556c99454a80" type="Function" className="PWM_Init" bodyStart="0x556c9946f710" bodyEnd="0x556c9945f970" nestedIn="0x556c99454590" function="0x556c9945c850"/>
+    <scope id="0x556c99461900" type="Function" className="PWM_SetColor" bodyStart="0x556c99560a80" bodyEnd="0x556c99563f20" nestedIn="0x556c99454590" function="0x556c9945c7a0"/>
+    <scope id="0x556c99461a90" type="If" bodyStart="0x556c99455f40" bodyEnd="0x556c99646400" nestedIn="0x556c99461900"/>
+    <scope id="0x556c99461c20" type="If" bodyStart="0x556c9945acb0" bodyEnd="0x556c9945a080" nestedIn="0x556c99461900"/>
+    <scope id="0x556c99461db0" type="If" bodyStart="0x556c9945a560" bodyEnd="0x556c99457240" nestedIn="0x556c99461900"/>
+  </scopes>
+  <variables>
+    <var id="0x556c99454c10" nameToken="0x556c994600f0" typeStartToken="0x556c99460000" typeEndToken="0x556c99460000" access="Argument" scope="0x556c99461900" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x556c99458060" nameToken="0x556c9945fe20" typeStartToken="0x556c9945fd30" typeEndToken="0x556c9945fd30" access="Argument" scope="0x556c99461900" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+    <var id="0x556c99461fb0" nameToken="0x556c99560920" typeStartToken="0x556c99560820" typeEndToken="0x556c99560820" access="Argument" scope="0x556c99461900" constness="0" isArray="false" isClass="false" isConst="false" isExtern="false" isPointer="false" isReference="false" isStatic="false" isVolatile="false"/>
+  </variables>
+  <valueflow>
+    <values id="0x556c9946c890">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9946a4b0">
+      <value intvalue="64" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99474040">
+      <value intvalue="6" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99455340">
+      <value intvalue="-64" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99469f80">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99455030">
+      <value intvalue="15" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c994718f0">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c994566b0">
+      <value intvalue="12" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99456920">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99455230">
+      <value intvalue="63" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99455830">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9946a680">
+      <value intvalue="48" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c994738d0">
+      <value intvalue="4" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99455450">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99459000">
+      <value intvalue="5" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99468ff0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99458580">
+      <value intvalue="4" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9946fc70">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c994709a0">
+      <value intvalue="21" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99458c40">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9946ee00">
+      <value intvalue="16" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99470140">
+      <value intvalue="4" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566be0">
+      <value intvalue="3584" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99454d40">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99647fc0">
+      <value intvalue="512" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9946df70">
+      <value intvalue="9" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995667d0">
+      <value intvalue="1536" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566560">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566700">
+      <value intvalue="1024" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566630">
+      <value intvalue="10" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566b10">
+      <value intvalue="3584" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995668a0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566a40">
+      <value intvalue="2048" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566970">
+      <value intvalue="11" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566d80">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566cb0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566f20">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566e50">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567260">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99566ff0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567190">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995670c0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567400">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567330">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995675a0">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995674d0">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567740">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567670">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568440">
+      <value intvalue="15" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567810">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995679b0">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995678e0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567cf0">
+      <value intvalue="6" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567a80">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567c20">
+      <value intvalue="4" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567b50">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568030">
+      <value intvalue="14" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567dc0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567f60">
+      <value intvalue="8" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99567e90">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568370">
+      <value intvalue="15" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568100">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995682a0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995681d0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568ac0">
+      <value intvalue="9" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568510">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995686b0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995685e0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995689f0">
+      <value intvalue="9" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568780">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568920">
+      <value intvalue="8" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568850">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569a90">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c99569b60">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c99569c30">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c99569d00">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c994542c0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568b90">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99454470">
+      <value intvalue="0" bound="Lower" condition-line="57" possible="true" path="0"/>
+    </values>
+    <values id="0x556c99569dd0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="57" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956b3c0">
+      <value intvalue="0" bound="Lower" condition-line="57" possible="true" path="0"/>
+    </values>
+    <values id="0x556c99568c60">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569ea0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c9956b910">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568d30">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9956b3e0">
+      <value intvalue="0" bound="Lower" condition-line="58" possible="true" path="0"/>
+    </values>
+    <values id="0x556c99569f70">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="58" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956ba10">
+      <value intvalue="0" bound="Lower" condition-line="58" possible="true" path="0"/>
+    </values>
+    <values id="0x556c99568e00">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9956a040">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c9956b9f0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568ed0">
+      <value intvalue="0" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9956a7b0">
+      <value intvalue="0" bound="Point" condition-line="57" known="true" path="0"/>
+    </values>
+    <values id="0x556c9956a110">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="256" bound="Lower" condition-line="57" impossible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a7d0">
+      <value intvalue="0" bound="Point" condition-line="57" known="true" path="0"/>
+    </values>
+    <values id="0x556c99568fa0">
+      <value intvalue="255" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c9956a2b0">
+      <value intvalue="-1" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="256" bound="Lower" condition-line="59" impossible="true" path="0"/>
+      <value intvalue="255" bound="Upper" condition-line="59" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a1e0">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="256" bound="Lower" condition-line="59" impossible="true" path="0"/>
+      <value intvalue="255" bound="Upper" condition-line="59" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a450">
+      <value intvalue="-1" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="58" possible="true" path="0"/>
+      <value intvalue="256" bound="Lower" condition-line="58" impossible="true" path="0"/>
+      <value intvalue="255" bound="Upper" condition-line="58" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a380">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="58" possible="true" path="0"/>
+      <value intvalue="256" bound="Lower" condition-line="58" impossible="true" path="0"/>
+      <value intvalue="255" bound="Upper" condition-line="58" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a5f0">
+      <value intvalue="-1" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="59" possible="true" path="0"/>
+    </values>
+    <values id="0x556c9956a520">
+      <value intvalue="18446744073709551615" bound="Upper" impossible="true" path="0"/>
+      <value intvalue="0" bound="Lower" condition-line="59" possible="true" path="0"/>
+    </values>
+    <values id="0x556c99569960">
+      <value intvalue="14" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569070">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569210">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569140">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569550">
+      <value intvalue="6" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995692e0">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569480">
+      <value intvalue="4" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995693b0">
+      <value intvalue="2" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569890">
+      <value intvalue="14" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c99569620">
+      <value intvalue="1" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995697c0">
+      <value intvalue="8" bound="Point" known="true" path="0"/>
+    </values>
+    <values id="0x556c995696f0">
+      <value intvalue="3" bound="Point" known="true" path="0"/>
+    </values>
+  </valueflow>
+</dump>
+</dumps>

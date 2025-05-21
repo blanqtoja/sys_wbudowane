@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+\title{Dokumentacja projektu: Inteligentna donica}
+\author{
+  Julia Dobroszek 251504 \\
+  Aleksander Kaźmierczak 251544 (kierownik grupy)\\
+  Malwina Wodnicka index \\
+  
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Funkcjonalności}
+
+\subsection{Czujnik światła}
+Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikacyjnym I2C. Implementacja tego elementu obejmuje trzy kluczowe funkcjonalności:
+
+\begin{enumerate}
+    \item \textbf{Inicjalizacja i konfiguracja czujnika ISL29003} - Proces inicjalizacji obejmuje ustawienie adresu urządzenia na magistrali I2C, konfigurację rejestrów czujnika oraz określenie parametrów pomiaru, takich jak czułość i częstotliwość próbkowania.
+
+    \item \textbf{Odczyt danych z czujnika} - Funkcjonalność ta odpowiada za komunikację z czujnikiem poprzez protokół I2C, wysyłanie komend odczytu do odpowiednich rejestrów oraz interpretację otrzymanych danych. Implementacja uwzględnia obsługę błędów komunikacji oraz weryfikację poprawności odczytanych wartości.
+
+    \item \textbf{Przetwarzanie i analiza danych} - Po odczytaniu surowych danych z czujnika, system przetwarza je na użyteczne informacje o poziomie natężenia światła. Funkcjonalność ta obejmuje kalibrację, filtrowanie zakłóceń oraz konwersję wartości na jednostki zrozumiałe dla użytkownika (np. luxy).
+\end{enumerate}
+
+\subsection{Czujnik temperatury}
+System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujnika. Implementacja obejmuje:
+
+\begin{enumerate}
+    \item \textbf{Inicjalizacja czujnika temperatury} - Proces inicjalizacji obejmuje konfigurację czujnika z wykorzystaniem funkcji czasowych (getTicks) oraz ustawienie parametrów pomiaru.
+    
+    \item \textbf{Cykliczny odczyt temperatury} - Funkcjonalność ta odpowiada za regularne pobieranie danych z czujnika oraz konwersję odczytanych wartości na format zrozumiały dla użytkownika.
+    
+    \item \textbf{Wykorzystanie danych temperaturowych} - Informacja o temperaturze jest wyświetlana na ekranie OLED i może wpływać na decyzje systemu dotyczące nawadniania lub doświetlania rośliny.
+\end{enumerate}
+
+\subsection{Wyświetlacz OLED}
+Donica wykorzystuje wyświetlacz OLED komunikujący się przez interfejs SPI. Implementacja obejmuje inicjalizację wyświetlacza, konfigurację parametrów transmisji SPI oraz bibliotekę funkcji do wyświetlania informacji o stanie rośliny, poziomie światła i innych parametrach środowiskowych. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
+
+\subsection{Sterowanie GPIO}
+System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
+
+\subsection{Modulacja szerokości impulsu (PWM)}
+Implementacja PWM umożliwia precyzyjne sterowanie elementami wykonawczymi wymagającymi sygnału analogowego, takimi jak pompy wody czy wentylatory. Funkcjonalność obejmuje konfigurację częstotliwości sygnału PWM, ustawianie wypełnienia impulsu (duty cycle) oraz dynamiczną zmianę parametrów w zależności od warunków środowiskowych. PWM jest wykorzystywane głównie do regulacji intensywności doświetlania rośliny za pomocą lamp LED.
+
+\subsection{Timer}
+System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
+
+\subsection{Przetwornik analogowo-cyfrowy (ADC)}
+System wykorzystuje przetwornik analogowo-cyfrowy do odczytu analogowego wejścia czujnika określanego jako "czujnik wilgotności". Należy zaznaczyć, że termin "wilgotność" jest w tym przypadku skrótem myślowym, ponieważ w rzeczywistości nie mierzymy bezpośrednio wilgotności gleby, a jej przewodność elektryczną, która jest skorelowana z zawartością wody w glebie. Implementacja obejmuje:
+
+\begin{enumerate}
+    \item \textbf{Inicjalizacja i konfiguracja przetwornika ADC} - Proces inicjalizacji obejmuje konfigurację rejestrów przetwornika, ustawienie częstotliwości próbkowania, wybór kanału pomiarowego oraz określenie napięcia referencyjnego.
+    
+    \item \textbf{Odczyt wartości analogowej} - Funkcjonalność ta odpowiada za uruchomienie konwersji analogowo-cyfrowej, odczyt wyniku konwersji oraz obsługę ewentualnych błędów pomiaru.
+    
+    \item \textbf{Interpretacja danych pomiarowych} - System przetwarza odczytane wartości na względny poziom wilgotności gleby. Proces ten obejmuje kalibrację czujnika (określenie wartości dla suchej i mokrej gleby), filtrowanie zakłóceń oraz konwersję surowych danych na format zrozumiały dla użytkownika.
+\end{enumerate}
+
+
+\end{document}

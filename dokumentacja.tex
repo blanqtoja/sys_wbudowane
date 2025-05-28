@@ -15,7 +15,97 @@
 
 \maketitle
 
+
+\section{Instrukcja użytkowania}
+
+\subsection{Uruchomienie urządzenia}
+Aby uruchomić inteligentną donicę, należy wykonać następujące kroki:
+\begin{enumerate}
+    \item Podłączyć urządzenie do źródła zasilania za pomocą dołączonego przewodu.
+    \item Umieścić czujnik wilgotności (dwa metalowe druty) w glebie w doniczce. Czujnik powinien być umieszczony na głębokości około 3-5 cm, aby zapewnić prawidłowy pomiar wilgotności gleby.
+    \item Po podłączeniu zasilania, system automatycznie rozpocznie pracę i wyświetli informacje na ekranie OLED.
+\end{enumerate}
+
+\subsection{Interpretacja wskaźników}
+Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprzez:
+\begin{enumerate} 
+     \item \textbf{Wyświetlacz OLED} - Na ekranie prezentowane są aktualne statystyki dotyczące: 
+     \begin{itemize} 
+         \item Poziomu wilgotności gleby:
+             \begin{itemize}
+                 \item \textbf{sucho} - oznacza niski poziom wilgotności gleby (odczyt powyżej 2801), wskazujący na konieczność podlania rośliny
+                 \item \textbf{w normie} - oznacza optymalny poziom wilgotności gleby (odczyt między 1601 a 2800), idealny dla wzrostu większości roślin
+                 \item \textbf{mokro} - oznacza wysoki poziom wilgotności gleby (odczyt poniżej 1600), wskazujący na nadmiar wody, który może być szkodliwy dla rośliny
+             \end{itemize}
+         \item Temperatury otoczenia (w stopniach Celsjusza) 
+         \item Natężenia światła - system interpretuje odczyt z czujnika i wyświetla jeden z trzech komunikatów:
+         \begin{itemize}
+             \item "jasno" - gdy wartość odczytu przekracza 2000
+             \item "OK" - gdy wartość odczytu mieści się w przedziale od 350 do 2000
+             \item "ciemno" - gdy wartość odczytu jest mniejsza niż 350
+         \end{itemize}
+         \item Dodatkowych informacji o stanie systemu 
+     \end{itemize} 
+     
+     \item \textbf{Dioda RGB} - W zależności od poziomu wilgotności gleby, dioda RGB świeci się różnymi kolorami: 
+     \begin{itemize} 
+         \item Kolor żółto-zielony (\#c8ff1e) - oznacza stan \textbf{sucho} (odczyt powyżej 2801), sygnalizując potrzebę podlania rośliny
+         \item Kolor zielony (\#1eff00) - oznacza stan \textbf{w normie} (odczyt między 1601 a 2800), sygnalizując optymalny poziom wilgotności
+         \item Kolor błękitny (\#1effff) - oznacza stan \textbf{mokro} (odczyt poniżej 1600), sygnalizując nadmiar wody w glebie
+     \end{itemize} 
+ \end{enumerate}
+
+\subsection{Kalibracja i konserwacja}
+\begin{enumerate}
+    \item \textbf{Kalibracja} - System został skalibrowany fabrycznie na podstawie eksperymentów empirycznych. Urządzenie nie posiada możliwości zewnętrznej kalibracji przez użytkownika.
+    
+    \item \textbf{Konserwacja} - Aby zapewnić prawidłowe działanie urządzenia:
+    \begin{itemize}
+        \item Regularnie czyścić czujnik wilgotności z osadów mineralnych, które mogą gromadzić się na jego powierzchni
+        \item Utrzymywać wyświetlacz OLED w czystości, unikając bezpośredniego kontaktu z wodą
+        \item Sprawdzać okresowo stan połączeń elektrycznych
+        \item \textbf{Kategorycznie unikać kontaktu elektroniki z wodą} - Jedynym elementem, który może mieć bezpośredni kontakt z wilgocią, jest czujnik wilgotności (metalowe druty). Pozostałe elementy elektroniczne należy chronić przed zalaniem, zachlapaniem oraz nadmierną wilgotnością powietrza, gdyż może to prowadzić do trwałego uszkodzenia urządzenia i utraty gwarancji
+    \end{itemize}
+\end{enumerate}
+
 \section{Funkcjonalności}
+
+\subsection{Magistrala SPI}
+System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz innymi peryferiami. Implementacja obejmuje konfigurację parametrów transmisji, takich jak częstotliwość zegara, tryb pracy oraz obsługę przerwań.
+
+\subsection{Magistrala I2C}
+\begin{enumerate}
+    \item Interfejs I2C jest używany do komunikacji z czujnikiem światła oraz innymi komponentami wymagającymi komunikacji szeregowej. Implementacja obejmuje inicjalizację magistrali I2C, konfigurację adresów urządzeń oraz obsługę błędów komunikacji.\newline
+    \item Płytka LPC1769 posiada X magistrali I2C, w projekcie została użyta magistral XX. 
+    
+    
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Czujnik światła}
 Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikacyjnym I2C. Implementacja tego elementu obejmuje trzy kluczowe funkcjonalności:
@@ -65,66 +155,9 @@ System wykorzystuje przetwornik analogowo-cyfrowy do odczytu analogowego wejści
     \item \textbf{Interpretacja danych pomiarowych} - System przetwarza odczytane wartości na względny poziom wilgotności gleby. Proces ten obejmuje kalibrację czujnika (określenie wartości dla suchej i mokrej gleby), filtrowanie zakłóceń oraz konwersję surowych danych na format zrozumiały dla użytkownika.
 \end{enumerate}
 
-\section{Instrukcja użytkowania}
-
-\subsection{Uruchomienie urządzenia}
-Aby uruchomić inteligentną donicę, należy wykonać następujące kroki:
-\begin{enumerate}
-    \item Podłączyć urządzenie do źródła zasilania za pomocą dołączonego przewodu.
-    \item Umieścić czujnik wilgotności (dwa metalowe druty) w glebie w doniczce. Czujnik powinien być umieszczony na głębokości około 3-5 cm, aby zapewnić prawidłowy pomiar wilgotności gleby.
-    \item Po podłączeniu zasilania, system automatycznie rozpocznie pracę i wyświetli informacje na ekranie OLED.
-\end{enumerate}
-
-\subsection{Interpretacja wskaźników}
-Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprzez:
-\begin{enumerate} 
-     \item \textbf{Wyświetlacz OLED} - Na ekranie prezentowane są aktualne statystyki dotyczące: 
-     \begin{itemize} 
-         \item Poziomu wilgotności gleby:
-             \begin{itemize}
-                 \item \textbf{sucho} - oznacza niski poziom wilgotności gleby (odczyt powyżej 2801), wskazujący na konieczność podlania rośliny
-                 \item \textbf{w normie} - oznacza optymalny poziom wilgotności gleby (odczyt między 1601 a 2800), idealny dla wzrostu większości roślin
-                 \item \textbf{mokro} - oznacza wysoki poziom wilgotności gleby (odczyt poniżej 1600), wskazujący na nadmiar wody, który może być szkodliwy dla rośliny
-             \end{itemize}
-         \item Temperatury otoczenia (w stopniach Celsjusza) 
-         \item Natężenia światła - system wyświetla jeden z trzech komunikatów:
-         \begin{itemize}
-             \item "jasno" - gdy wartość natężenia światła przekracza 2000 luksów
-             \item "OK" - gdy wartość natężenia światła mieści się w przedziale od 350 do 2000 luksów
-             \item "ciemno" - gdy wartość natężenia światła jest mniejsza niż 350 luksów
-         \end{itemize}
-         \item Dodatkowych informacji o stanie systemu 
-     \end{itemize} 
-     
-     \item \textbf{Dioda RGB} - W zależności od poziomu wilgotności gleby, dioda RGB świeci się różnymi kolorami: 
-     \begin{itemize} 
-         \item Kolor żółto-zielony (\#c8ff1e) - oznacza stan \textbf{sucho} (odczyt powyżej 2801), sygnalizując potrzebę podlania rośliny
-         \item Kolor zielony (\#1eff00) - oznacza stan \textbf{w normie} (odczyt między 1601 a 2800), sygnalizując optymalny poziom wilgotności
-         \item Kolor błękitny (\#1effff) - oznacza stan \textbf{mokro} (odczyt poniżej 1600), sygnalizując nadmiar wody w glebie
-     \end{itemize} 
- \end{enumerate}
-        \item Dodatkowych informacji o stanie systemu
-    \end{itemize}
-    
-    \item \textbf{Dioda RGB} - W zależności od poziomu wilgotności gleby, dioda RGB świeci się różnymi kolorami:
-    \begin{itemize}
-        \item Kolor XZY - oznacza [stan wilgotności 1]
-        \item Kolor XZY - oznacza [stan wilgotności 2]
-        \item Kolor XZY - oznacza [stan wilgotności 3]
-    \end{itemize}
-\end{enumerate}
-
-\subsection{Kalibracja i konserwacja}
-\begin{enumerate}
-    \item \textbf{Kalibracja} - System został skalibrowany fabrycznie na podstawie eksperymentów empirycznych. Urządzenie nie posiada możliwości zewnętrznej kalibracji przez użytkownika.
-    
-    \item \textbf{Konserwacja} - Aby zapewnić prawidłowe działanie urządzenia:
-    \begin{itemize}
-        \item Regularnie czyścić czujnik wilgotności z osadów mineralnych, które mogą gromadzić się na jego powierzchni
-        \item Utrzymywać wyświetlacz OLED w czystości, unikając bezpośredniego kontaktu z wodą
-        \item Sprawdzać okresowo stan połączeń elektrycznych
-        \item \textbf{Kategorycznie unikać kontaktu elektroniki z wodą} - Jedynym elementem, który może mieć bezpośredni kontakt z wilgocią, jest czujnik wilgotności (metalowe druty). Pozostałe elementy elektroniczne należy chronić przed zalaniem, zachlapaniem oraz nadmierną wilgotnością powietrza, gdyż może to prowadzić do trwałego uszkodzenia urządzenia i utraty gwarancji
-    \end{itemize}
-\end{enumerate}
 
 \end{document}
+
+
+
+

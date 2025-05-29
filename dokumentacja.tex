@@ -86,7 +86,8 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
 \subsubsection{Ustawienia rejestrów}
 Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokumentacji płytki. Poniżej znajdują się opisane rejestry:
 \begin{itemize}
-    \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C (Adres: 0x00). Używany do ustawiania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C.
+    %sprawdzic czy dobry adres
+    \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C. Używany do ustawiania bitów w rejestrze kontrolnym I2CON. Pozwala ustawiać pojedyncze bity bez konieczności odczytywania i modyfikowania całego rejestru. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C. Poniżej zostały opiasne flagi:
     \begin{enumerate}
         \item \textbf{-} - Bity 0 i 1 są zarezerowane 
         \item \textbf{AA} - Bit 2 \\
@@ -103,27 +104,40 @@ Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokume
             W trybie master, ustawienie STO = 1 powoduje wysłanie warunku STOP na magistrali I2C, czyli SDA przechodzi z LOW na HIGH, gdy SCL jest HIGH. To kończy bieżącą transmisję i linia jest zwalniana.\\
             Gdy magistrala wykryje warunek STOP, flaga STO zostaje automatycznie wyczyszczona przez sprzęt.
 
-        \item \textbf{STA} - służy do rozpoczęcia transmisji przez wysłanie warunku START\\
-                Jeżeli interfejs I2C jest w trybie slave, to:\\
-                \begin{enumerate}
-                    \item Interfejs przechodzi do trybu master
-                    \item Jeśli magistrala jest wolna – natychmiast wysyła warunek START (SDA z HIGH do LOW przy SCL = HIGH).
-                    \item Jeśli magistrala jest zajęta – czeka na warunek STOP, który „uwolni” magistralę, a potem wysyła START po pół okresie zegara wewnętrznego.
-                \end{enumerate}
-                Jeśli interfejs już jest w trybie master, to:\\
-                \begin{enumerate}
-                    \item Ustawienie STA = 1 powoduje wysłanie repeated START – kolejnego warunku START bez wcześniejszego STOP.
-                \end{enumerate}
-                            
+        \item \textbf{STA} - Bit 5\\
+            Służy do rozpoczęcia transmisji przez wysłanie warunku START
+                \begin{itemize}
+                    \item Jeżeli interfejs I2C jest w trybie slave, to:
+                    \begin{itemize}
+                        \item Interfejs przechodzi do trybu master
+                        \item Jeśli magistrala jest wolna – natychmiast wysyła warunek START (SDA z HIGH do LOW przy SCL = HIGH).
+                        \item Jeśli magistrala jest zajęta – czeka na warunek STOP, który „uwolni” magistralę, a potem wysyła START po pół okresie zegara wewnętrznego.
+                    \end{itemize}
 
-        \item \textbf{I2EN} - Gdy:\\
-            I2EN = 1 interfejs I2C jest włączony.\\
-            I2EN = 0 interfejs I2C jest wyłączony.
-        
-        
+                    \item Jeśli interfejs już jest w trybie master, to:
+                    \begin{itemize}
+                        \item Ustawienie STA = 1 powoduje wysłanie repeated START – kolejnego warunku START bez wcześniejszego STOP.
+                    \end{itemize}   
+                    \item W przypadku, gdy STA oraz STO ustawimy jednocześnie na 1, to:
+                    \begin{itemize}
+                        \item w tybie master zostanie syłany sygnal STOP, następnie wysyłany jest START (restart transmisji)
+                        \item w trybie slave nastąpi zatrzymanie transmisji bez wysłąnia STOP na magistralę, a następnie, jeśli magistrala jest wolna, zostanie wysłany START
+                    \end{itemize}
+                \end{itemize}
+        \item \textbf{I2EN} - Bit 6\\
+        Flaga odpowiedzialna za włączenie lub wyłączenie interfejsu I2C. Gdy:\\\
+            I2EN = 0, interfejs I2C jest wyłączony\\
+            I2EN = 1, interfejs I2C jest włączony
+            
         
     \end{enumerate}
-    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych I2C (Adres: 0x18). Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
+    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych I2C. Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
+    \begin{enumerate}
+        \item AAC to bit w rejestrze I2CONCLR, który służy do wyzerowania bitu AA (Assert Acknowledge) w rejestrze I2CON. Bit AA odpowiada za to, czy urządzenie I2C nada ACK (potwierdzenie) podczas komunikacji.
+    \end{enumerate}
+    
+    
+    
     \item \textbf{I2STAT} - Rejestr statusu I2C (Adres: 0x08). Dostarcza szczegółowe kody statusu odzwierciedlające aktualny stan interfejsu I2C.
     \item \textbf{I2DAT} - Rejestr danych I2C (Adres: 0x0C). Podczas trybu nadawania lub odbioru, dane są zapisywane lub odczytywane z tego rejestru.
     \item \textbf{I2ADR0, I2ADR1, I2ADR2, I2ADR3} - Rejestry adresowe I2C (Adresy: 0x20, 0x24, 0x28, 0x2C). Zawierają 7-bitowy adres slave do działania interfejsu I2C w trybie slave.
@@ -134,10 +148,14 @@ Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokume
     \item \textbf{I2MASK0, I2MASK1, I2MASK2, I2MASK3} - Rejestry maski I2C (Adresy: 0x30, 0x34, 0x38, 0x3C). Służą do określenia dopasowania adresu w trybie slave.
 \end{itemize}
 
-    
+\subsubsection{Inicjalizacja magistrali I2C2}
+Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących kroków:
+\begin{enumerate}
+    %opis ustawien konkretnych rejestrow w projekcie, uzasadnienie czemu wybralismy takie ustawienia
+    \item 
 
 
-
+\end{enumerate}
 
 
 

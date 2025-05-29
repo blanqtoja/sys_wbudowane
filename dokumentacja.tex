@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[polish]{babel}
+\usepackage{hyperref}
 
 \title{Dokumentacja projektu: Inteligentna donica}
 \author{
@@ -24,7 +25,9 @@ Aby uruchomić inteligentną donicę, należy wykonać następujące kroki:
     \item Podłączyć urządzenie do źródła zasilania za pomocą dołączonego przewodu.
     \item Umieścić czujnik wilgotności (dwa metalowe druty) w glebie w doniczce. Czujnik powinien być umieszczony na głębokości około 3-5 cm, aby zapewnić prawidłowy pomiar wilgotności gleby.
     \item Po podłączeniu zasilania, system automatycznie rozpocznie pracę i wyświetli informacje na ekranie OLED.
+    
 \end{enumerate}
+
 
 \subsection{Interpretacja wskaźników}
 Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprzez:
@@ -75,24 +78,63 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
 
 \subsection{Magistrala I2C}
 \begin{enumerate}
-    \item Interfejs I2C jest używany do komunikacji z czujnikiem światła oraz innymi komponentami wymagającymi komunikacji szeregowej. Implementacja obejmuje inicjalizację magistrali I2C, konfigurację adresów urządzeń oraz obsługę błędów komunikacji.\newline
-    \item Płytka LPC1769 posiada X magistrali I2C, w projekcie została użyta magistral XX. 
-    
-    
-    
+    \item Interfejs I2C jest używany do komunikacji z czujnikiem światła oraz innymi komponentami wymagającymi komunikacji szeregowej. Implementacja obejmuje inicjalizację magistrali I2C, konfigurację adresów urządzeń oraz obsługę błędów komunikacji.
+    \item Płytka LPC1769 posiada trzy magistrale I2C, w projekcie została użyta magistrala I2C2. 
+    \item Czujnik światła jest podłączony do magistrali I2C2, a jego adres jest ustawiony na 0x44. Szczegóły konfiguracji znajdują się w sekcji \ref{sec:czujnik_swiatla}.
 \end{enumerate}
 
+\subsubsection{Ustawienia rejestrów}
+Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokumentacji płytki. Poniżej znajdują się opisane rejestry:
+\begin{itemize}
+    \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C (Adres: 0x00). Używany do ustawiania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C.
+    \begin{enumerate}
+        \item \textbf{-} - Bity 0 i 1 są zarezerowane 
+        \item \textbf{AA} - Bit 2 \\
+            Gdy:\\
+            AA = 1 urządzenie wyśle ACK (czyli ustawi linię SDA w stan niski w czasie impulsu zegarowego na linii SCL). \\
+            AA = 0 urządzenie wyśle NACK (czyli pozostawi linię SDA w stanie wysokim).
+        \item \textbf{SI} - Bit 3 \\
+            Flaga ta informuje o zmianie stanu magistrali np. zakończenie nadawania danych.
+            Gdy:\\
+            SI = 1, niski poziom sygnału SCL jest wydłużony. Transmisja zostaje wstrzymana.\\
+            SI resetuje się poprzez zapisanie 1 do bitu SIC (SI Clear) w rejestrze I2CONCLR
+        \item \textbf{STO} - Bit 4\\
+            Flaga zakończenia transmisji danych. Jej działanie zależy od trybu, w jakim pracuje układ: master czy slave.\\
+            W trybie master, ustawienie STO = 1 powoduje wysłanie warunku STOP na magistrali I2C, czyli SDA przechodzi z LOW na HIGH, gdy SCL jest HIGH. To kończy bieżącą transmisję i linia jest zwalniana.\\
+            Gdy magistrala wykryje warunek STOP, flaga STO zostaje automatycznie wyczyszczona przez sprzęt.
 
+        \item \textbf{STA} - służy do rozpoczęcia transmisji przez wysłanie warunku START\\
+                Jeżeli interfejs I2C jest w trybie slave, to:\\
+                \begin{enumerate}
+                    \item Interfejs przechodzi do trybu master
+                    \item Jeśli magistrala jest wolna – natychmiast wysyła warunek START (SDA z HIGH do LOW przy SCL = HIGH).
+                    \item Jeśli magistrala jest zajęta – czeka na warunek STOP, który „uwolni” magistralę, a potem wysyła START po pół okresie zegara wewnętrznego.
+                \end{enumerate}
+                Jeśli interfejs już jest w trybie master, to:\\
+                \begin{enumerate}
+                    \item Ustawienie STA = 1 powoduje wysłanie repeated START – kolejnego warunku START bez wcześniejszego STOP.
+                \end{enumerate}
+                            
 
+        \item \textbf{I2EN} - Gdy:\\
+            I2EN = 1 interfejs I2C jest włączony.\\
+            I2EN = 0 interfejs I2C jest wyłączony.
+        
+        
+        
+    \end{enumerate}
+    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych I2C (Adres: 0x18). Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
+    \item \textbf{I2STAT} - Rejestr statusu I2C (Adres: 0x08). Dostarcza szczegółowe kody statusu odzwierciedlające aktualny stan interfejsu I2C.
+    \item \textbf{I2DAT} - Rejestr danych I2C (Adres: 0x0C). Podczas trybu nadawania lub odbioru, dane są zapisywane lub odczytywane z tego rejestru.
+    \item \textbf{I2ADR0, I2ADR1, I2ADR2, I2ADR3} - Rejestry adresowe I2C (Adresy: 0x20, 0x24, 0x28, 0x2C). Zawierają 7-bitowy adres slave do działania interfejsu I2C w trybie slave.
+    \item \textbf{I2SCLH} - Rejestr cyklu zegara SCL I2C (wysoka połowa) (Adres: 0x10). Zawiera wysoką połowę cyklu zegara I2C.
+    \item \textbf{I2SCLL} - Rejestr cyklu zegara SCL I2C (niska połowa) (Adres: 0x14). Zawiera niską połowę cyklu zegara I2C.
+    \item \textbf{MMCTRL} - Rejestr kontrolny trybu monitorowania I2C (Adres: 0x1C). Używany do kontrolowania trybu monitorowania I2C.
+    \item \textbf{I2DATA\_BUFFER} - Rejestr bufora danych I2C (Adres: 0x2C). Zawiera zawartość 8 najstarszych bitów rejestru przesuwnego I2DAT.
+    \item \textbf{I2MASK0, I2MASK1, I2MASK2, I2MASK3} - Rejestry maski I2C (Adresy: 0x30, 0x34, 0x38, 0x3C). Służą do określenia dopasowania adresu w trybie slave.
+\end{itemize}
 
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -108,6 +150,7 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
 
 
 \subsection{Czujnik światła}
+\label{sec:czujnik_swiatla}
 Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikacyjnym I2C. Implementacja tego elementu obejmuje trzy kluczowe funkcjonalności:
 
 \begin{enumerate}

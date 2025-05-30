@@ -89,7 +89,7 @@ Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokume
     %sprawdzic czy dobry adres
     \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C. Używany do ustawiania bitów w rejestrze kontrolnym I2CON. Pozwala ustawiać pojedyncze bity bez konieczności odczytywania i modyfikowania całego rejestru. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C. Poniżej zostały opiasne flagi:
     \begin{enumerate}
-        \item \textbf{-} - Bity 0 i 1 są zarezerowane 
+        \item Bity 0, 1 oraz 7:31 są zarezerowane 
         \item \textbf{AA} - Bit 2 \\
             Gdy:\\
             AA = 1 urządzenie wyśle ACK (czyli ustawi linię SDA w stan niski w czasie impulsu zegarowego na linii SCL). \\
@@ -131,21 +131,41 @@ Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokume
             
         
     \end{enumerate}
-    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych I2C. Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
+    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych. Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
     \begin{enumerate}
-        \item AAC to bit w rejestrze I2CONCLR, który służy do wyzerowania bitu AA (Assert Acknowledge) w rejestrze I2CON. Bit AA odpowiada za to, czy urządzenie I2C nada ACK (potwierdzenie) podczas komunikacji.
+        \item Bity 0, 1, 4 oraz 7:31 są zarezerowane
+        \item \textbf{AAC} - Bit 2 - służy do wyzerowania bitu AA (Assert Acknowledge) w rejestrze I2CON. Bit AA odpowiada za to, czy urządzenie I2C nada ACK (potwierdzenie) podczas komunikacji.
+        \item \textbf{SIC} - Bit 3 - służy do czyszczenia flagi przerwania I2C (Interrupt Clear). 
+        \item \textbf{STAC} - Bit 5 - służy do czyszczenia flagi START (STA)
+        \item \textbf{I2CENC} - Bit 6 - wyłącza interfejs I2C
+    \end{enumerate}
+    
+    \item \textbf{I2STAT} - Rejestr statusu I2C. Dostarcza szczegółowe kody statusu pokazujące aktualny stan interfejsu. Z tego rejestru można tylko odczytywać dane.
+    \begin{enumerate}
+        \item Bity 0:2 oraz 8:31 są zarezerowane
+        \item Bity 7:3 - zawierają kod aktualnego stanu interfejsu I2C.
+            Kod statusu możemy wyodrębnić dzięki masce 0xF8:\\
+            \begin{verbatim}
+                uint8_t status = I2STAT & 0xF8;
+            \end{verbatim}
+
+            %dodac referencje do dokuemntacji lcp
+            W rejestrze może wystąpić 26 kodów statusu. Kody, które mogą wystąpić znajdują się w dokumentacji LPC1769, w tabelach 399 oraz 402.\\
+            Jeśli jakikolwiek z powyższych kodów wystąpi, to oznacza, że na pewno bit SI zostanie ustawiony na 1.
     \end{enumerate}
     
     
+    \item \textbf{I2DAT} - Rejestr danych. Podczas trybu nadawania lub odbioru, dane (8 bitów) są zapisywane lub odczytywane z tego rejestru.   
     
-    \item \textbf{I2STAT} - Rejestr statusu I2C (Adres: 0x08). Dostarcza szczegółowe kody statusu odzwierciedlające aktualny stan interfejsu I2C.
-    \item \textbf{I2DAT} - Rejestr danych I2C (Adres: 0x0C). Podczas trybu nadawania lub odbioru, dane są zapisywane lub odczytywane z tego rejestru.
-    \item \textbf{I2ADR0, I2ADR1, I2ADR2, I2ADR3} - Rejestry adresowe I2C (Adresy: 0x20, 0x24, 0x28, 0x2C). Zawierają 7-bitowy adres slave do działania interfejsu I2C w trybie slave.
-    \item \textbf{I2SCLH} - Rejestr cyklu zegara SCL I2C (wysoka połowa) (Adres: 0x10). Zawiera wysoką połowę cyklu zegara I2C.
-    \item \textbf{I2SCLL} - Rejestr cyklu zegara SCL I2C (niska połowa) (Adres: 0x14). Zawiera niską połowę cyklu zegara I2C.
-    \item \textbf{MMCTRL} - Rejestr kontrolny trybu monitorowania I2C (Adres: 0x1C). Używany do kontrolowania trybu monitorowania I2C.
+    
+    
+    \item \textbf{I2SCLH} - Rejestr cyklu zegara SCL (wysoka połowa).Zawiera wysoką połowę cyklu zegara I2C.
+    \item \textbf{I2SCLL} - Rejestr cyklu zegara SCL (niska połowa). Zawiera niską połowę cyklu zegara I2C.
+    \item \textbf{MMCTRL} - Rejestr kontrolny trybu monitorowania. Używany do kontrolowania trybu monitorowania I2C.
     \item \textbf{I2DATA\_BUFFER} - Rejestr bufora danych I2C (Adres: 0x2C). Zawiera zawartość 8 najstarszych bitów rejestru przesuwnego I2DAT.
-    \item \textbf{I2MASK0, I2MASK1, I2MASK2, I2MASK3} - Rejestry maski I2C (Adresy: 0x30, 0x34, 0x38, 0x3C). Służą do określenia dopasowania adresu w trybie slave.
+    
+    \item \textbf{I2ADR0, I2ADR1, I2ADR2, I2ADR3} - Rejestry adresowe I2C. Zawierają 7-bitowy adres slave do działania interfejsu I2C w trybie slave. W na bicie 0 można ustawić czy urządzenie ma odpowiadać na GC (General Call) lub tylko na określony adres.
+    \item \textbf{I2MASK0, I2MASK1, I2MASK2, I2MASK3} - Rejestry maski I2C. Służą do określenia dopasowania adresu w trybie slave.
 \end{itemize}
 
 \subsubsection{Inicjalizacja magistrali I2C2}

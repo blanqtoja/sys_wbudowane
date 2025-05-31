@@ -329,7 +329,7 @@ static void init_i2c(void)
 	// Initialize I2C peripheral
 	I2C_Init(LPC_I2C2, 100000);
 
-	/* Enable I2C1 operation */
+	/* Enable I2C2 operation */
 	I2C_Cmd(LPC_I2C2, ENABLE);
 }
 
@@ -444,7 +444,7 @@ int main (void)
         // odczyt temperatury
         t = temp_read();
         // konwersja odczytu na stopnie Celsjusza
-        // dla MAX6576 z TS1=VCC, TS0=VCC (scalar_multiplier = 640 μs/°K)
+        // dla MAX6576 z TS1=VCC, TS0=VCC (scalar_multiplier = 640 μs/K)
         float tempC = ((float)t / 640.0) - 273.15;
 
         // wyswietlanie temperatury w stopniach Celsjusza

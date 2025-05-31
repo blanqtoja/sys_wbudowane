@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[polish]{babel}
 \usepackage{hyperref}
+\usepackage{amsmath} 
 
 \title{Dokumentacja projektu: Inteligentna donica}
 \author{
@@ -83,7 +84,7 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
     \item Czujnik światła jest podłączony do magistrali I2C2, a jego adres jest ustawiony na 0x44. Szczegóły konfiguracji znajdują się w sekcji \ref{sec:czujnik_swiatla}.
 \end{enumerate}
 
-\subsubsection{Ustawienia rejestrów}
+\subsubsection{Omówienie rejestrów}
 Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokumentacji płytki. Poniżej znajdują się opisane rejestry:
 \begin{itemize}
     %sprawdzic czy dobry adres
@@ -172,12 +173,59 @@ Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokume
 Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących kroków:
 \begin{enumerate}
     %opis ustawien konkretnych rejestrow w projekcie, uzasadnienie czemu wybralismy takie ustawienia
-    \item 
+    \item Ustawienie odpowiednich pinów\\
+        Użyte zostały piny P0.10 i P0.11, które odpowiadają pinom SCL i SDA na magistrali I2C2.\\
+        Dla powyższych pinów wybrane zostały funkcje nr. 2, ponieważ z dokumentacji LPC1769 wynika, że funkcja nr. 2 odpowiada pinom SCL i SDA.\\ %odwolanie do tabeli w dokumentacji
+    \item Włączenie zasilania magistrali I2C2\\
+        % tabela Table 46. 
+        Z tabeli 46. w dokumentacji LPC1769 można odczytać, że bit 6 w rejestrze PCONP odpowiada za włączenie zasilania magistrali I2C2.
+        \[
+            PCONP |= (1<<26)
+        \]
+    \item Ustawienie taktowania zegara\\
+        Taktowanie zegara dla magistrali I2C2 ustawiamy poprzez wpisanie do rejestru I2SCLH i I2SCLL odpowiednich wartości. Wpierw pobieramy zawartość rejestru PCLK; robimy to poprzez odczytanie danych z bitów 21:20 z adresu 0x400F C1AC przy użyciu maski. Stąd wiemy, że dzielnikiem zegara jest 2, więc 
+        \begin{align*}
+        PCLK_{I2C2} &= \frac{CCLK}{2}\\
+        I2SCLH &= \frac{PCLK_{I2C2}}{2 \cdot target\_clock}\\
+        I2SCLL &= \frac{PCLK_{I2C2}}{target\_clock} - I2SCLH
+        \end{align*}
+            
+
+        CCLK wynosi 100MHZ. Mając powyższe wartości możemy wyliczyć taktowanie z poniższego wzoru:
+        \[
+        I2C_{bitfrequency} = \frac{PCLK}{I2SCLH + I2SCLL}
+        \]
+        Z Tabeli 395 w dokumentacji LPC1769 można odczytać, że standardowe taktowanie wynosi 100kHz, więc do rejestrów I2SCLH oraz I2SCLL wpisujemy 250
+    \item Wyzerowanie flag rejestru I2CON\\
+        W celu resetowania flag AC, STA, I2EN ustawiamy w rejestrze I2CONCLR bity 2, 5,6, które zerują te flagi w rejestrze I2CON.
+        
+    \item Włączenie magistrali I2C\\
+        W celu włączenia magistrali I2C ustawiamy bit 6 w rejestrze I2CON.
+\end{enumerate}
+
+\subsubsection{Wykorzystanie magistrali I2C2}
+\begin{enumerate}
+    \item Początkowe ustawienia\\
+        Rozpoczęcie transmisji odbywa się poprzez ustawienie flagi START w rejestraze I2CON (bit 5) na 1 oraz flagi SI (przerwanie) w rejestrze I2CON (5 bit) na 0. Później master czeka na zmianę flagi SI na 1, która oznacza, że transmisja została rozpoczęta. Następnie sprawdzany jest rejest stanu I2STAT, aby sprawdzić, czy warunek START został wysłany (0x08). Ustawiamy SI na 0.
+    \item Wysyłanie danych\\
+        
+    
+    \item Odbieranie danych\\
+    \begin{enumerate}
+        \item Żeby wskazać adres urządzenia z któego będziemy odbierać dane należy wpisać 7-bitowy adres slave do rejestru I2DAT. Ponadto należy ustawić pierwszy bit na 1, aby wskazać, że odbieramy dane. Następnie ustawiamy flagę SI w rejestrze I2CON na 0.
+        \item Master oczekuje na potwierdzenei (ACK) od slave - (z Tabeli 400) w rejestrze I2STAT powinna znajdowaćsię wartość 0x40. Gdy znajduje się tam inna wartość, to adres jest ponownie wysyłany.
+        \item Po otrzymaniu ACK, master ustawia bit 5 w rejestrze I2CON (STA) na 0.
+        \item Master ustawia bit 2 w rejestrze I2CON (AA) na 1, aby ustawić ACK. I odbiera bajty danych:
+        \begin{enumerate}
+            \item W rejestrze I2CON ustawiamy bit 3 (SI) na 0.
+            \item Master czeka na zmianę flagi SI w rejestrze I2STAT
+            \item Odczyt danych z I2DAT (8 bitów)
+            \item przed ostatnim bajtem danych master ustawia bit 2 w rejestrze I2CON (AA) na 0, aby wyłączyć ACK.
+        \end{enumerate}    
+    \end{enumerate}    
 
 
 \end{enumerate}
-
-
 
 
 

@@ -74,9 +74,7 @@ Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprze
 
 \section{Funkcjonalności}
 
-\subsection{Magistrala SPI}
-System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz innymi peryferiami. Implementacja obejmuje konfigurację parametrów transmisji, takich jak częstotliwość zegara, tryb pracy oraz obsługę przerwań.
-
+%olek
 \subsection{Magistrala I2C}
 \begin{enumerate}
     \item Interfejs I2C jest używany do komunikacji z czujnikiem światła oraz innymi komponentami wymagającymi komunikacji szeregowej. Implementacja obejmuje inicjalizację magistrali I2C, konfigurację adresów urządzeń oraz obsługę błędów komunikacji.
@@ -87,7 +85,6 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
 \subsubsection{Omówienie rejestrów}
 Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokumentacji płytki. Poniżej znajdują się opisane rejestry:
 \begin{itemize}
-    %sprawdzic czy dobry adres
     \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C. Używany do ustawiania bitów w rejestrze kontrolnym I2CON. Pozwala ustawiać pojedyncze bity bez konieczności odczytywania i modyfikowania całego rejestru. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C. Poniżej zostały opiasne flagi:
     \begin{enumerate}
         \item Bity 0, 1 oraz 7:31 są zarezerowane 
@@ -248,14 +245,7 @@ Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących krok
 
 \end{enumerate}
 
-
-
-
-
-
-
-
-
+%olek
 \subsection{Czujnik światła}
 \label{sec:czujnik_swiatla}
 Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikacyjnym I2C. Implementacja tego elementu obejmuje trzy kluczowe funkcjonalności:
@@ -268,6 +258,7 @@ Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikac
     \item \textbf{Przetwarzanie i analiza danych} - Po odczytaniu surowych danych z czujnika, system przetwarza je na użyteczne informacje o poziomie natężenia światła. Funkcjonalność ta obejmuje kalibrację, filtrowanie zakłóceń oraz konwersję wartości na jednostki zrozumiałe dla użytkownika (np. luxy).
 \end{enumerate}
 
+%Julka
 \subsection{Czujnik temperatury}
 System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujnika. Implementacja obejmuje:
 
@@ -279,21 +270,30 @@ System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujni
     \item \textbf{Wykorzystanie danych temperaturowych} - Informacja o temperaturze jest wyświetlana na ekranie OLED i może wpływać na decyzje systemu dotyczące nawadniania lub doświetlania rośliny.
 \end{enumerate}
 
+%Julka
+\subsection{Magistrala SPI}
+System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz innymi peryferiami. Implementacja obejmuje konfigurację parametrów transmisji, takich jak częstotliwość zegara, tryb pracy oraz obsługę przerwań.
+
+%Julka
 \subsection{Wyświetlacz OLED}
 Donica wykorzystuje wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikujący się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Implementacja obejmuje inicjalizację wyświetlacza, konfigurację parametrów transmisji SPI oraz bibliotekę funkcji do wyświetlania informacji o stanie rośliny, poziomie światła i innych parametrach środowiskowych. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
 
+%wolne
 \subsection{System audio}
 System audio inteligentnej donicy składa się z głośnika (oznaczenie na schemacie SP1) oraz układu sterowania LM4811MM (oznaczenie na schemacie U10). Układ ten umożliwia generowanie sygnałów dźwiękowych informujących użytkownika o stanie rośliny. Implementacja obejmuje inicjalizację układu sterowania, konfigurację parametrów dźwięku oraz bibliotekę funkcji do odtwarzania różnych melodii w zależności od poziomu wilgotności gleby.
 
+%Julka
 \subsection{Sterowanie GPIO}
 System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
 
+%olek
+\subsection{Timer}
+System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
+%olek
 \subsection{Modulacja szerokości impulsu (PWM)}
 Implementacja PWM umożliwia precyzyjne sterowanie elementami wykonawczymi wymagającymi sygnału analogowego, takimi jak pompy wody czy wentylatory. Funkcjonalność obejmuje konfigurację częstotliwości sygnału PWM, ustawianie wypełnienia impulsu (duty cycle) oraz dynamiczną zmianę parametrów w zależności od warunków środowiskowych. PWM jest wykorzystywane głównie do regulacji intensywności doświetlania rośliny za pomocą lamp LED.
 
-\subsection{Timer}
-System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
-
+%wolne
 \subsection{Przetwornik analogowo-cyfrowy (ADC)}
 System wykorzystuje przetwornik analogowo-cyfrowy do odczytu analogowego wejścia czujnika określanego jako "czujnik wilgotności". Należy zaznaczyć, że termin "wilgotność" jest w tym przypadku skrótem myślowym, ponieważ w rzeczywistości nie mierzymy bezpośrednio wilgotności gleby, a jej przewodność elektryczną, która jest skorelowana z zawartością wody w glebie. Implementacja obejmuje:
 

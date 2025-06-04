@@ -422,6 +422,8 @@ int main (void)
 
     light_enable();
     light_setRange(LIGHT_RANGE_4000);
+    //zobaczyc czy nie spowoduje bledu
+    light_setWidth(LIGHT_WIDTH_16BITS);
 
     oled_clearScreen(OLED_COLOR_WHITE);
 

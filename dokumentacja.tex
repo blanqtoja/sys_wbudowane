@@ -4,6 +4,10 @@
 \usepackage[polish]{babel}
 \usepackage{hyperref}
 \usepackage{amsmath} 
+\usepackage{float}
+\usepackage{graphicx}
+
+
 
 \title{Dokumentacja projektu: Inteligentna donica}
 \author{
@@ -11,11 +15,29 @@
   Aleksander Kaźmierczak 251544 (kierownik grupy)\\
   Malwina Wodnicka 251XXX \\  % Tutaj należy wstawić właściwy numer indeksu
 }
+
+
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+%tabela opisujaca kto co robi
+|%zrobic ladniejsza
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    członek zespołu & funkcjonalność\\
+    \hline
+    Olek & i2c, light, pwm, adc\\
+    Malwina & gpio, audio, timer\\
+    Julka & SPI, oled, czujnik temperatury\\
+    \hline
+    \end{tabular}
+    \caption{Zawartość zespołu}
+\end{table}
 
 
 \section{Instrukcja użytkowania}
@@ -188,7 +210,7 @@ Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących krok
         \end{align*}
             
 
-        CCLK wynosi 100MHZ. Mając powyższe wartości możemy wyliczyć taktowanie z poniższego wzoru:
+        CCLK wynosi 100MHz. Mając powyższe wartości możemy wyliczyć taktowanie z poniższego wzoru:
         \[
         I2C_{bitfrequency} = \frac{PCLK}{I2SCLH + I2SCLL}
         \]
@@ -228,6 +250,7 @@ Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących krok
         \end{enumerate}    
     \end{enumerate}    
 
+    \label{sec:I2C_wysylanie_rejestrow}
     \item Zmiana i odczyt rejestrów urządzeń slave\\
     \begin{enumerate}
         \item Wysyłamy adres rejestru, który chcemy odczytać lub zmodyfikować.
@@ -249,6 +272,10 @@ Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących krok
 \subsection{Czujnik światła}
 \label{sec:czujnik_swiatla}
 Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikacyjnym I2C. Implementacja tego elementu obejmuje trzy kluczowe funkcjonalności:
+ISL29003 to zintegrowany czujnik światła z 16-bitowym przetwornikiem ADC. Wewnętrzny przetwornik ADC zapewnia 16-bitową rozdzielczość, jednocześnie odrzucając migotanie 50 Hz i 60 Hz spowodowane sztucznymi źródłami światła. Ogólne zasady działania ADC zostały przedstawione w rozdziale \ref{sec:ADC}.
+%Malwina
+\subsection{Sterowanie GPIO}
+System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
 
 \begin{enumerate}
     \item \textbf{Inicjalizacja i konfiguracja czujnika ISL29003} - Proces inicjalizacji obejmuje ustawienie adresu urządzenia na magistrali I2C, konfigurację rejestrów czujnika oraz określenie parametrów pomiaru, takich jak czułość i częstotliwość próbkowania.
@@ -258,6 +285,65 @@ Inteligentna donica wykorzystuje czujnik światła oparty na protokole komunikac
     \item \textbf{Przetwarzanie i analiza danych} - Po odczytaniu surowych danych z czujnika, system przetwarza je na użyteczne informacje o poziomie natężenia światła. Funkcjonalność ta obejmuje kalibrację, filtrowanie zakłóceń oraz konwersję wartości na jednostki zrozumiałe dla użytkownika (np. luxy).
 \end{enumerate}
 
+\subsubsection{Inicjalizacja czujnika ISL29003}
+    Aby zainicjować czujnik ISL29003, należy ustawić wartość 1 na 7. bicie rejestru Command (0x00). Sposób wysyłania zawartości rejestró do urządzeń podrzędnych zostałopisany w poprzednim podrozdziale \ref{sec:I2C_wysylanie_rejestrow}.
+
+    Wysyłanie adresu urządzenia - Wysyłanie adresu urządzenia ISL29003 na magistrali I2C. Adres urządzenia to 0x44.
+    Informacje na temat rejestrów i ich wartości znajdują się w dokumentacji ISL29003, w tabeli 1.\\%odwolanie do dokumentacji
+
+    Kolejnym etapem przygotowania czujnika do pracy jest zdefiniowanie zakresu. Stałe te będą używane do przeliczania danych wyjściowych czujnika. W naszym programie ustawiamy zakres na 3892, co oznacza skalę od 0 do 3892 lux. Aby ustawić wybrane przez nas wartości zakresu (range) należy sutawić bity 3:2 (tabela 9.) w rejestrze Control (0x01) na 0:1
+%tabela 9.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|c|}
+        \hline
+        Bits 3:2 & k & RANGE (k)\\
+        \hline
+        0:0 & 1 & 973\\
+        0:1 & 2 & 3892\\
+        1:0 & 3 & 15,568\\
+        1:1 & 4 & 62,272\\
+        \hline
+        \end{tabular}
+        \caption{Zakresy skali lux}
+    \end{table}
+    Ustawiamy także liczbę cykli zegara na konwersację analogowo cyfrową poprzez umieszczenie wartości 0:0 na bitach 1:0 w rejestrze Command (0x00) (tabela 7.)
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|}
+        \hline
+        BITS 1:0 & NUMBER OF CLOCK CYCLES\\
+        \hline
+        0:0 & $2^{16} = 65,536$\\
+        0:1 & $2^{12} = 4,096$\\
+        1:0 & $2^{8} = 256$\\
+        1:1 & $2^{4} = 16$\\
+        \hline
+        \end{tabular}
+        \caption{Liczby cykli zegara}
+    \end{table}
+
+    \subsubsection{Odczyt danych z czujnika}
+    Dane z ISL29003 odczytujemy przy pomocy protokołu I2C. Dane wyjściowe przechowywane są w dchów rejestrach, ponieważ odczyt jest liczbą 16-bitową. W rejestrze o adresie 0x04 znajduje się najniższy bajt danych, a w rejestrze 0x05 najwyższy bajt. Sposób odczytywania danych został opisany w podrozdziale \ref{sec:I2C_wysylanie_rejestrow}.
+
+    \subsubsection{Przetwarzanie i analiza danych}
+    Po odczytaniu danych z czujnika, system przetwarza je na użyteczne informacje o poziomie natężenia światła. Aby uzyskać wartość w luxach, należy zastosować poniższy wzór (ten wzór obowiązuje tylko gdy mamy zewnętrzny rezystor 100k$\Omega$):\\
+    \[
+    E = \frac{FSR \cdot DATA}{2^{n}}
+    \]
+    Gdzie:\\
+    E - wartość w luxach\\
+    FSR - zakres skali (FSR = 3892 lux)\\
+    DATA - odczytana wartość z rejestru\\
+    n - liczba bitów w rejestrze (16 bitów)\\
+
+    %wstawienie zdjęcia
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{doc/ISL29003/schemat.png}
+        \caption{Schemat podłączenia czujnika ISL29003}
+        \label{fig:czujnik_swiatla}
+    \end{figure}
 
 
 
@@ -283,15 +369,12 @@ System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz inny
 \subsection{Wyświetlacz OLED}
 Donica wykorzystuje wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikujący się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Implementacja obejmuje inicjalizację wyświetlacza, konfigurację parametrów transmisji SPI oraz bibliotekę funkcji do wyświetlania informacji o stanie rośliny, poziomie światła i innych parametrach środowiskowych. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
 
-%wolne
+%Malwina
 \subsection{System audio}
 System audio inteligentnej donicy składa się z głośnika (oznaczenie na schemacie SP1) oraz układu sterowania LM4811MM (oznaczenie na schemacie U10). Układ ten umożliwia generowanie sygnałów dźwiękowych informujących użytkownika o stanie rośliny. Implementacja obejmuje inicjalizację układu sterowania, konfigurację parametrów dźwięku oraz bibliotekę funkcji do odtwarzania różnych melodii w zależności od poziomu wilgotności gleby.
 
-%Julka
-\subsection{Sterowanie GPIO}
-System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
 
-%olek
+%Malwina
 \subsection{Timer}
 System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
 %olek
@@ -300,15 +383,55 @@ Implementacja PWM umożliwia precyzyjne sterowanie elementami wykonawczymi wymag
 
 %wolne
 \subsection{Przetwornik analogowo-cyfrowy (ADC)}
+\label{sec:ADC}
 System wykorzystuje przetwornik analogowo-cyfrowy do odczytu analogowego wejścia czujnika określanego jako "czujnik wilgotności". Należy zaznaczyć, że termin "wilgotność" jest w tym przypadku skrótem myślowym, ponieważ w rzeczywistości nie mierzymy bezpośrednio wilgotności gleby, a jej przewodność elektryczną, która jest skorelowana z zawartością wody w glebie. Implementacja obejmuje:
-
+Wbudowany przetwornik ADC jest przetwornikiem 12-bitowym, co oznacza, że może zwracać wartość z zakresu 0-4095. Przetwornik ten działa przy użyciu metody SAR (Successive Approximation Register), która polega na sekwencyjnym przybliżaniu wartości.
 \begin{enumerate}
-    \item \textbf{Inicjalizacja i konfiguracja przetwornika ADC} - Proces inicjalizacji obejmuje konfigurację rejestrów przetwornika, ustawienie częstotliwości próbkowania, wybór kanału pomiarowego oraz określenie napięcia referencyjnego.
+    \item \textbf{Inicjalizacja i konfiguracja przetwornika ADC} - Proces inicjalizacji obejmuje konfigurację rejestrów mikrokontrolera, ustawienie częstotliwości próbkowania, wybór kanału pomiarowego oraz określenie napięcia referencyjnego. ADC może wykonać do 200 000 konwersji na sekundę (200 kHz), przy pełnej 12-bitowej rozdzielczości. To znaczy, że maksymalnie co 5 mikrosekund może być gotowy nowy wynik pomiaru. 
     
     \item \textbf{Odczyt wartości analogowej} - Funkcjonalność ta odpowiada za uruchomienie konwersji analogowo-cyfrowej, odczyt wyniku konwersji oraz obsługę ewentualnych błędów pomiaru.
     
     \item \textbf{Interpretacja danych pomiarowych} - System przetwarza odczytane wartości na względny poziom wilgotności gleby. Proces ten obejmuje kalibrację czujnika (określenie wartości dla suchej i mokrej gleby), filtrowanie zakłóceń oraz konwersję surowych danych na format zrozumiały dla użytkownika.
 \end{enumerate}
+
+
+%chapter 29.
+\subsubsection{Inicjalizacja przetwornika ADC}
+    \begin{enumerate}
+        \item Na początku ustawiono piny do pracy w trybie analogowym. Dla pinu 23 na porcie 0 ustawiono funkcję nr. 1, co jest odpowiednikiem funkcji analogowej (Tabela 81.) \\%odwolanie do dokumentacji
+              Aby ustawić wybraną funkcję, należy ustawić bity 15:14 w rejestrze PINSEL1 na 01.
+        \item Następnie ustawiono 12. bit w rejestrze PCONP o adresie 0x400F C0C4 na 1, aby włączyć zasilanie dla przetwornika ADC.
+        \item Kolejniym krokiem jest odczytanie dzielnika zapisanego w rejestrze PCLKSEL0 o adresie 0x400F C1A8 na bitach 25:24 (Tabela 40.). Domyślnie dzielnik ten wynosi 4 (w rejestrze pod podanymi bitami znajduje się 00). Wtedy obowiązuje wzór na PCLK:
+        \[
+        PCLK = \frac{CCLK}{4}
+        \]
+        Gdzie:\\
+        CCLK - takt zegara układu; CCLK = 100MHz\\
+        PCLK - takt zegara przetwornika ADC\\
+        
+    \end{enumerate}
+
+\subsubsection{Obliczanie masek do odczytu wartości rejestrów}
+    \subsubsubsection{Stan przetwarzania}
+        Aby móc zmieniać stan przetwarzania potrzebna jest maska, która pozwoli wybrać tylko interesujące nas bity z rejestru AD0CR.
+        \begin{enumerate}
+            \item W rejestrze AD0CR (0x4003 4000) na bicie 21 znajduje się informacja o stanie przetwornika:
+            \begin{itemize}
+                \item 0 - przetwornik jest gotowy do pracy;
+                \item 1 - przetwornik jest wyłączony
+            \end{itemize}
+            \item Zatem potrzebujemy maski (1<<21)
+        \end{enumerate}
+
+    \subsubsubsection{}
+        \begin{enumerate}
+            \item W rejestrze AD0CR (0x4003 4000) na bitach 15:12 znajduje się informacja o wybranym kanale:
+            \begin{itemize}
+        \end{itemize}
+
+%olek
+\subsection{Komparator LM393}
+Przeszukując sieć w poszukiwaniu dokumentacji komparatora LM393 nie mogliśmy znaleźć idealnie odpowiadającego opisu. Mimo, iż oznaczenia na układzie scalonym się pokrywają (dokumentacja dotyczy LM393), to wyprowadzenia nie są identyczne. W związku z tym nie udało się znaleźć dokładnego opisu, ale zasada działania przetwornika jest taka sama. 
 
 
 \end{document}

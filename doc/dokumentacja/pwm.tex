@@ -1,0 +1,33 @@
+\subsection{Modulacja szerokości impulsu (PWM)}
+Implementacja PWM umożliwia precyzyjne sterowanie elementami wykonawczymi wymagającymi sygnału analogowego, takimi jak silniki czy regulacja jasności diody LED. Funkcjonalność obejmuje konfigurację częstotliwości sygnału PWM, ustawianie wypełnienia impulsu (duty cycle) oraz dynamiczną zmianę parametrów w zależności od warunków środowiskowych. PWM jest wykorzystywane do regulacji intensywności świecenia diod LED w diodzie RGB LED3 [schemat]. %dodaj schemat
+W projekcie został wykorzystany PWM1.
+
+\subsubsection{Inicjalizacja PWM1}
+\begin{enumerate}
+    \item Konfigurację rozpoczynamy od włączenia zasilania. W tym celu ustawiamy 6 bit w rejestrze PCONP (tabela 46.) %odwolanie do dokumentacji
+    \item Piny na których chcemy sterować impulsami to P2.0, P2.1, P2.2. Chcemy je ustawić jako PWM1.1, PWM1.2, PWM1.3, dlatego w rejestrze PINSEL4 ustawiamy bity 1:0, 3:2, 5:4 na 01 - funkcja PWM1.X
+    % \item Następnie wybieramy tryb pracy na single edge, czyli
+    \item Opis rejestrów PWM1:\\
+    \begin{enumerate}
+        \item \textbf{IR} - rejestr ten służy do zarządzania przerwaniami. Przerwania 
+        \begin{enumerate}
+            \item \textbf{PWMMR0 Interrupt} - bit 0, flaga przerwania na kanale 0
+            \item \textbf{PWMMR1 Interrupt} - bit 1, flaga przerwania na kanale 1
+            \item \textbf{PWMMR2 Interrupt} - bit 2, flaga przerwania na kanale 2
+            \item \textbf{PWMMR3 Interrupt} - bit 3, flaga przerwania na kanale 3
+            \item \textbf{PWMCAP0 Interrupt} - bit 4, flaga przerwania dla zerowego wejscia przechwytującego (capture input); capture oznacza przechwycenie aktualnej wartości licznika (timer'a), np. w momencie zbocza sygnału (narastającego lub opadającego) na pinie wejściowym. Umożliwia to np. pomiar czasu trwania impulsów, okresów czy częstotliwości.
+            \item \textbf{PWMCAP1 Interrupt} - bit 5, flaga przerwania dla pierwszego wejscia przechwytującego 
+            \item Bity 7:6 - zarezerwowane
+            \item \textbf{PWMMR4 Interrupt} - bit 8, flaga przerwania na kanale 4
+            \item \textbf{PWMMR5 Interrupt} - bit 9, flaga przerwania na kanale 5
+            \item \textbf{PWMMR6 Interrupt} - bit 10, flaga przerwania na kanale 6
+            \item Bity 31:11 - zarezerwowane
+
+        \end{enumerate}
+        \item \textbf{PWM1TCR}
+        \begin{enumerate}
+            \item \textbf{ Counter Enable} - bit 0, włączanie i wyłączanie licznika timera oraz preskalera
+            \item 
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}

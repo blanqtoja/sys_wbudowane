@@ -1,0 +1,170 @@
+\subsection{Magistrala I2C}
+\begin{enumerate}
+    \item Interfejs I2C jest używany do komunikacji z czujnikiem światła oraz innymi komponentami wymagającymi komunikacji szeregowej. Implementacja obejmuje inicjalizację magistrali I2C, konfigurację adresów urządzeń oraz obsługę błędów komunikacji.
+    \item Płytka LPC1769 posiada trzy magistrale I2C, w projekcie została użyta magistrala I2C2. 
+    \item Czujnik światła jest podłączony do magistrali I2C2, a jego adres jest ustawiony na 0x44. Szczegóły konfiguracji znajdują się w sekcji \ref{sec:czujnik_swiatla}.
+\end{enumerate}
+
+\subsubsection{Omówienie rejestrów}
+Rejestry mikroprocesora zostały opisane w tabeli 384. I2C register map w dokumentacji płytki. Poniżej znajdują się opisane rejestry:
+\begin{itemize}
+    \item \textbf{I2CONSET} - Rejestr ustawień kontrolnych I2C. Używany do ustawiania bitów w rejestrze kontrolnym I2CON. Pozwala ustawiać pojedyncze bity bez konieczności odczytywania i modyfikowania całego rejestru. Zapisanie '1' do bitu w tym rejestrze ustawia odpowiadający bit w rejestrze kontrolnym I2C. Poniżej zostały opiasne flagi:
+    \begin{enumerate}
+        \item Bity 0, 1 oraz 7:31 są zarezerowane 
+        \item \textbf{AA} - Bit 2 \\
+            Gdy:\\
+            AA = 1 urządzenie wyśle ACK (czyli ustawi linię SDA w stan niski w czasie impulsu zegarowego na linii SCL). \\
+            AA = 0 urządzenie wyśle NACK (czyli pozostawi linię SDA w stanie wysokim).
+        \item \textbf{SI} - Bit 3 \\
+            Flaga ta informuje o zmianie stanu magistrali np. zakończenie nadawania danych.
+            Gdy:\\
+            SI = 1, niski poziom sygnału SCL jest wydłużony. Transmisja zostaje wstrzymana.\\
+            SI resetuje się poprzez zapisanie 1 do bitu SIC (SI Clear) w rejestrze I2CONCLR
+        \item \textbf{STO} - Bit 4\\
+            Flaga zakończenia transmisji danych. Jej działanie zależy od trybu, w jakim pracuje układ: master czy slave.\\
+            W trybie master, ustawienie STO = 1 powoduje wysłanie warunku STOP na magistrali I2C, czyli SDA przechodzi z LOW na HIGH, gdy SCL jest HIGH. To kończy bieżącą transmisję i linia jest zwalniana.\\
+            Gdy magistrala wykryje warunek STOP, flaga STO zostaje automatycznie wyczyszczona przez sprzęt.
+
+        \item \textbf{STA} - Bit 5\\
+            Służy do rozpoczęcia transmisji przez wysłanie warunku START
+                \begin{itemize}
+                    \item Jeżeli interfejs I2C jest w trybie slave, to:
+                    \begin{itemize}
+                        \item Interfejs przechodzi do trybu master
+                        \item Jeśli magistrala jest wolna – natychmiast wysyła warunek START (SDA z HIGH do LOW przy SCL = HIGH).
+                        \item Jeśli magistrala jest zajęta – czeka na warunek STOP, który „uwolni” magistralę, a potem wysyła START po pół okresie zegara wewnętrznego.
+                    \end{itemize}
+
+                    \item Jeśli interfejs już jest w trybie master, to:
+                    \begin{itemize}
+                        \item Ustawienie STA = 1 powoduje wysłanie repeated START – kolejnego warunku START bez wcześniejszego STOP.
+                    \end{itemize}   
+                    \item W przypadku, gdy STA oraz STO ustawimy jednocześnie na 1, to:
+                    \begin{itemize}
+                        \item w tybie master zostanie syłany sygnal STOP, następnie wysyłany jest START (restart transmisji)
+                        \item w trybie slave nastąpi zatrzymanie transmisji bez wysłąnia STOP na magistralę, a następnie, jeśli magistrala jest wolna, zostanie wysłany START
+                    \end{itemize}
+                \end{itemize}
+        \item \textbf{I2EN} - Bit 6\\
+        Flaga odpowiedzialna za włączenie lub wyłączenie interfejsu I2C. Gdy:\\\
+            I2EN = 0, interfejs I2C jest wyłączony\\
+            I2EN = 1, interfejs I2C jest włączony
+            
+        
+    \end{enumerate}
+    \item \textbf{I2CONCLR} - Rejestr kasowania ustawień kontrolnych. Używany do kasowania bitów w rejestrze kontrolnym I2C. Zapisanie '1' do bitu w tym rejestrze kasuje odpowiadający bit w rejestrze kontrolnym I2C.
+    \begin{enumerate}
+        \item Bity 0, 1, 4 oraz 7:31 są zarezerowane
+        \item \textbf{AAC} - Bit 2 - służy do wyzerowania bitu AA (Assert Acknowledge) w rejestrze I2CON. Bit AA odpowiada za to, czy urządzenie I2C nada ACK (potwierdzenie) podczas komunikacji.
+        \item \textbf{SIC} - Bit 3 - służy do czyszczenia flagi przerwania I2C (Interrupt Clear). 
+        \item \textbf{STAC} - Bit 5 - służy do czyszczenia flagi START (STA)
+        \item \textbf{I2CENC} - Bit 6 - wyłącza interfejs I2C
+    \end{enumerate}
+    
+    \item \textbf{I2STAT} - Rejestr statusu I2C. Dostarcza szczegółowe kody statusu pokazujące aktualny stan interfejsu. Z tego rejestru można tylko odczytywać dane.
+    \begin{enumerate}
+        \item Bity 0:2 oraz 8:31 są zarezerowane
+        \item Bity 7:3 - zawierają kod aktualnego stanu interfejsu I2C.
+            Kod statusu możemy wyodrębnić dzięki masce 0xF8:\\
+            \begin{verbatim}
+                uint8_t status = I2STAT & 0xF8;
+            \end{verbatim}
+
+            %dodac referencje do dokuemntacji lcp
+            W rejestrze może wystąpić 26 kodów statusu. Kody, które mogą wystąpić znajdują się w dokumentacji LPC1769, w tabelach 399 oraz 402.\\
+            Jeśli jakikolwiek z powyższych kodów wystąpi, to oznacza, że na pewno bit SI zostanie ustawiony na 1.
+    \end{enumerate}
+    
+    
+    \item \textbf{I2DAT} - Rejestr danych. Podczas trybu nadawania lub odbioru, dane (8 bitów) są zapisywane lub odczytywane z tego rejestru.   
+    
+    
+    
+    \item \textbf{I2SCLH} - Rejestr cyklu zegara SCL (wysoka połowa).Zawiera wysoką połowę cyklu zegara I2C.
+    \item \textbf{I2SCLL} - Rejestr cyklu zegara SCL (niska połowa). Zawiera niską połowę cyklu zegara I2C.
+    \item \textbf{MMCTRL} - Rejestr kontrolny trybu monitorowania. Używany do kontrolowania trybu monitorowania I2C.
+    \item \textbf{I2DATA\_BUFFER} - Rejestr bufora danych I2C (Adres: 0x2C). Zawiera zawartość 8 najstarszych bitów rejestru przesuwnego I2DAT.
+    
+    \item \textbf{I2ADR0, I2ADR1, I2ADR2, I2ADR3} - Rejestry adresowe I2C. Zawierają 7-bitowy adres slave do działania interfejsu I2C w trybie slave. W na bicie 0 można ustawić czy urządzenie ma odpowiadać na GC (General Call) lub tylko na określony adres.
+    \item \textbf{I2MASK0, I2MASK1, I2MASK2, I2MASK3} - Rejestry maski I2C. Służą do określenia dopasowania adresu w trybie slave.
+\end{itemize}
+
+\subsubsection{Inicjalizacja magistrali I2C2}
+Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących kroków:
+\begin{enumerate}
+    %opis ustawien konkretnych rejestrow w projekcie, uzasadnienie czemu wybralismy takie ustawienia
+    \item Ustawienie odpowiednich pinów\\
+        Użyte zostały piny P0.10 i P0.11, które odpowiadają pinom SCL i SDA na magistrali I2C2.\\
+        Dla powyższych pinów wybrane zostały funkcje nr. 2, ponieważ z dokumentacji LPC1769 wynika, że funkcja nr. 2 odpowiada pinom SCL i SDA.\\ %odwolanie do tabeli w dokumentacji
+    \item Włączenie zasilania magistrali I2C2\\
+        % tabela Table 46. 
+        Z tabeli 46. w dokumentacji LPC1769 można odczytać, że bit 6 w rejestrze PCONP odpowiada za włączenie zasilania magistrali I2C2.
+        \[
+            PCONP |= (1<<26)
+        \]
+    \item Ustawienie taktowania zegara\\
+        Taktowanie zegara dla magistrali I2C2 ustawiamy poprzez wpisanie do rejestru I2SCLH i I2SCLL odpowiednich wartości. Wpierw pobieramy zawartość rejestru PCLK; robimy to poprzez odczytanie danych z bitów 21:20 z adresu 0x400F C1AC przy użyciu maski. Stąd wiemy, że dzielnikiem zegara jest 2, więc 
+        \begin{align*}
+        PCLK_{I2C2} &= \frac{CCLK}{2}\\
+        I2SCLH &= \frac{PCLK_{I2C2}}{2 \cdot target\_clock}\\
+        I2SCLL &= \frac{PCLK_{I2C2}}{target\_clock} - I2SCLH
+        \end{align*}
+            
+
+        CCLK wynosi 100MHz. Mając powyższe wartości możemy wyliczyć taktowanie z poniższego wzoru:
+        \[
+        I2C_{bitfrequency} = \frac{PCLK}{I2SCLH + I2SCLL}
+        \]
+        Z Tabeli 395 w dokumentacji LPC1769 można odczytać, że standardowe taktowanie wynosi 100kHz, więc do rejestrów I2SCLH oraz I2SCLL wpisujemy 250
+    \item Wyzerowanie flag rejestru I2CON\\
+        W celu resetowania flag AC, STA, I2EN ustawiamy w rejestrze I2CONCLR bity 2, 5,6, które zerują te flagi w rejestrze I2CON.
+        
+    \item Włączenie magistrali I2C\\
+        W celu włączenia magistrali I2C ustawiamy bit 6 w rejestrze I2CON.
+\end{enumerate}
+
+\subsubsection{Wykorzystanie magistrali I2C2}
+\begin{enumerate}
+    \item Początkowe ustawienia\\
+        Rozpoczęcie transmisji odbywa się poprzez ustawienie flagi START w rejestraze I2CON (bit 5) na 1 oraz flagi SI (przerwanie) w rejestrze I2CON (5 bit) na 0. Później master czeka na zmianę flagi SI na 1, która oznacza, że transmisja została rozpoczęta. Następnie sprawdzany jest rejest stanu I2STAT, aby sprawdzić, czy warunek START został wysłany (0x08). Ustawiamy SI na 0.
+    \item Wysyłanie danych\\
+    \begin{enumerate}
+        \item Wysyłanie adresu urządzenia. Adres urządzenia jest 7-bitowy. W rejestrze I2DAT należy wpisać adres urządzenia, a następnie ustawić pierwszy bit na 0, aby wskazać, że wysyłamy adres. Następnie ustawiamy flagę SI w rejestrze I2CON na 0.
+        \item Master oczekuje na potwierdzenie (ACK) od slave - (z Tabeli 400) w rejestrze I2STAT powinna znajdowaćsię wartość 0x18. Gdy znajduje się tam inna wartość, to adres jest ponownie wysyłany.
+        \item Po otrzymaniu ACK, master ustawia bit 5 w rejestrze I2CON (STA) na 0.
+        \item Następnie master wysyła dane. W rejestrze I2DAT należy wpisać dane, które chcemy wysłać. Następnie ustawiamy flagę SI w rejestrze I2CON na 0.
+        \item Oczekiwanie na ustawienie SI rejestru I2CON na 1
+        \item Master oczekuje na potwierdzenie (ACK) od slave w rejestrze I2STAT powinna znajdowaćsię wartość 0x28. Gdy otrzymano ACK, to przechodzi do wysłania kolejnych danych.
+    \end{enumerate}
+    
+    \item Odbieranie danych\\
+    \begin{enumerate}
+        \item Żeby wskazać adres urządzenia z któego będziemy odbierać dane należy wpisać 7-bitowy adres slave do rejestru I2DAT. Ponadto należy ustawić pierwszy bit na 1, aby wskazać, że odbieramy dane. Następnie ustawiamy flagę SI w rejestrze I2CON na 0.
+        \item Master oczekuje na potwierdzenei (ACK) od slave - (z Tabeli 400) w rejestrze I2STAT powinna znajdowaćsię wartość 0x40. Gdy znajduje się tam inna wartość, to adres jest ponownie wysyłany.
+        \item Po otrzymaniu ACK, master ustawia bit 5 w rejestrze I2CON (STA) na 0.
+        \item Master ustawia bit 2 w rejestrze I2CON (AA) na 1, aby ustawić ACK. I odbiera bajty danych:
+        \begin{enumerate}
+            \item W rejestrze I2CON ustawiamy bit 3 (SI) na 0.
+            \item Master czeka na zmianę flagi SI w rejestrze I2STAT
+            \item Odczyt danych z I2DAT (8 bitów)
+            \item przed ostatnim bajtem danych master ustawia bit 2 w rejestrze I2CON (AA) na 0, aby wyłączyć ACK.
+        \end{enumerate}    
+    \end{enumerate}    
+
+    \label{sec:I2C_wysylanie_rejestrow}
+    \item Zmiana i odczyt rejestrów urządzeń slave\\
+    \begin{enumerate}
+        \item Wysyłamy adres rejestru, który chcemy odczytać lub zmodyfikować.
+        \item Jeśli chcemy modyfikować rejestr, należy wysłać nową wartość rejewstru.
+        \item Jeśli chcemy odczytać, należy zacząć odbierać dane
+        
+    \end{enumerate}
+
+    \item Koniec transmisji\\
+    \begin{enumerate}
+        \item W celu zakończenia transmisji należy ustawić bit 4 (STO) w rejestrze I2CON na 1.
+        \item Zmiana wartości flagi SI w rejestrze I2CON na 0.
+    \end{enumerate}
+
+
+\end{enumerate}

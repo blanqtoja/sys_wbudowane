@@ -1,0 +1,166 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{hyperref}
+\usepackage{amsmath} 
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{siunitx}
+
+
+
+
+\title{Dokumentacja projektu: Inteligentna donica}
+\author{
+  Julia Dobroszek 251504 \\
+  Aleksander Kaźmierczak 251544 (kierownik grupy)\\
+  Malwina Wodnicka 251XXX \\  % Tutaj należy wstawić właściwy numer indeksu
+}
+
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+%tabela opisujaca kto co robi
+|%zrobic ladniejsza
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    członek zespołu & funkcjonalność\\
+    \hline
+    Olek & i2c, light, pwm, adc\\
+    Malwina & gpio, audio, timer\\
+    Julka & SPI, oled, czujnik temperatury\\
+    \hline
+    \end{tabular}
+    \caption{Zawartość zespołu}
+\end{table}
+
+
+\section{Instrukcja użytkowania}
+
+\subsection{Uruchomienie urządzenia}
+Aby uruchomić inteligentną donicę, należy wykonać następujące kroki:
+\begin{enumerate}
+    \item Podłączyć urządzenie do źródła zasilania za pomocą dołączonego przewodu.
+    \item Umieścić czujnik wilgotności (dwa metalowe druty) w glebie w doniczce. Czujnik powinien być umieszczony na głębokości około 3-5 cm, aby zapewnić prawidłowy pomiar wilgotności gleby.
+    \item Po podłączeniu zasilania, system automatycznie rozpocznie pracę i wyświetli informacje na ekranie OLED.
+    
+\end{enumerate}
+
+
+\subsection{Interpretacja wskaźników}
+Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprzez:
+\begin{enumerate} 
+     \item \textbf{Wyświetlacz OLED} - Na ekranie prezentowane są aktualne statystyki dotyczące: 
+     \begin{itemize} 
+         \item Poziomu wilgotności gleby:
+             \begin{itemize}
+                \label{sec:wykorzystanie_ADC}
+                 \item \textbf{sucho} - oznacza niski poziom wilgotności gleby (odczyt powyżej 2801), wskazujący na konieczność podlania rośliny
+                 \item \textbf{w normie} - oznacza optymalny poziom wilgotności gleby (odczyt między 1601 a 2800), idealny dla wzrostu większości roślin
+                 \item \textbf{mokro} - oznacza wysoki poziom wilgotności gleby (odczyt poniżej 1600), wskazujący na nadmiar wody, który może być szkodliwy dla rośliny
+             \end{itemize}
+         \item Temperatury otoczenia (w stopniach Celsjusza) 
+         \item Natężenia światła - system interpretuje odczyt z czujnika i wyświetla jeden z trzech komunikatów:
+         \begin{itemize}
+             \item "jasno" - gdy wartość odczytu przekracza 2000
+             \item "OK" - gdy wartość odczytu mieści się w przedziale od 350 do 2000
+             \item "ciemno" - gdy wartość odczytu jest mniejsza niż 350
+         \end{itemize}
+         \item Dodatkowych informacji o stanie systemu 
+     \end{itemize} 
+     
+     \item \textbf{Dioda RGB} - W zależności od poziomu wilgotności gleby, dioda RGB świeci się różnymi kolorami: 
+     \begin{itemize} 
+         \item Kolor żółto-zielony (\#c8ff1e) - oznacza stan \textbf{sucho} (odczyt powyżej 2801), sygnalizując potrzebę podlania rośliny
+         \item Kolor zielony (\#1eff00) - oznacza stan \textbf{w normie} (odczyt między 1601 a 2800), sygnalizując optymalny poziom wilgotności
+         \item Kolor błękitny (\#1effff) - oznacza stan \textbf{mokro} (odczyt poniżej 1600), sygnalizując nadmiar wody w glebie
+     \end{itemize} 
+ \end{enumerate}
+
+\subsection{Kalibracja i konserwacja}
+\begin{enumerate}
+    \item \textbf{Kalibracja} - System został skalibrowany fabrycznie na podstawie eksperymentów empirycznych. Urządzenie nie posiada możliwości zewnętrznej kalibracji przez użytkownika.
+    
+    \item \textbf{Konserwacja} - Aby zapewnić prawidłowe działanie urządzenia:
+    \begin{itemize}
+        \item Regularnie czyścić czujnik wilgotności z osadów mineralnych, które mogą gromadzić się na jego powierzchni
+        \item Utrzymywać wyświetlacz OLED w czystości, unikając bezpośredniego kontaktu z wodą
+        \item Sprawdzać okresowo stan połączeń elektrycznych
+        \item \textbf{Kategorycznie unikać kontaktu elektroniki z wodą} - Jedynym elementem, który może mieć bezpośredni kontakt z wilgocią, jest czujnik wilgotności (metalowe druty). Pozostałe elementy elektroniczne należy chronić przed zalaniem, zachlapaniem oraz nadmierną wilgotnością powietrza, gdyż może to prowadzić do trwałego uszkodzenia urządzenia i utraty gwarancji
+    \end{itemize}
+\end{enumerate}
+
+\section{Funkcjonalności}
+
+%olek
+\input{i2c}
+
+%Malwina
+\subsection{Sterowanie GPIO}
+System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
+
+%olek
+%zaimportowanie pliku z opisem czujnika swiatla
+\input{czujnik_swiatla}
+
+
+
+%Julka
+\subsection{Czujnik temperatury}
+System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujnika. Implementacja obejmuje:
+
+\begin{enumerate}
+    \item \textbf{Inicjalizacja czujnika temperatury} - Proces inicjalizacji obejmuje konfigurację czujnika z wykorzystaniem funkcji czasowych (getTicks) oraz ustawienie parametrów pomiaru.
+    
+    \item \textbf{Cykliczny odczyt temperatury} - Funkcjonalność ta odpowiada za regularne pobieranie danych z czujnika oraz konwersję odczytanych wartości na format zrozumiały dla użytkownika.
+    
+    \item \textbf{Wykorzystanie danych temperaturowych} - Informacja o temperaturze jest wyświetlana na ekranie OLED i może wpływać na decyzje systemu dotyczące nawadniania lub doświetlania rośliny.
+\end{enumerate}
+
+%Julka
+\subsection{Magistrala SPI}
+System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz innymi peryferiami. Implementacja obejmuje konfigurację parametrów transmisji, takich jak częstotliwość zegara, tryb pracy oraz obsługę przerwań.
+
+%Julka
+\subsection{Wyświetlacz OLED}
+Donica wykorzystuje wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikujący się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Implementacja obejmuje inicjalizację wyświetlacza, konfigurację parametrów transmisji SPI oraz bibliotekę funkcji do wyświetlania informacji o stanie rośliny, poziomie światła i innych parametrach środowiskowych. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
+
+%Malwina
+\subsection{System audio}
+System audio inteligentnej donicy składa się z głośnika (oznaczenie na schemacie SP1) oraz układu sterowania LM4811MM (oznaczenie na schemacie U10). Układ ten umożliwia generowanie sygnałów dźwiękowych informujących użytkownika o stanie rośliny. Implementacja obejmuje inicjalizację układu sterowania, konfigurację parametrów dźwięku oraz bibliotekę funkcji do odtwarzania różnych melodii w zależności od poziomu wilgotności gleby.
+
+
+%Malwina
+\subsection{Timer}
+System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
+
+%olek
+%zaimportowanie pliku z opisem pwm
+\input{./pwm}
+
+
+
+
+
+
+
+%olek
+\input{adc.tex}
+
+%olek
+\subsection{Komparator LM393}
+Przeszukując sieć w poszukiwaniu dokumentacji komparatora LM393 nie mogliśmy znaleźć idealnie odpowiadającego opisu. Mimo, iż oznaczenia na układzie scalonym się pokrywają (dokumentacja dotyczy LM393), to wyprowadzenia nie są identyczne. W związku z tym nie udało się znaleźć dokładnego opisu, ale zasada działania przetwornika jest taka sama. 
+
+
+\end{document}
+
+
+
+

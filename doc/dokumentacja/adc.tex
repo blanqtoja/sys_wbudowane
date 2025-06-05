@@ -1,0 +1,98 @@
+
+\subsection{Przetwornik analogowo-cyfrowy (ADC)}
+\label{sec:ADC}
+System wykorzystuje przetwornik analogowo-cyfrowy do odczytu analogowego wejścia czujnika określanego jako "czujnik wilgotności". Należy zaznaczyć, że termin "wilgotność" jest w tym przypadku skrótem myślowym, ponieważ w rzeczywistości nie mierzymy bezpośrednio wilgotności gleby, a jej przewodność elektryczną, która jest skorelowana z zawartością wody w glebie. Implementacja obejmuje:
+Wbudowany przetwornik ADC jest przetwornikiem 12-bitowym, co oznacza, że może zwracać wartość z zakresu 0-4095. Przetwornik ten działa przy użyciu metody SAR (Successive Approximation Register), która polega na sekwencyjnym przybliżaniu wartości.
+\begin{enumerate}
+    \item \textbf{Inicjalizacja i konfiguracja przetwornika ADC} - Proces inicjalizacji obejmuje konfigurację rejestrów mikrokontrolera, ustawienie częstotliwości próbkowania, wybór kanału pomiarowego oraz określenie napięcia referencyjnego. ADC może wykonać do 200 000 konwersji na sekundę (200 kHz), przy pełnej 12-bitowej rozdzielczości. To znaczy, że maksymalnie co 5 mikrosekund może być gotowy nowy wynik pomiaru. 
+    
+    \item \textbf{Odczyt wartości analogowej} - Funkcjonalność ta odpowiada za uruchomienie konwersji analogowo-cyfrowej, odczyt wyniku konwersji oraz obsługę ewentualnych błędów pomiaru.
+    
+    \item \textbf{Interpretacja danych pomiarowych} - System przetwarza odczytane wartości na względny poziom wilgotności gleby. Proces ten obejmuje kalibrację czujnika (określenie wartości dla suchej i mokrej gleby), filtrowanie zakłóceń oraz konwersję surowych danych na format zrozumiały dla użytkownika.
+\end{enumerate}
+
+
+%chapter 29.
+\subsubsection{Inicjalizacja przetwornika ADC}
+    \begin{enumerate}
+        \item Na początku ustawiono piny do pracy w trybie analogowym. Dla pinu 23 na porcie 0 ustawiono funkcję nr. 1, co jest odpowiednikiem funkcji analogowej (Tabela 81.) \\%odwolanie do dokumentacji
+              Aby ustawić wybraną funkcję, należy ustawić bity 15:14 w rejestrze PINSEL1 na 01.
+        \item Następnie ustawiono 12. bit w rejestrze PCONP o adresie 0x400F C0C4 na 1, aby włączyć zasilanie dla przetwornika ADC.
+        \item Kolejniym krokiem jest odczytanie dzielnika zapisanego w rejestrze PCLKSEL0 o adresie 0x400F C1A8 na bitach 25:24 (Tabela 40.). Domyślnie dzielnik ten wynosi 4 (w rejestrze pod podanymi bitami znajduje się 00). Wtedy obowiązuje wzór na PCLK:
+        \[
+        PCLK = \frac{CCLK}{4}
+        \]
+        Gdzie:\\
+        CCLK - takt zegara układu; CCLK = 100MHz\\
+        PCLK - takt zegara przetwornika ADC\\
+        
+    \end{enumerate}
+
+\subsubsection{Obliczanie masek do odczytu wartości rejestrów}
+        Aby móc zmieniać stan przetwarzania potrzebna jest maska, która pozwoli wybrać tylko interesujące nas bity z rejestru AD0CR.
+        \begin{enumerate}
+            \item W rejestrze AD0CR (0x4003 4000) na bicie 21 znajduje się informacja o stanie przetwornika:
+            \begin{itemize}
+                \item 0 - przetwornik jest gotowy do pracy;
+                \item 1 - przetwornik jest wyłączony
+            \end{itemize}
+            \item Zatem potrzebujemy maski (1<<21)
+        \end{enumerate}
+\subsubsection{Ustawianie wartości AD0CR}
+    W rejestrze AD0CR (0x4003 4000) na bitach 15:8 znajduje się wartość przez jaką dzielony jest PCLK, by uzyskać częstotliwość próbkowania.
+    Zatem potrzebujemy maski \\
+    \[
+    (0xCLKDIV<<8) OR (1<<21)
+    \]
+    Gdzie:\\
+    \begin{align*}
+        \text{CLKDIV} = \text{rate} \cdot 65 \\
+        \text{CLKDIV} = \frac{2 \cdot PCLK  + \text{CLKDIV}}{2 \cdot \text{CLKDIV}} - 1\\
+    \end{align*}
+    rate = 0,2MHz\\
+    \\
+    Aby ustawić wartość AD0CR, należy wykonać następujące kroki:
+    \begin{enumerate}
+        \item Wczytaj aktualną wartość rejestru AD0CR (0x4003 4000) do zmiennej.
+        \item Wykonaj operację OR na tej zmiennej oraz masce.
+        \item Zapisz zmienną z wynikiem do rejestru AD0CR
+    \end{enumerate}
+    W opisywanym projekcie przetwornik ADC nie korzysta z przerwań.
+
+    \subsubsection{Przeliczanie odczytu na dane liczbowe}
+    Jak napisano na początku podrozdziału, przetwornik ADC korzysta z metody SAR (Successive Approximation Register). SAR jest realizowany sprzętowo. Sposób działania przetwornika jest następujący:\\
+    Dla uproszczenia przyjmujemy, że ADC ma 3 bity. Zakres wartości cyfrowych to 0-7. W rzeczywistości przetwornik ma 12 bitów.\\
+    Zakładamy, że:
+
+    \begin{align*}
+        V_{\text{ref}} &= \SI{3.3}{\volt} \\
+        V_{\text{in}} &= \SI{2.0}{\volt}
+    \end{align*}
+    Każdy krok, to 
+    \begin{align*}
+        \frac{\SI{3.3}{\volt}}{8} = \SI{0.4125}{\volt}
+    \end{align*}
+
+    \begin{enumerate}
+        \item Ustawiamy najbardziej znaczący bit na 1, więc liczba wynoch 100.
+        \item Następnie sprawdzamy, czy:
+            \begin{align*}
+                V_{\text{in}} \geq \frac{4}{8} \cdot V_{\text{ref}}\\
+                \SI{2.0}{\volt} \geq \SI{1.65}{\volt}
+            \end{align*}
+        \item Tak, więc zachowujemy najstarszy bit i ustawiamy kolejny bit na 1, czyli 110.
+        \item Następnie sprawdzamy, czy:
+            \begin{align*}
+                V_{\text{in}} \geq \frac{6}{8} \cdot V_{\text{ref}}\\
+                \SI{2.0}{\volt} \geq \SI{2.475}{\volt}
+            \end{align*}
+        \item Nie, więc zmieniamy bit na 0, czyli 101. Ustawiamy kolejny bit na 1, czyli 101.
+        \item Ponownie sprawdzamy, czy:
+            \begin{align*}
+                V_{\text{in}} \geq \frac{5}{8} \cdot V_{\text{ref}}\\
+                \SI{2.0}{\volt} \geq \SI{2.06}{\volt}
+            \end{align*}
+        \item Nie, więc zmieniamy bit na 0, czyli 100. Wartość cyfrowa wynosi 100, czyli 4 w systemie dziesiętnym, co odpowiada lekko ponad połowie zakresu odczytu ($\frac{4}{7} \approx 0.57$, a stosunek $\frac{V_{\text{in}}}{V_{\text{ref}}} \approx 0.60$).
+        
+    \end{enumerate}
+    Uzyskany pomiar służy do określenia wilgotności gleby i wypisanie na wyświtlacz odpowiedniego komunikatu, zostało to opisane w sekcji \ref{sec:wykorzystanie_ADC}.

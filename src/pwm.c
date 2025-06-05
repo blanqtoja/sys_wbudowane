@@ -23,7 +23,7 @@ void PWM_Init(void) {
 
     // ustaw czestotliwosc (przy zalozeniu PCLK_PWM1 = 25 MHz)
     LPC_PWM1->PR = 0;         // prescaler = 1
-    LPC_PWM1->MR0 = 255;      // okres PWM = 255 cykli
+    LPC_PWM1->MR0 = 255;      // okres PWM = 255 cykli //"sufit ustawiony na 255"
     LPC_PWM1->MCR = (1 << 1); // reset on MR0 (PWM cycle)
 
     LPC_PWM1->MR1 = 255;  

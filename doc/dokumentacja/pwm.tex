@@ -66,8 +66,69 @@ W projekcie został wykorzystany PWM1.
                 \caption{Rodzaje pracy w trybie Timer/Counter}
             \end{table}
             
+            \item \textbf{PWM1MCR} - steruje reakcjami układu PWM, gdy zawartość rejestru licznika czasowego PWM Timer Counter (TC) jest równa jednej z wartości w rejestrach dopasowania PWM Match Registers (MR0–MR6). Ustawienie jedynki na poniższych bitach powoduje włączenie danej funkcji.
+            \begin{enumerate}
+                \item \textbf{PWMMR0I} - bit 0, gdy rejestr licznika PWM (PWM Timer Counter) osiągnie wartość ustawioną w Match Register 0 – PWMMR0, może wystąpić przerwanie - jeśli wartość ustawiona na tym bicie to 1
+                \item \textbf{PWMMR0R} - bit 1, gdy zawartość licznika PWMTC jest równa wartości PWMMR0 nastąpi reset PWMTC; Pozwala to tworzyć cykliczny sygnał PWM – licznik odlicza od 0 do wartości w PWMMR0, potem reset.
+                \item \textbf{PWMMR0S} - bit 3, zatrzymuje licznik, gdy wartość w rejestrze PWMTC jest równa wartości zapisanej w PWMMR0
+                \item funkcjonalności kolejnych bitów tego rejestru są cyklicznie powtarzane dla PWMMR1f, PWMMR2f, PWMMR3f, PWMMR4f, PWMMR5f, PWMMR6f (gdzie 'f' oznacza numer rejestru PWMMR)\\
+                                        Bity 21:31 są zarezerwowane.
+            \end{enumerate}
 
+            \item \textbf{PWM1CCR} - rejestr pozwala skonfigurować zdarzenia przechwytywania (capture events) na wejściach CAPn.x, czyli kiedy wartość licznika zostanie zapisana do rejestru przechwytywania (CRn), gdzie n jest numerem Timera - 0 lub 1. Warto zaznaczyć, że jeśli CAP input jest skonfigurowane jako źródło zliczania (Counter Mode w CTCR), to jego bity w PWM1CCR muszą mieć wartość 000.
+                Poniższe funkcje są dostępne przy ustawieniu flagi na 1 we wskazanym bicie.
+                \begin{enumerate}
+                    \item \textbf{Capture on CAPn.0 rising edge} - bit 0, jeśli zostanie wykryte zbocze narastające, to do rejestru przechwytywania CR0 zostanie wpisana zawartość TC
+                    \item \textbf{Capture on CAPn.0 falling edge} - bit 1, jeśli zostanie wykryte zbocze opadające, to do rejestru przechwytywania CR0 zostanie wpisana zawartość TC
+                    \item \textbf{Interrupt on CAPn.0 event} - bit 3, jeśli zostanie wykryte zdarzenie przechwycenia, to zawartośćTC zostanie wpisana do CR0 oraz zostanie wygenerowane przewanie
+                    \item Takie same funkcje mają bity 5:3, ale dla CAPn.1 i zapis do CR1.
+                    \item Bity 31:6 są zarezerwowane.
+                \end{enumerate}
+            \item \textbf{PWM1PCR} - rejestr służy do włączania PWM oraz wybierania trybu działąnia kanału.
+                \begin{enumerate}
+                    \item \textbf{PWMSELx} - wybór trybu pracy dla kanału PWMx, gdzie x to numery 2-6.\\
+                        Poniższa tabela opisuje generowany impuls w zależności od ustawionego bitu. \\
+                        Bity 0:1 sąnieużywane, zawsze mają wartość 0.\\
+                        Bity 7:8 - są zarezerwowane.\\
+                        Zatem bity ustawiające tryby pracy to 6:2.
+                        \begin{table}[H]
+                            \centering
+                            \begin{tabular}{|c|c|c|}
+                                \hline
+                                Wartość & Tryb & Opis\\
+                                \hline
+                                    0 & Single-edge & Generowany jest impuls z jedną krawędzią  opadającą \ref{fig:single-edge-left-pwm}, ponieważ z dokumentacji strona 520, wynika iż każdy cykl PWM zaczyna się od stanu wysokiego.\\
+                                    1 & Double-edge & Generowany jest impuls z dwiema (umożliwia symetryczne impulsy \ref{fig:double-edge-center-pwm})\\
+                                \hline
+                            \end{tabular}
+                            \caption{Rodzaje pracy w trybie Timer/Counter}
+                        \end{table}
 
+                        \begin{figure}[H]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{../PWM/single_edge_left.jpg}
+                            \caption{Przedstawienie trybu single-edge PWM, lewy impuls}
+                            \label{fig:single-edge-left-pwm}
+                        \end{figure}
+
+                        \begin{figure}[H]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{../PWM/single_edge_right.jpg}
+                            \caption{Przedstawienie trybu single-edge PWM, prawy impuls}
+                            \label{fig:single-edge-right-pwm}
+                        \end{figure}
+
+                        \begin{figure}[H]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{../PWM/double-edge-center-pwm.jpg}
+                            \caption{Przedstawienie trybu double-edge PWM}
+                            \label{fig:double-edge-center-pwm}
+                        \end{figure}
+                    
+                        \item \textbf{PWMENAx} - służy do włączania lub wyłączania wyjścia PWM, gdzie x to numer kanału PWM (1-6). Ustawianie tych funkcji odbywa się na bitach 14:9. Wartość 1 włącza wyjście, a wartość 0 wyłącza. Bity 15:31 są nieużywane i mają wartość 0.
+                \end{enumerate}
+            
+                
 
         \end{enumerate}
 

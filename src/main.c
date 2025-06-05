@@ -41,7 +41,8 @@ static uint32_t notes[] = {
 
 static const char *songs[] = {
 		"E2, F4, E2, E4, E2, E4, E2, E4, E2, E4, E2, E4, E2, E4, D2, D2, D2", // kompozytor: Malwina Wodnicka (nie trzeba placic za X bo nie wie co to jest)
-		"G2, G2, G2, F1, F1, F1, F1, D8, D4, F2, F2, F2, F2, F2, E2, E2"
+//		"G2, G2, G2, F1, F1, F1, F1, D8, D4, F2, F2, F2, F2, F2, E2, E2"
+		"A2, c1, f1, a1, A2, g1, a1, B2, e2, d2, c2, A2, f1, G2, F2, E3, C3"
 };
 
 /*! 
@@ -445,9 +446,8 @@ int main (void)
 
         // odczyt temperatury
         t = temp_read();
-        // konwersja odczytu na stopnie Celsjusza
-        // dla MAX6576 z TS1=VCC, TS0=VCC (scalar_multiplier = 640 μs/K)
-        float tempC = ((float)t / 640.0) - 273.15;
+
+        float tempC = (float)t /10.0;
 
         // wyswietlanie temperatury w stopniach Celsjusza
         sprintf(buf, "%.1f C", tempC);
@@ -536,9 +536,9 @@ int main (void)
 		//wyswietlamy napis ze wzgledu na wartosc lux
 		oled_putString(55, 18, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 
-        intToString(t, buf, 10, 10);
-        oled_fillRect((1+9*6),1, 80, 8, OLED_COLOR_WHITE);
-        oled_putString((1+9*6),1, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+//        intToString(t, buf, 10, 10);
+//        oled_fillRect((1+9*6),1, 80, 8, OLED_COLOR_WHITE);
+//        oled_putString((1+9*6),1, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 
         Timer0_Wait(200);
     }

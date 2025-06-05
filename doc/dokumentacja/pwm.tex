@@ -26,8 +26,50 @@ W projekcie został wykorzystany PWM1.
         \end{enumerate}
         \item \textbf{PWM1TCR}
         \begin{enumerate}
-            \item \textbf{ Counter Enable} - bit 0, włączanie i wyłączanie licznika timera oraz preskalera
-            \item 
+            \item \textbf{Counter Enable} - bit 0, włączanie i wyłączanie licznika timera oraz preskalera
+            \item \textbf{Counter Reset} - bit 1, resetowanie licznika timera, synchoronizacja z kolejnym zboczem narastającym PCLK, tak długo, aż wartość tego bitu będzie równa 1
+            \item Bit 2 - zarezerwowany
+            \item \textbf{PWM Enable} - gdy wartość bitu jest róna 1 - \textbf{tryb PWM}, licznik resetuje się do 1, aktywuje shadow registery.\\
+                            Gdy wartość bitu jest równa 0 - \textbf{tryb timer}, licznik resetuje się do 0, bez PWM - działą jak zwykły timer.
+            \item Bit 4:31 - zarezerwowane
         \end{enumerate}
+        \item \textbf{PWM1CTCR} - rejestr służy do wyboru trybu licznika - timer lub jako licznik zliczający impulsy z zewnętrznego źródła. 
+        \begin{enumerate}
+            \item \textbf{Counter/Timer Mode} - bity 0:1, wartości i odpowiadające im działanie zostały opisane w poniższej tabeli.
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c|c|}
+                    \hline
+                    Wartość & Opis\\
+                    \hline
+                    00  & Timer mode: Timer Counter (TC) wykorzystuje Prescale Counter (PC) oraz Prescale Register (PR), aby móc działać wolniej. TC inkrementuje się gdy PC = PR\\
+                    01 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy każdym zboczu narastającym) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    10 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy każdym zboczu opadającym) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    11 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy na obu zboczach impulsu) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    \hline
+                \end{tabular}
+                \caption{Rodzaje pracy w trybie Timer/Counter}
+            \end{table}
+            \item \textbf{Count Input Select} - bity 3:2 - ta częśćrejestru odpowiada za wybó pinu PCAP z którego będą zliczane impulsy.\\
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c|c|}
+                    \hline
+                    Wartość & Opis\\
+                    \hline
+                    00  & Timer mode: Timer Counter (TC) wykorzystuje Prescale Counter (PC) oraz Prescale Register (PR), aby móc działać wolniej. TC inkrementuje się gdy PC = PR\\
+                    01 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy każdym zboczu narastającym) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    10 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy każdym zboczu opadającym) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    11 & Counter Mode: TC zlicza impulsy przychodzące (inkrementacja przy na obu zboczach impulsu) z zewnętrznego pinu wybranego na bitach 3:2  \\
+                    \hline
+                \end{tabular}
+                \caption{Rodzaje pracy w trybie Timer/Counter}
+            \end{table}
+            
+
+
+
+        \end{enumerate}
+
     \end{enumerate}
 \end{enumerate}

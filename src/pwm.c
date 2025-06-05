@@ -6,7 +6,7 @@
  *  @brief    Inicjalizuje moduł PWM do sterowania diodą RGB.
  *  @returns  Brak wartości zwracanej (void)
  *  @side effects:
- *            Konfiguruje piny P2.0, P2.1, P2.2 jako wyjścia PWM1.1, PWM1.2, PWM1.3
+ *            Konfiguruje piny P2.0, P2.1, P2.2 jako wyjścia PWM1.1, PWM1.2, PWM1.3 // na schemacie są to piny PIO1_9, PIO1_10, PIO1_11
  *            Ustawia częstotliwość PWM z okresem 255 cykli
  *            Włącza licznik PWM i tryb PWM
  */

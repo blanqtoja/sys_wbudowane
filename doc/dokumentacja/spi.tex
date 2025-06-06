@@ -1,0 +1,57 @@
+\subsection{Magistrala SPI}
+System wykorzystuje magistralę SPI z interfejsem SSP1 do komunikacji z wyświetlaczem OLED. 
+Piny SPI:
+\begin{itemize}
+\item \textbf{P0.7} - SCK1 (Serial Clock for SSP1); generowany przez mastera sygnał zegarowy służący do synchronizacji przesyłu danych.
+\item \textbf{P0.8} - MISO1 (Main In, Sub Out); służy do przesyłu danych od slave'a do mastera; SPI używamy tylko dla OLED więc MISO nie jest używany;
+\item \textbf{P0.9} - MOSI1 (Main Out, Sub In); służy do przesyłu danych od mastera do slave'a;
+\item \textbf{P2.2 - SSEL} (Slave Select); umożliwia wybór slave’a do transmisji, jest aktywowany stanem niskim; sterowany przez GPIO;
+\end{itemize}
+Rejestry:
+\begin{itemize}
+    \item \textbf{S0SPCR} - SPI Control Register; rejestr sterujący pracą interfejsu SPI, pozwala m.in. na ustawienie trybu pracy, włączenie SPI i przerwań.
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru S0SPCR}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0–1     & —            & Zarezerwowane. \\
+\hline
+2       &BitEnable  & 0 – transmisja zawsze 8-bitowa, 1 – długość słowa określona przez bity 11:8 (\texttt{BITS}). \\
+\hline
+3       &CPHA     & Faza zegara: 0 – dane próbkowane na pierwszym zboczu, 1 – na drugim zboczu. \\
+\hline
+4       & CPOL       & Polaryzacja zegara: 0 – SCK aktywny wysoki, 1 – SCK aktywny niski. \\
+\hline
+5       & MSTR       & Tryb pracy SPI: 0 – tryb Slave, 1 – tryb Master. \\
+\hline
+6       & LSBF       & Kolejność bitów: 0 – MSB pierwszy, 1 – LSB pierwszy. \\
+\hline
+7       & SPIE       & Przerwania SPI: 0 – wyłączone, 1 – włączone (na zdarzenia SPIF lub MODF). \\
+\hline
+8–11    & BITS       & Liczba bitów przesyłanych w jednym transferze (aktywny tylko gdy BitEnable = 1). Patrz tabela poniżej. \\
+\hline
+12–31   & —            & Zarezerwowane. \\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111 & 0000\\
+\hline
+8    & 9    & 10   & 11   & 12   & 13   & 14   & 15 & 16\\
+\hline
+\end{tabular}
+\end{table}
+
+    \item \textbf{S0SPSR} - SPI Status Register; rejestr stanu, zawiera flagi informujące o gotowości transmisji, zakończeniu przesyłu i błędach.
+    \item \textbf{S0SPDR} - SPI Data Register; dwukierunkowy rejestr danych, zapis do niego inicjuje transmisję, odczyt zwraca dane odebrane przez SPI.
+    \item \textbf{S0SPCCR} - SPI Clock Counter Register; ustala częstotliwość zegara SPI (SCK) poprzez wartość dzielnika.
+    \item \textbf{S0SPINT} - SPI Interrupt Flag; flaga informująca o wystąpieniu przerwania SPI; może być programowo wyczyszczona.
+\end{itemize}

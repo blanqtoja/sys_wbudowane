@@ -1,0 +1,27 @@
+\subsection{Wyświetlacz OLED}
+
+Wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikuje się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
+
+\subsubsection{Konfiguracja}
+Piny sterujące wyświetlaczem OLED:
+\begin{itemize}
+\item \textbf{P0.6} – CS (Chip Select); aktywny w stanie niskim;
+\item \textbf{P2.7} – D/C (Data/Command); w stanie wysokim dane są traktowane jako dane, w stanie niskim przesyłane do rejestru komend.
+\item \textbf{P2.1} - RES (reset); w stanie niskim wywołuje reset i inicjalizację, w trakcie normalnej pracy należy utrzymywać go w stanie wysokim;
+\end{itemize}
+Inicjalizacja:
+\begin{enumerate}
+    \item Ustawiamy piny 2.1, 2,7 oraz 0.6 w tryb wyjścia za pomocą rejestrów GPIO. %Odwołanie do GPIO rejestrów FIODIR
+    \item Ustawiamy pin 2.1 w tryb niskiego stanu aby upewnić się, że wyświetlacz jest wyłączony.
+    \item Wysyłamy instrukcje inicjalizujące do wyświetlacza OLED.
+    \item Odczekujemy krótki czas przed włączeniem wyświetlacza.
+    \item Ustawiamy pin 2.1 w tryb wysokiego stanu aby włączyć wyświetlacz.
+\end{enumerate}
+Przesyłanie danych:
+\begin{enumerate}
+    \item Ustawienie pinu CS w stan niski.
+    \item Ustawienie pinu D/C w stan wysoki w trybie danych lub w stan niski w trybie komendy.
+    \item Ustawienie pinu CS w stan wysoki.
+\end{enumerate}
+
+

@@ -34,9 +34,7 @@
     członek zespołu & funkcjonalność\\
     \hline
     Olek & i2c, light, pwm, adc\\
-   \hline
     Malwina & gpio, audio, timer\\
-   \hline
     Julka & SPI, oled, czujnik temperatury\\
     \hline
     \end{tabular}
@@ -127,12 +125,10 @@ System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujni
 \end{enumerate}
 
 %Julka
-\subsection{Magistrala SPI}
-System wykorzystuje interfejs SPI do komunikacji z wyświetlaczem OLED oraz innymi peryferiami. Implementacja obejmuje konfigurację parametrów transmisji, takich jak częstotliwość zegara, tryb pracy oraz obsługę przerwań.
+\input{spi}
 
 %Julka
-\subsection{Wyświetlacz OLED}
-Donica wykorzystuje wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikujący się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Implementacja obejmuje inicjalizację wyświetlacza, konfigurację parametrów transmisji SPI oraz bibliotekę funkcji do wyświetlania informacji o stanie rośliny, poziomie światła i innych parametrach środowiskowych. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
+\input{oled}
 
 %Malwina
 \subsection{System audio}

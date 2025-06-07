@@ -53,3 +53,9 @@ Piny sterujące wyświetlaczem OLED:
     \item Po przerysowaniu całej linii znakowej kursor pionowy jest przesuwany w dół o jeden piksel, a poziomy resetowany do początkowej pozycji.
 \end{enumerate}
 
+\subsubsection{Wyświetlanie ciągu znaków i wypełnienie prostokąta}
+
+Wyświetlenie ciągu znaków i wypełnienie prostokąta realizowane są w oparciu o te same mechanizmy niskopoziomowe co rysowanie pojedynczego piksela, znaku, przy czym operacje te są zoptymalizowane pod kątem wydajności poprzez grupowanie zapisów do pamięci wyświetlacza.
+
+W przypadku ciągów znaków każdy znak traktowany jest jako zestaw pikseli, a wypełnienie prostokąta sprowadza się do sekwencyjnego ustawiania bloków pikseli w określonym obszarze, co minimalizuje liczbę koniecznych operacji adresowania.
+

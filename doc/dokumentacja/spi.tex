@@ -7,12 +7,12 @@ Piny SPI:
 \item \textbf{P0.9} - MOSI1 (Main Out, Sub In); służy do przesyłu danych od mastera do slave'a;
 \item \textbf{P2.2 - SSEL} (Slave Select); umożliwia wybór slave’a do transmisji, jest aktywowany stanem niskim; sterowany przez GPIO;
 \end{itemize}
-Rejestry:
+Rejestry magistrali SPI:
 \begin{itemize}
     \item \textbf{S0SPCR} - SPI Control Register; rejestr sterujący pracą interfejsu SPI, pozwala m.in. na ustawienie trybu pracy, włączenie SPI i przerwań.
 \begin{table}[H]
 \centering
-\caption{Opis bitów rejestru S0SPCR}
+\caption{Opis bitów rejestru S0SPCR.}
 \vspace{0.5em}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{|c|c|p{9.5cm}|}
@@ -51,7 +51,106 @@ Rejestry:
 \end{table}
 
     \item \textbf{S0SPSR} - SPI Status Register; rejestr stanu, zawiera flagi informujące o gotowości transmisji, zakończeniu przesyłu i błędach.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru S0SPSR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0–2     & —        & Zarezerwowane.\\
+\hline
+3       & ABRT     & Przerwanie transmisji w trybie Slave: 1 – wystąpiło przerwanie; bit czyszczony przez odczytanie tego rejestru. \\
+\hline
+4       & MODF     & Błąd trybu: 1 – wystąpił błąd trybu. Bit czyszczony przez odczytanie tego rejestru i zapis do rejestru kontrolnego SPI. \\
+\hline
+5       & ROVR     & Nadpisanie przy odczycie: 1 – wystąpił błąd przepełnienia przy odbiorze. Bit czyszczony przez odczytanie tego rejestru. \\
+\hline
+6       & WCOL     & Kolizja zapisu: 1 – wystąpiła kolizja przy zapisie. Bit czyszczony przez odczytanie tego rejestru i dostęp do rejestru danych SPI. \\
+\hline
+7       & SPIF     & Flaga zakończenia transmisji SPI: 1 – zakończono transmisję. Dla Mastera: ustawiana na końcu ostatniego cyklu; dla Slave’a: przy ostatnim zboczu próbkującym SCK. Bit czyszczony przez odczytanie tego rejestru i dostęp do rejestru danych SPI. \\
+\hline
+8–31    & —        & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+    
     \item \textbf{S0SPDR} - SPI Data Register; dwukierunkowy rejestr danych, zapis do niego inicjuje transmisję, odczyt zwraca dane odebrane przez SPI.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru S0SPDR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0-7     & DataLow  & Dwukierunkowy port danych SPI. Służy do odczytu danych odebranych lub zapisu danych do wysłania. \newline Wartość domyślna: \texttt{0x00}. \\
+\hline
+8–15    & DataHigh & Dodatkowe bity transmisji/odbioru, gdy bit 2 rejestru \texttt{SPCR} (BitEnable) = 1 i bity 11:8 \texttt{SPCR} są różne od \texttt{1000} (czyli liczba bitów > 8). \newline Gdy liczba bitów < 16, bardziej znaczące bity przy odczycie mają wartość zero. \newline Wartość domyślna: \texttt{0x00}. \\
+\hline
+16–31   & —         & Zarezerwowane. \\
+\hline
+\end{tabular}
+\end{table}
+
+    
     \item \textbf{S0SPCCR} - SPI Clock Counter Register; ustala częstotliwość zegara SPI (SCK) poprzez wartość dzielnika.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru S0SPCCR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0–7     & Counter    & Ustawienie licznika zegara SPI0. \newline Wartość musi być parzysta i większa lub równa 8. Określa częstotliwość zegara SPI:  
+\[ \text{SCK}_{\text{freq}} = \frac{PCLK}{\text{Counter}} \]
+\newline Wartość domyślna: \texttt{0x00}. \\
+\hline
+8–31    & —          & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+    
     \item \textbf{S0SPINT} - SPI Interrupt Flag; flaga informująca o wystąpieniu przerwania SPI; może być programowo wyczyszczona.
+
+    \begin{table}[H]
+\centering
+\caption{Opis bitów rejestru S0SPINT}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0     & SPIF       & Flaga przerwania SPI. Ustawiana przez interfejs SPI w celu wygenerowania przerwania. \newline Zerowana przez zapisanie jedynki do tego bitu. \newline \\
+\hline
+1–7   & —          & Zarezerwowane.\\
+\hline
+8–31  & —          & Zarezerwowane. \\
+\hline
+\end{tabular}
+\end{table}
+\end{itemize}
+Rejestry SSP:
+\begin{itemize}
+  \item \textbf{CR0} – Control Register 0; ustala rozmiar słowa danych, tryb protokołu SPI oraz współczynnik dzielnika zegara.
+  \item \textbf{CR1} – Control Register 1; konfiguruje tryb master/slave i inne ustawienia pracy kontrolera SSP.
+  \item \textbf{DR} – Data Register; rejestr danych – zapis wypełnia FIFO nadawcze, odczyt opróżnia FIFO odbiorcze.
+  \item \textbf{SR} – Status Register; rejestr stanu – zawiera flagi informujące o stanie transmisji i buforów FIFO.
+  \item \textbf{CPSR} – Clock Prescale Register; dzielnik preskalera zegara – ustala podstawową częstotliwość SSP.
+  \item \textbf{IMSC} – Interrupt Mask Set and Clear Register; umożliwia maskowanie (włączanie/wyłączanie) poszczególnych źródeł przerwań.
+  \item \textbf{RIS} – Raw Interrupt Status Register; pokazuje status aktywnych przerwań niezależnie od ustawienia masek.
+  \item \textbf{MIS} – Masked Interrupt Status Register; pokazuje status przerwań uwzględniający ustawienia masek.
+  \item \textbf{ICR} – Interrupt Clear Register (SSPICR); służy do ręcznego kasowania wybranych flag przerwań.
+  \item \textbf{DMACR} – DMA Control Register; umożliwia włączenie transmisji danych za pomocą kontrolera DMA.
 \end{itemize}

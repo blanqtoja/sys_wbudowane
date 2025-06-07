@@ -113,16 +113,7 @@ System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami
 
 
 %Julka
-\subsection{Czujnik temperatury}
-System monitoruje temperaturę otoczenia rośliny za pomocą dedykowanego czujnika. Implementacja obejmuje:
-
-\begin{enumerate}
-    \item \textbf{Inicjalizacja czujnika temperatury} - Proces inicjalizacji obejmuje konfigurację czujnika z wykorzystaniem funkcji czasowych (getTicks) oraz ustawienie parametrów pomiaru.
-    
-    \item \textbf{Cykliczny odczyt temperatury} - Funkcjonalność ta odpowiada za regularne pobieranie danych z czujnika oraz konwersję odczytanych wartości na format zrozumiały dla użytkownika.
-    
-    \item \textbf{Wykorzystanie danych temperaturowych} - Informacja o temperaturze jest wyświetlana na ekranie OLED i może wpływać na decyzje systemu dotyczące nawadniania lub doświetlania rośliny.
-\end{enumerate}
+\input{termometr}
 
 %Julka
 \input{spi}

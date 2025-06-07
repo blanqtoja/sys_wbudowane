@@ -1,13 +1,13 @@
 \subsection{Magistrala SPI}
 System wykorzystuje magistralę SPI z interfejsem SSP1 do komunikacji z wyświetlaczem OLED. 
-Piny SPI:
+\subsubsection{Piny SPI:}
 \begin{itemize}
 \item \textbf{P0.7} - SCK1 (Serial Clock for SSP1); generowany przez mastera sygnał zegarowy służący do synchronizacji przesyłu danych.
 \item \textbf{P0.8} - MISO1 (Main In, Sub Out); służy do przesyłu danych od slave'a do mastera; SPI używamy tylko dla OLED więc MISO nie jest używany;
 \item \textbf{P0.9} - MOSI1 (Main Out, Sub In); służy do przesyłu danych od mastera do slave'a;
 \item \textbf{P2.2 - SSEL} (Slave Select); umożliwia wybór slave’a do transmisji, jest aktywowany stanem niskim; sterowany przez GPIO;
 \end{itemize}
-Rejestry magistrali SPI:
+\subsubsection {Rejestry magistrali SPI:}
 \begin{itemize}
     \item \textbf{S0SPCR} - SPI Control Register; rejestr sterujący pracą interfejsu SPI, pozwala m.in. na ustawienie trybu pracy, włączenie SPI i przerwań.
 \begin{table}[H]
@@ -141,16 +141,285 @@ Rejestry magistrali SPI:
 \end{tabular}
 \end{table}
 \end{itemize}
-Rejestry SSP:
+\subsubsection {Rejestry SSP:}
 \begin{itemize}
   \item \textbf{CR0} – Control Register 0; ustala rozmiar słowa danych, tryb protokołu SPI oraz współczynnik dzielnika zegara.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru CR0.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0-3     & DSS         & Wybór długości słowa danych przesyłanych w jednej ramce (ang. \textit{Data Size Select}). Wartości 0000–0010 są zarezerwowane i nieobsługiwane. Patrz tabela poniżej. \\
+\hline
+4-5     & FRF         & Format ramki: \texttt{00} – SPI, \texttt{01} – TI, \texttt{10} – Microwire, \texttt{11} – zarezerwowane (nie używać). \\
+\hline
+6       & CPOL        & Polaryzacja zegara: 0 – linia SCK niska między transmisjami, 1 – linia SCK wysoka między transmisjami. \\
+\hline
+7       & CPHA        & Faza zegara: 0 – dane próbkowane przy pierwszym zboczu, 1 – przy drugim zboczu sygnału zegarowego. \\
+\hline
+8-15    & SCR         & Ustawienie szybkości zegara (ang. \textit{Serial Clock Rate}) – liczba cykli zegara preskalera na jeden bit - 1. Częstotliwość transmisji: $f = \frac{\text{PCLK}}{\text{CPSDVSR} \times (\text{SCR} + 1)}$. \\
+\hline
+16-31   & —           & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+
+\begin{table}[H]
+\centering
+\caption{Kodowanie pola \texttt{DSS} – długość słowa danych.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{DSS} & 0011 & 0100 & 0101 & 0110 & 0111 & 1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111 \\
+\hline
+\textbf{Bity} & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+  
   \item \textbf{CR1} – Control Register 1; konfiguruje tryb master/slave i inne ustawienia pracy kontrolera SSP.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru CR1.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{10.2cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & LBM & Loop Back Mode: 0 – tryb normalny, 1 – sprzężenie zwrotne (dane wejściowe pochodzą z wyjścia). \\
+\hline
+1 & SSE & SSP Enable: 0 – kontroler SSP wyłączony, 1 – kontroler SSP włączony (działa na magistrali SPI). \\
+\hline
+2 & MS & Master/Slave Mode: 0 – tryb Master (SSP steruje SCLK, MOSI, SSEL), 1 – tryb Slave (SSP steruje tylko MISO). Może być ustawiony tylko gdy \texttt{SSE} = 0. \\
+\hline
+3 & SOD & Slave Output Disable: 0 – wyjście MISO aktywne w trybie Slave, 1 – wyjście MISO zablokowane. Dotyczy tylko trybu Slave. \\
+\hline
+4-31 & — & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{DR} – Data Register; rejestr danych – zapis wypełnia FIFO nadawcze, odczyt opróżnia FIFO odbiorcze.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru DR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{10cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0-15 & DATA & Dane do wysłania lub odebrane dane. \\
+\hline
+ & & \textbf{Zapis:} Program może zapisać dane do rejestru, gdy bit \texttt{TNF} (Tx FIFO Not Full) w rejestrze statusu jest ustawiony na 1 (FIFO nadajnika nie jest pełne). Jeśli FIFO było puste i kontroler SSP nie jest zajęty, transmisja zaczyna się natychmiast. W przeciwnym wypadku dane zostaną wysłane po zakończeniu poprzednich. Jeśli długość danych jest mniejsza niż 16 bitów, dane powinny być wyjustowane do prawej strony (right-justified). \\
+\hline
+ & & \textbf{Odczyt:} Program może odczytać dane, gdy bit \texttt{RNE} (Rx FIFO Not Empty) w rejestrze statusu jest ustawiony na 1 (FIFO odbiornika nie jest puste). Odczyt zwraca najstarsze dane w FIFO, wyjustowane do prawej strony jeśli mniej niż 16 bitów. \\
+\hline
+16-31 & — & Zarezerwowane. \\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{SR} – Status Register; rejestr stanu – zawiera flagi informujące o stanie transmisji i buforów FIFO.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru SR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & TFE & Transmit FIFO Empty — bit ustawiony na 1, gdy FIFO nadajnika jest puste, 0 gdy nie jest puste.  \\
+\hline
+1 & TNF & Transmit FIFO Not Full — bit ustawiony na 1, gdy FIFO nadajnika nie jest pełne, 0 gdy jest pełne.  \\
+\hline
+2 & RNE & Receive FIFO Not Empty — bit ustawiony na 1, gdy FIFO odbiornika nie jest puste, 0 gdy jest puste.  \\
+\hline
+3 & RFF & Receive FIFO Full — bit ustawiony na 1, gdy FIFO odbiornika jest pełne, 0 gdy nie jest pełne.  \\
+\hline
+4 & BSY & Busy — bit ustawiony na 1, gdy kontroler SSP jest zajęty (wysyła/odbiera ramkę lub FIFO nadajnika nie jest puste), 0 gdy jest bezczynny.  \\
+\hline
+5-31 & — & Zarezerwowane.  \\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{CPSR} – Clock Prescale Register; dzielnik preskalera zegara – ustala podstawową częstotliwość SSP.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru CPSR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bity} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0-7 & CPSDVSR & Parzysta wartość z zakresu 2–254, przez którą dzielony jest sygnał zegara SSP\_PCLK, aby uzyskać zegar preskalera. Bit 0 zawsze odczytywany jest jako 0 (rezerwuje parzystość wartości). \\
+\hline
+8-31 & — & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{IMSC} – Interrupt Mask Set and Clear Register; umożliwia maskowanie (włączanie/wyłączanie) poszczególnych źródeł przerwań.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru IMSC.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & RORIM & Ustawienie tego bitu powoduje włączenie przerwania w przypadku przepełnienia odbiorczego FIFO (Receive Overrun), czyli gdy FIFO jest pełne, a kolejna ramka została całkowicie odebrana. W takim przypadku poprzednie dane w FIFO są nadpisywane. \\
+\hline
+1 & RTIM & Włącza przerwanie w przypadku wystąpienia Receive Time-out, czyli gdy FIFO nie jest puste, ale dane nie były odczytane przez pewien czas określony jako okres timeout. \\
+\hline
+2 & RXIM & Włącza przerwanie, gdy odbiorcze FIFO jest co najmniej w połowie zapełnione. \\
+\hline
+3 & TXIM & Włącza przerwanie, gdy nadające FIFO jest co najmniej w połowie puste. \\
+\hline
+4-31 & — & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{RIS} – Raw Interrupt Status Register; pokazuje status aktywnych przerwań niezależnie od ustawienia masek.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru RIS.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & RORRIS & Bit ustawiany na 1, gdy nowa ramka została całkowicie odebrana, podczas gdy Rx FIFO było pełne. Wtedy poprzednia ramka jest nadpisywana przez nową. \\
+\hline
+1 & RTRIS & Bit ustawiany na 1, gdy Rx FIFO nie jest puste i nie zostało odczytane przez okres timeout (określony na podstawie częstotliwości SSP). \\
+\hline
+2 & RXRIS & Bit ustawiany na 1, gdy Rx FIFO jest co najmniej w połowie zapełnione. \\
+\hline
+3 & TXRIS & Bit ustawiany na 1, gdy Tx FIFO jest co najmniej w połowie puste. \\
+\hline
+4-31 & — & Zarezerwowane. \\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{MIS} – Masked Interrupt Status Register; pokazuje status przerwań uwzględniający ustawienia masek.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru MIS.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{9.5cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & RORMIS & Bit ustawiany na 1, jeśli nowa ramka została całkowicie odebrana podczas gdy Rx FIFO było pełne, i jeśli odpowiednia przerwanie jest włączone. \\
+\hline
+1 & RTMIS & Bit ustawiany na 1, jeśli Rx FIFO nie jest puste, nie zostało odczytane przez okres timeout oraz przerwanie jest włączone. \\
+\hline
+2 & RXMIS & Bit ustawiany na 1, jeśli Rx FIFO jest co najmniej w połowie zapełnione i przerwanie jest włączone. \\
+\hline
+3 & TXMIS & Bit ustawiany na 1, jeśli Tx FIFO jest co najmniej w połowie puste i przerwanie jest włączone. \\
+\hline
+4-31 & — & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+
+  
   \item \textbf{ICR} – Interrupt Clear Register (SSPICR); służy do ręcznego kasowania wybranych flag przerwań.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru ICR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{10cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & RORIC & Zapisanie 1 do tego bitu czyści przerwanie „ramka została odebrana, gdy Rx FIFO było pełne”. \\
+\hline
+1 & RTIC & Zapisanie 1 do tego bitu czyści przerwanie „Rx FIFO nie jest puste i nie zostało odczytane przez okres timeout”. Okres timeout jest taki sam w trybie master i slave i zależy od szybkości SSP: 32 bity przy PCLK / (CPSDVSR × [SCR+1]). \\
+\hline
+2-31 & — & Zarezerwowane.\\
+\hline
+\end{tabular}
+\end{table}
+  
   \item \textbf{DMACR} – DMA Control Register; umożliwia włączenie transmisji danych za pomocą kontrolera DMA.
+
+\begin{table}[H]
+\centering
+\caption{Opis bitów rejestru DMACR.}
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|p{10cm}|}
+\hline
+\textbf{Bit} & \textbf{Symbol} & \textbf{Opis} \\
+\hline
+0 & RXDMAE & Włącza DMA dla odbiorczego FIFO, gdy ustawiony na 1. Wyłącza DMA dla odbiorczego FIFO, gdy ustawiony na 0. \\
+\hline
+1 & TXDMAE & Włącza DMA dla nadawczego FIFO, gdy ustawiony na 1. Wyłącza DMA dla nadawczego FIFO, gdy ustawiony na 0. \\
+\hline
+2-31 & — & Zarezerwowane. \\
+\hline
+\end{tabular}
+\end{table}
+
+  
 \end{itemize}
+
+\subsubsection{Inicjalizacja magistrali}
+\begin{enumerate}
+    \item Ustawienie pinów
+    \begin{enumerate}
+        \item P0.7 — SCK
+        \item P0.8 — MISO
+        \item P0.9 — MOSI
+        \item P2.2 — SSEL
+    \end{enumerate}
+    \item Włączenie zasilania SSP1 poprzez ustawienie bitu 10 w rejestrze PCONP.
+    \item Konfiguracja ustawień magistrali (tryb pracy: master, format ramki: SPI, liczba bitów danych: 8, polaryzacja i faza zegara: CPOL - wysoki poziom, CPHA - pierwsza krawędź, prędkość zegara: 1 MHz).
+    \item Inicjalizacja rejestrów kontrolnych SSP (CR0 i CR1).
+    \item Ustawienie prędkości taktowania SSP.
+    \item Włączenie magistrali SSP ustawiając bit SSE w rejestrze CR1.
+\end{enumerate}
+
+\subsection{Wykorzystanie}
+\begin{enumerate}
+    \item Konfiguracja pinów SPI (PINSEL), ustawienie parametrów w strukturze SSP\_CFG\_Type, wywołanie SSP\_Init() i SSP\_Cmd() do uruchomienia magistrali.
+    \item Wysyłanie danych; ustawienie linii SSEL nisko (aktywacja slave), wpisanie danych do SSP\_DR, oczekiwanie na zakończenie transmisji (BSY=0), odbiór danych równolegle.
+    \item Odbieranie danych; Wysłanie tzw. dummy bajtów, oczekiwanie na odebranie danych (RNE=1), odczyt z SSP\_DR.
+    \item Zmiana i odczyt rejestrów slave; wysłanie adresu rejestru, wysłanie lub odebranie danych zgodnie z potrzebą.
+    \item Koniec transmisji; ustawienie linii SSEL na wysoki poziom.
+\end{enumerate}

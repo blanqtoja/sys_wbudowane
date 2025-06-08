@@ -1,7 +1,7 @@
 \subsection{Sterowanie GPIO}
 
 \subsubsection{Wstęp}
-System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi, wykrywania poziomu wody oraz obsługi przycisków interfejsu użytkownika.
+System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi.
 
 \subsubsection{Konfiguracja portów GPIO}
 
@@ -61,19 +61,86 @@ Po przypisaniu pinu funkcji GPIO, konfiguracja odbywa się za pomocą zestawu re
 
 \begin{table}[H]
 \centering
-\caption{Przypisanie pinów mikrokontrolera LPC176x do funkcji w projekcie}
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do czujnika wilgotności gleby}
 \begin{tabular}{@{}lll@{}}
 \toprule
 \textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
 P0.23        & ADC0                             & Odczyt wilgotności gleby (czujnik analogowy) \\
-P0.26        & GPIO                             & Inna funkcja (niezidentyfikowana) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO0DIR dla pinu 23
+
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do obsługi układu audio LM4811}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P0.26        & LM4811 SIGNAL                     & Generowanie sygnału dźwiękowego \\
 P0.27        & LM4811 CLK                       & Sterowanie zegarem układu audio LM4811 \\
 P0.28        & LM4811 UP/DN                     & Regulacja głośności LM4811 \\
-P2.0         & PWM1.1 (Red)                     & Sterowanie składową czerwoną diody RGB \\
-P2.1         & PWM1.2 (Green)                   & Sterowanie składową zieloną diody RGB \\
-P2.2         & PWM1.3 (Blue)                    & Sterowanie składową niebieską diody RGB \\
 P2.13        & LM4811 SHUTDOWN                  & Włączenie/wyłączenie układu LM4811 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIOxDIR dla odpowiednich pinów
+
+
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do sterowania diodą RGB}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P2.0         & PWM1.1 (Red)                     & Sterowanie składową czerwoną diody RGB \\
+P2.1         & PWM1.2 (Green)                   & Sterowanie składową zieloną diody RGB \\
+P2.2         & PWM1.3 (Blue)                    & Sterowanie składową niebieską diody RGB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO2DIR
+
+\subsubsection{Przerwania sprzętowe – opis i zastosowanie}
+
+\begin{itemize}
+    \item \textbf{Czym są przerwania sprzętowe?} \\
+    Przerwania sprzętowe (ang. \textit{hardware interrupts}) pozwalają mikrokontrolerowi natychmiast reagować na określone zdarzenia zewnętrzne lub wewnętrzne, bez konieczności ich ciągłego sprawdzania w pętli głównej programu (polling).
+    
+    \item \textbf{Mechanizm w LPC1768/9:} \\
+    Obsługa przerwań w mikrokontrolerze \textbf{LPC1768/9} opiera się na wbudowanym w rdzeń \textbf{Cortex-M3} kontrolerze \textbf{NVIC} (\textit{Nested Vectored Interrupt Controller}), który zarządza priorytetami i wywoływaniem odpowiednich procedur obsługi przerwań.
+    
+    \item \textbf{Typowe zastosowania przerwań:}
+    \begin{itemize}
+        \item zmiana stanu pinu GPIO (np. naciśnięcie przycisku),
+        \item zakończenie konwersji ADC,
+        \item odebranie danych przez UART, SPI czy I\textsuperscript{2}C,
+        \item przepełnienie licznika lub zegara.
+    \end{itemize}
+
+    \item \textbf{Podejście w aktualnym projekcie:}
+    \begin{itemize}
+        \item W obecnej implementacji programu \textbf{nie są wykorzystywane przerwania}.
+        \item Wszystkie operacje (odczyty czujników, sterowanie wyjściami, reakcje na zmiany warunków) są realizowane sekwencyjnie w \textbf{pętli głównej} z użyciem metody \textit{polling}.
+    \end{itemize}
+
+    \item \textbf{Zalety i ograniczenia tego podejścia:}
+    \begin{itemize}
+        \item \textbf{Zalety:} prostsza implementacja – brak konieczności definiowania procedur ISR (Interrupt Service Routine).
+        \item \textbf{Ograniczenia:}
+        \begin{itemize}
+            \item mniejsze wykorzystanie potencjału mikrokontrolera,
+            \item możliwe opóźnienia w reakcji na zdarzenia,
+            \item ograniczona skalowalność w bardziej złożonych aplikacjach.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
 

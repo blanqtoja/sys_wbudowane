@@ -57,5 +57,23 @@ Po przypisaniu pinu funkcji GPIO, konfiguracja odbywa się za pomocą zestawu re
 
 \end{itemize}
 
+\subsubsection{Do czego używamy GPIO?}
 
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC176x do funkcji w projekcie}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P0.23        & ADC0                             & Odczyt wilgotności gleby (czujnik analogowy) \\
+P0.26        & GPIO                             & Inna funkcja (niezidentyfikowana) \\
+P0.27        & LM4811 CLK                       & Sterowanie zegarem układu audio LM4811 \\
+P0.28        & LM4811 UP/DN                     & Regulacja głośności LM4811 \\
+P2.0         & PWM1.1 (Red)                     & Sterowanie składową czerwoną diody RGB \\
+P2.1         & PWM1.2 (Green)                   & Sterowanie składową zieloną diody RGB \\
+P2.2         & PWM1.3 (Blue)                    & Sterowanie składową niebieską diody RGB \\
+P2.13        & LM4811 SHUTDOWN                  & Włączenie/wyłączenie układu LM4811 \\
+\bottomrule
+\end{tabular}
+\end{table}
 

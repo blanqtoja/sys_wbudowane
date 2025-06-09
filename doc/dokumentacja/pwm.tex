@@ -126,11 +126,28 @@ W projekcie został wykorzystany PWM1.
                         \end{figure}
                     
                         \item \textbf{PWMENAx} - służy do włączania lub wyłączania wyjścia PWM, gdzie x to numer kanału PWM (1-6). Ustawianie tych funkcji odbywa się na bitach 14:9. Wartość 1 włącza wyjście, a wartość 0 wyłącza. Bity 15:31 są nieużywane i mają wartość 0.
+                        \item \textbf{PWM1LER} - używany jest do aktualizacji rejestró PWM Match, ponieważ w trybie PWM Mode, wartości wpisywane do rejestrów dopasowania nie są od razu używane, ale trafiają do rejestrów tymczasowych (shadow registers). Zmiany należy zatwierdzić poprzez ustawienie odpowiednich bitó w PWM1LER. Zmiany są widoczne dopiero po rozpocząciu nowego cyklu PWM.
+                        %MR0 - sufit - koniec cyklu
+                        %MRx (x = 1–6) = moment zbocza opadającego
+                        %W trybie single edge: zbocze narastające zawsze w 0
+                        %W double edge: zbocza mogą być ustawione niezależnie w MRx i MRy (np. MR1 i MR2)
                 \end{enumerate}
             
                 
 
         \end{enumerate}
 
+        
     \end{enumerate}
+
+    \item Omówienie zagadnienia PWM na podstawie sterowania diodą LED3. \\
+        LED3, to dioda RGB, skłądająca się z oddzielnych diod czerwonej, zielonej i niebieskiej (wspólny plus). Wykorzystanie PWM do pośredniego (sterujemy masą poprzez tranzystory \ref{fig:led3}) sterowania jasnością diod RGB umożliwia dostosowanie jasności poszczególnych kolorów w zależności od potrzeb.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.8\textwidth]{../PWM/led3.jpg}
+            \caption{Schemat diody RGB}
+            \label{fig:led3}
+        \end{figure}
+        
+
 \end{enumerate}

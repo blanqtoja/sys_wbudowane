@@ -8,6 +8,34 @@
 \usepackage{graphicx}
 \usepackage{siunitx}
 \usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage[table]{xcolor} % włącza kolory w tabelach
+\usepackage{colortbl}      % dodatkowe narzędzia do kolorowania tabel
+\usepackage{array}         % lepsze zarządzanie kolumnami
+
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=10pt,
+    backgroundcolor=\color{white},
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false
+}
 
 
 
@@ -33,7 +61,7 @@
     \hline
     członek zespołu & funkcjonalność\\
     \hline
-    Olek & i2c, light, pwm, adc\\
+    Olek & i2c, light, pwm, adc\\    %zrobione: i2c, light, pwm, adc
     Malwina & gpio, audio, timer\\
     Julka & SPI, oled, czujnik temperatury\\
     \hline
@@ -140,8 +168,8 @@ System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzani
 \input{adc.tex}
 
 %olek
-\subsection{Komparator LM393}
-Przeszukując sieć w poszukiwaniu dokumentacji komparatora LM393 nie mogliśmy znaleźć idealnie odpowiadającego opisu. Mimo, iż oznaczenia na układzie scalonym się pokrywają (dokumentacja dotyczy LM393), to wyprowadzenia nie są identyczne. W związku z tym nie udało się znaleźć dokładnego opisu, ale zasada działania przetwornika jest taka sama. 
+% \subsection{Komparator LM393}
+% Przeszukując sieć w poszukiwaniu dokumentacji komparatora LM393 nie mogliśmy znaleźć idealnie odpowiadającego opisu. Mimo, iż oznaczenia na układzie scalonym się pokrywają (dokumentacja dotyczy LM393), to wyprowadzenia nie są identyczne. W związku z tym nie udało się znaleźć dokładnego opisu, ale zasada działania przetwornika jest taka sama. 
 
 
 \end{document}

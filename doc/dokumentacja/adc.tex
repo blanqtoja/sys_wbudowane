@@ -19,13 +19,16 @@ Wbudowany przetwornik ADC jest przetwornikiem 12-bitowym, co oznacza, że może 
               Aby ustawić wybraną funkcję, należy ustawić bity 15:14 w rejestrze PINSEL1 na 01.
         \item Następnie ustawiono 12. bit w rejestrze PCONP o adresie 0x400F C0C4 na 1, aby włączyć zasilanie dla przetwornika ADC.
         \item Kolejniym krokiem jest odczytanie dzielnika zapisanego w rejestrze PCLKSEL0 o adresie 0x400F C1A8 na bitach 25:24 (Tabela 40.). Domyślnie dzielnik ten wynosi 4 (w rejestrze pod podanymi bitami znajduje się 00). Wtedy obowiązuje wzór na PCLK:
-        \[
-        PCLK = \frac{CCLK}{4}
-        \]
-        Gdzie:\\
-        CCLK - takt zegara układu; CCLK = 100MHz\\
-        PCLK - takt zegara przetwornika ADC\\
         
+        \begin{equation*}
+            PCLK = \frac{CCLK}{4}
+        \end{equation*}
+            
+        Gdzie:
+        \begin{align*}
+        \text{CCLK} & - \text{takt zegara układu};\quad CCLK = 100\,\text{MHz} \\
+        \text{PCLK} & - \text{takt zegara przetwornika ADC}
+        \end{align*}
     \end{enumerate}
 
 \subsubsection{Obliczanie masek do odczytu wartości rejestrów}
@@ -40,17 +43,19 @@ Wbudowany przetwornik ADC jest przetwornikiem 12-bitowym, co oznacza, że może 
         \end{enumerate}
 \subsubsection{Ustawianie wartości AD0CR}
     W rejestrze AD0CR (0x4003 4000) na bitach 15:8 znajduje się wartość przez jaką dzielony jest PCLK, by uzyskać częstotliwość próbkowania.
-    Zatem potrzebujemy maski \\
-    \[
+    Zatem potrzebujemy maski 
+    \begin{equation*}
     (0xCLKDIV<<8) OR (1<<21)
-    \]
-    Gdzie:\\
+    \end{equation*}
+
+    Gdzie:
     \begin{align*}
-        \text{CLKDIV} = \text{rate} \cdot 65 \\
-        \text{CLKDIV} = \frac{2 \cdot PCLK  + \text{CLKDIV}}{2 \cdot \text{CLKDIV}} - 1\\
+        \text{CLKDIV} &= \text{rate} \cdot 65 \\
+        \text{CLKDIV} &= \frac{2 \cdot PCLK + \text{CLKDIV}}{2 \cdot \text{CLKDIV}} - 1 \\
+        \text{rate}   &= 0{,}2\,\text{MHz}
     \end{align*}
-    rate = 0,2MHz\\
-    \\
+
+    
     Aby ustawić wartość AD0CR, należy wykonać następujące kroki:
     \begin{enumerate}
         \item Wczytaj aktualną wartość rejestru AD0CR (0x4003 4000) do zmiennej.
@@ -95,4 +100,4 @@ Wbudowany przetwornik ADC jest przetwornikiem 12-bitowym, co oznacza, że może 
         \item Nie, więc zmieniamy bit na 0, czyli 100. Wartość cyfrowa wynosi 100, czyli 4 w systemie dziesiętnym, co odpowiada lekko ponad połowie zakresu odczytu ($\frac{4}{7} \approx 0.57$, a stosunek $\frac{V_{\text{in}}}{V_{\text{ref}}} \approx 0.60$).
         
     \end{enumerate}
-    Uzyskany pomiar służy do określenia wilgotności gleby i wypisanie na wyświtlacz odpowiedniego komunikatu, zostało to opisane w sekcji \ref{sec:wykorzystanie_ADC}.
+    Uzyskany pomiar służy do określenia wilgotności gleby i wypisanie na wyświtlacz odpowiedniego komunikatu, zostało to opisane w sekcji \hyperref[sec:wykorzystanie_ADC]{Interpretacja wskaźników}.

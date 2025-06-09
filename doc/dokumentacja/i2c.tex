@@ -128,6 +128,8 @@ Inicjalizacja magistrali I2C2 odbywa się poprzez wykonanie następujących krok
     \item Początkowe ustawienia\\
         Rozpoczęcie transmisji odbywa się poprzez ustawienie flagi START w rejestraze I2CON (bit 5) na 1 oraz flagi SI (przerwanie) w rejestrze I2CON (5 bit) na 0. Później master czeka na zmianę flagi SI na 1, która oznacza, że transmisja została rozpoczęta. Następnie sprawdzany jest rejest stanu I2STAT, aby sprawdzić, czy warunek START został wysłany (0x08). Ustawiamy SI na 0.
     \item Wysyłanie danych\\
+    \phantomsection
+    \label{I2C_wysylanie_rejestrow}
     \begin{enumerate}
         \item Wysyłanie adresu urządzenia. Adres urządzenia jest 7-bitowy. W rejestrze I2DAT należy wpisać adres urządzenia, a następnie ustawić pierwszy bit na 0, aby wskazać, że wysyłamy adres. Następnie ustawiamy flagę SI w rejestrze I2CON na 0.
         \item Master oczekuje na potwierdzenie (ACK) od slave - (z Tabeli 400) w rejestrze I2STAT powinna znajdowaćsię wartość 0x18. Gdy znajduje się tam inna wartość, to adres jest ponownie wysyłany.

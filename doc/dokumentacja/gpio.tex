@@ -1,0 +1,146 @@
+\subsection{Sterowanie GPIO}
+
+\subsubsection{Wstęp}
+System wykorzystuje piny GPIO mikrokontrolera do sterowania różnymi elementami wykonawczymi donicy. Funkcjonalność ta obejmuje konfigurację kierunku pinów (wejście/wyjście), ustawianie stanów logicznych oraz obsługę przerwań sprzętowych. GPIO jest wykorzystywane między innymi do sterowania diodami sygnalizacyjnymi.
+
+\subsubsection{Konfiguracja portów GPIO}
+
+W systemie opartym o mikrokontroler LPC1768/9, obsługa pinów GPIO odbywa się dwuetapowo: najpierw należy przypisać pinowi odpowiednią funkcję, a następnie ustawić jego kierunek oraz zarządzać stanem logicznym.
+
+\paragraph{Funkcja pinu}
+
+Piny mikrokontrolera mogą pełnić różne role – od ogólnych wejść/wyjść (GPIO), przez interfejsy komunikacyjne (SPI, UART), aż po funkcje specjalne. Wybór funkcji dokonywany jest za pomocą rejestrów \texttt{PINSEL0} do \texttt{PINSEL9}, z których każdy kontroluje dwa bity odpowiadające konkretnemu pinowi:
+
+\begin{itemize}
+    \item \texttt{00} – GPIO (funkcja domyślna),
+    \item \texttt{01}, \texttt{10}, \texttt{11} – funkcje alternatywne (specyficzne dla każdego pinu).
+\end{itemize}
+
+Pełna lista funkcji alternatywnych znajduje się w dokumentacji mikrokontrolera (sekcja 8.5.1 dokumentu UM10360).
+
+\paragraph{Rejestry GPIO}
+
+Po przypisaniu pinu funkcji GPIO, konfiguracja odbywa się za pomocą zestawu rejestrów \texttt{FIOx}, gdzie \texttt{x} oznacza numer portu (od 0 do 4). Poniżej opis poszczególnych rejestrów:
+
+\begin{itemize}
+    \item \textbf{\texttt{FIOxDIR}} – \textit{Direction Register} (Rejestr kierunku):
+
+    Ten rejestr pozwala ustalić kierunek działania każdego pinu portu. 
+    \texttt{1} ustawia dany pin jako wyjście (output), natomiast \texttt{0} oznacza wejście (input). 
+
+
+    \item \textbf{\texttt{FIOxMASK}} – \textit{Mask Register} (Rejestr maski):
+
+    Maskowanie pozwala ignorować niektóre bity przy operacjach odczytu/zapisu. 
+    Bity ustawione na \texttt{1} są pomijane przez funkcje korzystające z \texttt{FIOxSET}, \texttt{FIOxCLR} i \texttt{FIOxPIN}. 
+    Ustawienie bitu na \texttt{0} oznacza, że operacje na danym pinie są aktywne.
+
+
+    \item \textbf{\texttt{FIOxPIN}} – \textit{Pin Value Register} (Rejestr stanu pinów):
+
+    Ten rejestr służy zarówno do odczytu, jak i zapisu. 
+    Odczyt zwraca aktualny stan logiczny wszystkich pinów danego portu, natomiast zapis nadpisuje piny wyjściowe wartościami logicznymi (jeśli są skonfigurowane jako output).
+
+
+    \item \textbf{\texttt{FIOxSET}} – \textit{Set Register} (Rejestr ustawień):
+
+    Rejestr służy do ustawiania wybranych pinów wyjściowych na stan wysoki (\texttt{logic 1}). 
+    Każdy bit ustawiony na \texttt{1} wymusza stan wysoki na odpowiadającym mu pinie. 
+    Ustawienie bitu na \texttt{0} nie zmienia niczego. Nie działa na pinach wejściowych.
+
+
+    \item \textbf{\texttt{FIOxCLR}} – \textit{Clear Register} (Rejestr zerowania):
+
+    Rejestr ten jest odwrotnością \texttt{FIOxSET}. Pozwala ustawić konkretne piny wyjściowe na stan niski (\texttt{logic 0}). 
+    Podobnie jak wcześniej, ustawienie \texttt{1} na wybranym bicie spowoduje wyczyszczenie (ustawienie stanu niskiego) danego pinu. 
+    Nie wpływa na piny wejściowe.
+
+\end{itemize}
+
+\subsubsection{Do czego używamy GPIO?}
+
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do czujnika wilgotności gleby}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P0.23        & ADC0                             & Odczyt wilgotności gleby (czujnik analogowy) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO0DIR dla pinu 23
+
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do obsługi układu audio LM4811}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P0.26        & LM4811 SIGNAL                     & Generowanie sygnału dźwiękowego \\
+P0.27        & LM4811 CLK                       & Sterowanie zegarem układu audio LM4811 \\
+P0.28        & LM4811 UP/DN                     & Regulacja głośności LM4811 \\
+P2.13        & LM4811 SHUTDOWN                  & Włączenie/wyłączenie układu LM4811 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIOxDIR dla odpowiednich pinów
+
+
+\begin{table}[H]
+\centering
+\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do sterowania diodą RGB}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
+P2.0         & PWM1.1 (Red)                     & Sterowanie składową czerwoną diody RGB \\
+P2.1         & PWM1.2 (Green)                   & Sterowanie składową zieloną diody RGB \\
+P2.2         & PWM1.3 (Blue)                    & Sterowanie składową niebieską diody RGB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO2DIR
+
+\subsubsection{Przerwania sprzętowe – opis i zastosowanie}
+
+\begin{itemize}
+    \item \textbf{Czym są przerwania sprzętowe?} \\
+    Przerwania sprzętowe (ang. \textit{hardware interrupts}) pozwalają mikrokontrolerowi natychmiast reagować na określone zdarzenia zewnętrzne lub wewnętrzne, bez konieczności ich ciągłego sprawdzania w pętli głównej programu (polling).
+    
+    \item \textbf{Mechanizm w LPC1768/9:} \\
+    Obsługa przerwań w mikrokontrolerze \textbf{LPC1768/9} opiera się na wbudowanym w rdzeń \textbf{Cortex-M3} kontrolerze \textbf{NVIC} (\textit{Nested Vectored Interrupt Controller}), który zarządza priorytetami i wywoływaniem odpowiednich procedur obsługi przerwań.
+    
+    \item \textbf{Typowe zastosowania przerwań:}
+    \begin{itemize}
+        \item zmiana stanu pinu GPIO (np. naciśnięcie przycisku),
+        \item zakończenie konwersji ADC,
+        \item odebranie danych przez UART, SPI czy I\textsuperscript{2}C,
+        \item przepełnienie licznika lub zegara.
+    \end{itemize}
+
+    \item \textbf{Podejście w aktualnym projekcie:}
+    \begin{itemize}
+        \item W obecnej implementacji programu \textbf{nie są wykorzystywane przerwania}.
+        \item Wszystkie operacje (odczyty czujników, sterowanie wyjściami, reakcje na zmiany warunków) są realizowane sekwencyjnie w \textbf{pętli głównej} z użyciem metody \textit{polling}.
+    \end{itemize}
+
+    \item \textbf{Zalety i ograniczenia tego podejścia:}
+    \begin{itemize}
+        \item \textbf{Zalety:} prostsza implementacja – brak konieczności definiowania procedur ISR (Interrupt Service Routine).
+        \item \textbf{Ograniczenia:}
+        \begin{itemize}
+            \item mniejsze wykorzystanie potencjału mikrokontrolera,
+            \item możliwe opóźnienia w reakcji na zdarzenia,
+            \item ograniczona skalowalność w bardziej złożonych aplikacjach.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+

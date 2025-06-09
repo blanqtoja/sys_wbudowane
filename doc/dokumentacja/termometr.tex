@@ -1,12 +1,43 @@
 \subsection{Czujnik temperatury}
 Czujnik MAX6576 zapewnia pomiar temperatury otoczenia rośliny.
 
-Implementacja obejmuje:
+\subsubsection{Konfiguracja mikrokontrolera}
 
+Do obsługi czujnika MAX6576 wykorzystano pin \texttt{PIO1\_5} odpowiadający pinowi \texttt{P0.2}. Konfiguracja tego pinu przebiega w następujący sposób:
+
+\begin{itemize}
+    \item \texttt{PINSEL0} – bity 5:4 ustawione na 00, konfiguracja P0.2 jako funkcję GPIO.
+    \item \texttt{FIODIR0} – bit 2 ustawiony na 0, co ustawia kierunek pinu P0.2 jako wejściowy.
+    \item \texttt{FIOPIN0} – odczyt wartości logicznej pinu w celu wykrywania zboczy sygnału z czujnika.
+\end{itemize}
+
+Do zliczania czasu pomiędzy zboczami wykorzystano Timer0:
+
+\begin{itemize}
+    \item \texttt{T0TCR} – ustawiony na 0x02 (reset), a następnie na 0x01 (start).
+    \item \texttt{T0PR} – preskaler ustawiony tak, aby timer inkrementował wartość co 1~ms, tj. dla 100~MHz: \texttt{T0PR = 100\,000 - 1}.
+    \item \texttt{T0TC} – licznik główny, odczytywany przy wystąpieniu pierwszego i ostatniego zbocza (w milisekundach).
+\end{itemize}
+
+Zbocza sygnału wykrywane są w programie poprzez porównanie aktualnego i poprzedniego stanu pinu \texttt{P0.2}.
+
+\subsubsection{Inicjalizacja i odczyt}
 \begin{enumerate}
-    \item \textbf{Inicjalizacja czujnika temperatury} - Proces inicjalizacji obejmuje konfigurację czujnika z wykorzystaniem funkcji czasowych (getTicks) oraz ustawienie parametrów pomiaru.
-    
-    \item \textbf{Cykliczny odczyt temperatury} - Funkcjonalność ta odpowiada za regularne pobieranie danych z czujnika oraz konwersję odczytanych wartości na format zrozumiały dla użytkownika.
-    
-    \item \textbf{Wykorzystanie danych temperaturowych} - Informacja o temperaturze jest wyświetlana na ekranie OLED i może wpływać na decyzje systemu dotyczące nawadniania lub doświetlania rośliny.
+    \item Konfiguracja pinu \texttt{PIO1\_5} (P0.2) jako wejściowego.
+    \item System oczekuje na zbocze sygnału wejściowego, co inicjuje pomiar czasu.
+    \item Zliczanie \texttt{NUM\_HALF\_PERIODS} (tutaj 340) kolejnych zboczy sygnału z czujnika.\\
+    (Licznik sprzętowy generuje przerwanie co 1~ms.)
+    \item Pomiar czasu \(\Delta t_{\text{ms}}\) – liczba milisekund, które upłynęły między pierwszym a ostatnim zboczem.
+    \item Przeliczenie czasu na temperaturę:
+    \[
+    10 \cdot T(\degree \mathrm{C}) = \frac{2 \cdot 1000 \cdot \Delta t_{\text{ms}}}{\texttt{NUM\_HALF\_PERIODS} \cdot \texttt{TEMP\_SCALAR\_DIV10}} - 2731
+    \]
+    \begin{itemize}
+        \item \(\Delta t_{\text{ms}}\) – zmierzony czas (w ms) dla zadanej liczby półokresów.
+        \item \texttt{TEMP\_SCALAR\_DIV10} – współczynnik zależny od konfiguracji pinów \texttt{TS0}/\texttt{TS1} (tutaj: 1).
+        \item \texttt{NUM\_HALF\_PERIODS} – liczba półokresów poddanych pomiarowi (tutaj: 340).
+        \item \(2731\) – stała przeliczająca wynik z kelwinów na dziesiąte części stopnia Celsjusza.
+    \end{itemize}
+    \item Wykorzystanie odczytanych danych – temperatura wyświetlana jest na ekranie OLED.
 \end{enumerate}
+

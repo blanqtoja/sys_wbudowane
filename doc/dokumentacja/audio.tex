@@ -1,0 +1,55 @@
+\subsection{System audio}
+
+\subsubsection{Wstęp}
+System audio inteligentnej donicy składa się z głośnika (oznaczenie na schemacie SP1) oraz układu sterowania LM4811MM (oznaczenie na schemacie U10). Układ ten umożliwia generowanie sygnałów dźwiękowych informujących użytkownika o stanie rośliny. Implementacja obejmuje inicjalizację układu sterowania, konfigurację parametrów dźwięku oraz bibliotekę funkcji do odtwarzania różnych melodii w zależności od poziomu wilgotności gleby.
+
+
+\subsubsection{Podstawy Teoretyczne}
+\paragraph{Generacja Dźwięku w Mikrokontrolerze}
+Dźwięk powstaje poprzez przełączanie pinu GPIO w odpowiedniej częstotliwości, tworząc przebieg prostokątny (square wave).
+Częstotliwość nuty oblicza się ze wzoru:
+$$ f = \frac{1}{2 \cdot T} $$
+gdzie $T$ to czas stanu wysokiego/niskiego w mikrosekundach.
+
+\paragraph{Wzmacniacz LM4811}
+\begin{itemize}
+    \item Sterowany cyfrowo (3 piny: CLK, UP/DN, SHDN).
+    \item Zakres głośności: 64 kroki (sterowane impulsami CLK).
+    \item Tryb shutdown (SHDN = 0 wyłącza wzmacniacz).
+\end{itemize}
+
+\subsubsection{Implementacja}
+\paragraph{Konfiguracja Sprzętowa}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Element} & \textbf{Pin LPC1768/9} & \textbf{Funkcja} \\
+\hline
+LM4811 SIGNAL& P0.26 & Generowanie sygnału dźwiękowego \\
+LM4811 CLK & P0.27 & Zegar zmiany głośności \\
+LM4811 UP/DN & P0.28 & Kierunek zmiany głośności \\
+LM4811 SHDN & P2.13 & Włączanie/wyłączanie wzmacniacza \\
+\hline
+\end{tabular}
+
+W programie piny te są konfigurowane jako wyjścia przy pomocy funkcji \texttt{GPIO\_SetDir()}:
+\begin{verbatim}
+GPIO_SetDir(0, 1<<27, 1); // CLK
+GPIO_SetDir(0, 1<<28, 1); // UP/DN
+GPIO_SetDir(2, 1<<13, 1); // SHDN
+GPIO_SetDir(0, 1<<26, 1); // Square wave 
+\end{verbatim}
+
+Następnie są ustawiane w stan niski w celu inicjalizacji układu LM4811:
+\begin{verbatim}
+GPIO_ClearValue(0, 1<<27);
+GPIO_ClearValue(0, 1<<28);
+GPIO_ClearValue(2, 1<<13);
+\end{verbatim}
+
+\paragraph{Odtwarzanie melodii}
+Melodie odtwarzane są w zależności od poziomu wilgotności gleby. Odpowiednia funkcja `playSong()` generuje na pinie P0.26 przebieg prostokątny o odpowiedniej częstotliwości i czasie trwania, co przekłada się na dźwięki słyszalne z głośnika. Dwie melodie są używane: „smutna” i „wesoła”.
+
+
+
+
+

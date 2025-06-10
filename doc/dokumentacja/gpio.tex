@@ -59,18 +59,7 @@ Po przypisaniu pinu funkcji GPIO, konfiguracja odbywa się za pomocą zestawu re
 
 \subsubsection{Do czego używamy GPIO?}
 
-\begin{table}[H]
-\centering
-\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do czujnika wilgotności gleby}
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
-P0.23        & ADC0                             & Odczyt wilgotności gleby (czujnik analogowy) \\
-\bottomrule
-\end{tabular}
-\end{table}
 
-Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO0DIR dla pinu 23
 
 \begin{table}[H]
 \centering
@@ -86,23 +75,8 @@ P2.13        & LM4811 SHUTDOWN                  & Włączenie/wyłączenie ukła
 \end{tabular}
 \end{table}
 
-Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIOxDIR dla odpowiednich pinów
+Piny są skonfigurowane jako wyjścia za pomocą funkcji GPIO i sterowane przez rejestry FIOxDIR oraz FIOxSET/FIOxCLR.
 
-
-\begin{table}[H]
-\centering
-\caption{Przypisanie pinów mikrokontrolera LPC1768/9 do sterowania diodą RGB}
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{Pin} & \textbf{Funkcja}                  & \textbf{Opis} \\ \midrule
-P2.0         & PWM1.1 (Red)                     & Sterowanie składową czerwoną diody RGB \\
-P2.1         & PWM1.2 (Green)                   & Sterowanie składową zieloną diody RGB \\
-P2.2         & PWM1.3 (Blue)                    & Sterowanie składową niebieską diody RGB \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Konfigurujemy na wyjście. Modyfikujemy zawartość rejestru FIO2DIR
 
 \subsubsection{Przerwania sprzętowe – opis i zastosowanie}
 

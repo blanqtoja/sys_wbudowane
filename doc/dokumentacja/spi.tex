@@ -1,6 +1,8 @@
 \subsection{Magistrala SPI}
+\label{spi}
 System wykorzystuje magistralę SPI z interfejsem SSP1 do komunikacji z wyświetlaczem OLED. 
 \subsubsection{Piny SPI:}
+\label{piny}
 \begin{itemize}
 \item \textbf{P0.7} - SCK1 (Serial Clock for SSP1); generowany przez mastera sygnał zegarowy służący do synchronizacji przesyłu danych.
 \item \textbf{P0.8} - MISO1 (Main In, Sub Out); służy do przesyłu danych od slave'a do mastera; SPI używamy tylko dla OLED więc MISO nie jest używany;
@@ -401,25 +403,25 @@ System wykorzystuje magistralę SPI z interfejsem SSP1 do komunikacji z wyświet
 
 \subsubsection{Inicjalizacja magistrali}
 \begin{enumerate}
-    \item Ustawienie pinów
+    \item Przypisanie pinów\ref{piny}
     \begin{enumerate}
         \item P0.7 — SCK
         \item P0.8 — MISO
         \item P0.9 — MOSI
         \item P2.2 — SSEL
     \end{enumerate}
-    \item Włączenie zasilania SSP1 poprzez ustawienie bitu 10 w rejestrze PCONP.
-    \item Konfiguracja ustawień magistrali (tryb pracy: master, format ramki: SPI, liczba bitów danych: 8, polaryzacja i faza zegara: CPOL - wysoki poziom, CPHA - pierwsza krawędź, prędkość zegara: 1 MHz).
+    \item Konfiguracja ustawień magistrali.
+    \item Włączenie zasilania SSP1 (ustawienie 10. bitu PCONP)
     \item Inicjalizacja rejestrów kontrolnych SSP (CR0 i CR1).
-    \item Ustawienie prędkości taktowania SSP.
-    \item Włączenie magistrali SSP ustawiając bit SSE w rejestrze CR1.
+    \item Ustawienie prędkości taktowania zegara SSP.
+    \item Włączenie magistrali SSP1 ustawiając bit SSE w rejestrze CR1.
 \end{enumerate}
 
-\subsection{Wykorzystanie}
-\begin{enumerate}
-    \item Konfiguracja pinów SPI (PINSEL), ustawienie parametrów w strukturze SSP\_CFG\_Type, wywołanie SSP\_Init() i SSP\_Cmd() do uruchomienia magistrali.
-    \item Wysyłanie danych; ustawienie linii SSEL nisko (aktywacja slave), wpisanie danych do SSP\_DR, oczekiwanie na zakończenie transmisji (BSY=0), odbiór danych równolegle.
-    \item Odbieranie danych; Wysłanie tzw. dummy bajtów, oczekiwanie na odebranie danych (RNE=1), odczyt z SSP\_DR.
-    \item Zmiana i odczyt rejestrów slave; wysłanie adresu rejestru, wysłanie lub odebranie danych zgodnie z potrzebą.
-    \item Koniec transmisji; ustawienie linii SSEL na wysoki poziom.
-\end{enumerate}
+% \subsection{Wykorzystanie}
+% \begin{enumerate}
+%     \item Konfiguracja pinów SPI, uruchomienie magistrali.
+%     \item Wysyłanie danych; ustawienie linii SSEL nisko (aktywacja slave), wpisanie danych do SSP\_DR, oczekiwanie na zakończenie transmisji (BSY=0), odbiór danych równolegle.
+%     \item Odbieranie danych; Wysłanie tzw. dummy bajtów, oczekiwanie na odebranie danych (RNE=1), odczyt z SSP\_DR.
+%     \item Zmiana i odczyt rejestrów slave; wysłanie adresu rejestru, wysłanie lub odebranie danych zgodnie z potrzebą.
+%     \item Koniec transmisji; ustawienie linii SSEL na wysoki poziom.
+% \end{enumerate}

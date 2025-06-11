@@ -1,6 +1,6 @@
 \subsection{Wyświetlacz OLED}
 
-Do wyświetlania informacji (interfejsu użytkownika) wykorzystano wyświetlacz OLED UG-9664HSWAG01 (oznaczenie na schemacie OLED1). Jest to monochromatyczny wyświetlacz o rozdzielczości 96x64 pikseli, sterowany za pomocą magistrali SPI. Wyświetlacz ten oparty jest o sterownik SSD1305 (zdolny do obsługiwania rozdzielczości 132x63 pikseli).
+Do wyświetlania informacji (interfejsu użytkownika) wykorzystano wyświetlacz OLED UG-9664HSWAG01 (oznaczenie na schemacie OLED1). Jest to monochromatyczny wyświetlacz o rozdzielczości 96x64 pikseli, sterowany za pomocą magistrali SPI\ref{spi}. Wyświetlacz ten oparty jest o sterownik SSD1305 (zdolny do obsługiwania rozdzielczości 132x64 pikseli).
 
 \subsubsection{Konfiguracja}
 Piny sterujące wyświetlaczem OLED:
@@ -10,57 +10,52 @@ Piny sterujące wyświetlaczem OLED:
 \item \textbf{P2.1} - RES (reset); w stanie niskim wywołuje reset i inicjalizację, w trakcie normalnej pracy należy utrzymywać go w stanie wysokim;
 \end{itemize}
 \subsubsection {Inicjalizacja:}
+Modyfikacja rejestrów opisana jest w rozdziale GPIO. \ref{gpio}
 \begin{enumerate}
-    \item Ustawiamy piny 2.1, 2,7 oraz 0.6 w tryb wyjścia za pomocą rejestrów GPIO. %Odwołanie do GPIO rejestrów FIODIR
-    \item Ustawiamy pin 2.1 w tryb niskiego stanu aby upewnić się, że wyświetlacz jest wyłączony.
+    \item Ustawiamy piny 2.1, 2,7 oraz 0.6 w tryb wyjścia za pomocą rejestrów GPIO (modyfikując rejestry FIOxDIR).
+    \item Ustawiamy pin 2.1 w tryb niskiego stanu aby upewnić się, że wyświetlacz jest wyłączony (modyfikując rejestr FIOxCLR).
     \item Wysyłamy sekwencję instrukcji inicjalizujących do wyświetlacza OLED.
     \item Odczekujemy krótki czas przed włączeniem wyświetlacza.
-    \item Ustawiamy pin 2.1 w tryb wysokiego stanu aby włączyć wyświetlacz.
+    \item Ustawiamy pin 2.1 w tryb wysokiego stanu aby włączyć wyświetlacz (modyfikując rejestr FIOxSET).
 \end{enumerate}
-\subsubsection {Przesyłanie danych:}
+\subsubsection {Przesyłanie danych/komendy:}
 \label{przes}
 \begin{enumerate}
-    \item Ustawienie pinu CS w stan niski.
-    \item Ustawienie pinu D/C w stan wysoki w trybie danych lub w stan niski w trybie komendy.
+    \item Ustawienie pinu CS w stan niski (aktywowanie transmisji).
+    \item Ustawienie pinu D/C w stan wysoki dla danych lub w stan niski dla komendy.
     \item Przygotowanie struktury transferu.
-    \item Inicjacja transmisji SPI.
-    \item Ustawienie pinu CS w stan wysoki.
+    \item Inicjacja transmisji SPI (dane przesyłane przez MOSI). 
+    \item Ustawienie pinu CS w stan wysoki (zakończenie transmisji).
 \end{enumerate}
 
 \subsubsection {Rysowanie pojedynczego piksela}
 \label{piksel}
-Pamięć wyświetlacza podzielona jest na 8 stron, z których każda zawiera 132 bajty (kolumny). Każdy bajt reprezentuje 8 pionowych pikseli. Aktywny obszar matrycy to 96x64 piksele, jednak z powodu nadmiarowych kolumn konieczne jest przesunięcie (offset) adresowania o 18 kolumn w poziomie.
+Pamięć wyświetlacza podzielona jest na 8 stron, z których każda odpowiada 132 kolumnom (bajtom). Każdy bajt reprezentuje 8 pionowych pikseli. Aktywny obszar matrycy to 96x64 piksele, jednak z powodu nadmiarowych kolumn konieczne jest przesunięcie (offset) adresowania o 18 kolumn w poziomie.
 
 \begin{enumerate}
-    \item Na podstawie współrzędnej y określany jest numer strony (ang. page address) — każda strona odpowiada 8 poziomym liniom pikseli w pamięci graficznej SSD1305.
+    \item Na podstawie współrzędnej y określany jest numer strony — każda strona odpowiada 8 poziomym liniom pikseli w pamięci graficznej SSD1305.
     \item Obliczany jest adres kolumny x, przy czym należy uwzględnić fakt, że kontroler SSD1305 obsługuje rozdzielczość 132x64 piksele, natomiast fizyczny wyświetlacz posiada tylko 96x64 piksele, co oznacza konieczność stosowania przesunięcia poziomego podczas adresowania kolumn.
-    \item Na podstawie współrzędnej y wyliczany jest numer bitu (0–7), który odpowiada konkretnej pozycji w bajcie strony, a następnie tworzona jest odpowiednia maska bitowa.
-    \item W buforze cieniowania wykonywana jest modyfikacja odpowiedniego bajtu: bit jest ustawiany lub czyszczony w zależności od wartości koloru (czarny/biały).
-    \item Ustawiany jest adres w pamięci wyświetlacza (komendy: wybór strony, kolumny niskiej i wysokiej).
+    \item Na podstawie współrzędnej y określana jest pozycja bitu (0–7), który odpowiada konkretnej pozycji w bajcie strony, a następnie tworzona jest odpowiednia maska bitowa.
+    \item W buforze cieniowania wykonywana jest modyfikacja odpowiedniego bajtu: bit jest ustawiany lub zerowany w zależności od wartości koloru (czarny/biały).
+    \item Ustawiany jest adres w pamięci wyświetlacza.
     \item Bajt danych z bufora cieniowania (zaktualizowany) jest przesyłany przez interfejs SPI do pamięci graficznej wyświetlacza tak jak opisano w \ref{przes}.
 \end{enumerate}
 
 \subsubsection{Wyświetlanie pojedynczego znaku}
 \begin{enumerate}
-    \item Z tablicy font5x7 pobierany jest odpowiedni wzorzec bitowy znaku (bitmapa o wysokości 8 linii).
-    \item Dla każdej z 8 linii (wierszy) znaku:
-    \begin{itemize}
-        \item Wczytywany jest bajt danych określający wzorzec piksela w danym wierszu.
+    \item Z tablicy font5x7 pobierany jest odpowiedni wzorzec bitowy znaku.
         \item Iteracja po 6 kolumnach piksela w danej linii:
         \begin{itemize}
             \item Jeśli odpowiedni bit w bajcie danych jest ustawiony — wybierany jest kolor pierwszoplanowy, W przeciwnym razie — kolor tła).
             \item Ustawienie danego piksela zgodnie z kolorem i współrzędnymi \ref{piksel}.
         \end{itemize}
-    \end{itemize}
     \item Po przerysowaniu całej linii znakowej kursor pionowy jest przesuwany w dół o jeden piksel, a poziomy resetowany do początkowej pozycji.
 \end{enumerate}
 
 \subsubsection{Wyświetlanie ciągu znaków, rysowanie prostokąta}
 
-Wyświetlenie ciągu znaków i rysowanie prostokąta realizowane są w oparciu o te same mechanizmy niskopoziomowe co rysowanie pojedynczego piksela, znaku, przy czym operacje te są zoptymalizowane pod kątem wydajności poprzez grupowanie zapisów do pamięci wyświetlacza.
-
-W przypadku ciągów znaków każdy znak traktowany jest jako zestaw pikseli, a wypełnienie prostokąta sprowadza się do sekwencyjnego ustawiania bloków pikseli w określonym obszarze, co minimalizuje liczbę koniecznych operacji adresowania.
+Wyświetlenie ciągu znaków i rysowanie prostokąta realizowane są w oparciu o te same mechanizmy niskopoziomowe, co rysowanie pojedynczego piksela lub znaku. Operacje te są wykonywane sekwencyjnie, poprzez wielokrotne wywołania funkcji ustawiających piksele. Funkcja wyświetlania tekstu przetwarza kolejne znaki jako zestawy pikseli, natomiast rysowanie prostokąta realizowane jest poprzez rysowanie jego krawędzi jako linii poziomych i pionowych.
 
 \subsubsection{Czyszczenie ekranu}
-Czyszczenie ekranu polega na ustawieniu wszystkich strony (od 0xB0 do 0xB7) i wysyłaniu do każdej po 132 bajty zer (lub wartości 0xFF przy inwersji), w celu wyczyszczenia zawartości.
+Czyszczenie ekranu polega na ustawieniu wszystkich stron (od 0xB0 do 0xB7) i wysyłaniu do każdej po 132 bajty zer (lub wartości 0xFF), w celu wyczyszczenia zawartości.
 

@@ -157,23 +157,14 @@ Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprze
 \input{oled}
 
 %Malwina
-\subsection{System audio}
-System audio inteligentnej donicy składa się z głośnika (oznaczenie na schemacie SP1) oraz układu sterowania LM4811MM (oznaczenie na schemacie U10). Układ ten umożliwia generowanie sygnałów dźwiękowych informujących użytkownika o stanie rośliny. Implementacja obejmuje inicjalizację układu sterowania, konfigurację parametrów dźwięku oraz bibliotekę funkcji do odtwarzania różnych melodii w zależności od poziomu wilgotności gleby.
-
+\input{audio}
 
 %Malwina
-\subsection{Timer}
-System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu. Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
+\input{timer}
 
 %olek
 %zaimportowanie pliku z opisem pwm
 \input{./pwm}
-
-
-
-
-
-
 
 %olek
 \input{adc.tex}
@@ -182,6 +173,71 @@ System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzani
 % \subsection{Komparator LM393}
 % Przeszukując sieć w poszukiwaniu dokumentacji komparatora LM393 nie mogliśmy znaleźć idealnie odpowiadającego opisu. Mimo, iż oznaczenia na układzie scalonym się pokrywają (dokumentacja dotyczy LM393), to wyprowadzenia nie są identyczne. W związku z tym nie udało się znaleźć dokładnego opisu, ale zasada działania przetwornika jest taka sama. 
 
+\section{Analiza awarii}
+
+\begin{table}[H]
+\centering
+\caption{Analiza FMEA/FMECA}
+\begin{tabular}{|p{4.2cm}|c|c|c|p{4.5cm}|c|}
+\hline
+\textbf{Ryzyko} & \textbf{Szansa} & \textbf{Znaczenie} & \textbf{Wykrywalność} & \textbf{Reakcja} & \textbf{Iloczyn} \\
+\hline
+Błąd odczytu z czujnika wilgotności gleby (ADC) & 0.3 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+\hline
+Brak komunikacji z czujnikiem światła (I2C) & 0.2 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+\hline
+Uszkodzenie wyświetlacza OLED (SPI) & 0.1 &\cellcolor{yellow!50} 8 & ? & ? & ? \\
+\hline
+Przegrzanie czujnika temperatury & 0.1 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+\hline
+Zawieszenie PWM (LED, audio) & 0.2 &\cellcolor{green!50} 3 & ? & ? & ? \\
+\hline
+Timer systemowy zatrzymany / błędny & 0.5 & \cellcolor{red!50}9 & ? & ? & ? \\
+\hline
+Zanik zasilania & 0.4 & \cellcolor{red!50}10 & ? & ? & ? \\
+\hline
+Zalanie układu & 0.8 & \cellcolor{red!50}10 & ? & ?. & ? \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Analiza potencjalnych awarii}
+
+\subsubsection{ADC (czujnik wilgotności)}
+Błąd odczytu z czujnika wilgotności gleby powoduje utratę informacji o potrzebie podlania rośliny. Awaria może wynikać z nieprawidłowego działania przetwornika analogowo-cyfrowego, zwarcia, przerwy lub degradacji czujnika.
+
+\subsubsection{I2C}
+Awaria zaburzy komunikację pomiędzy mikrokontrolerem a czujnikiem światła. Brak dostępu do danych oświetlenia uniemożliwi systemowi optymalną regulację doświetlenia rośliny, a także ograniczy możliwość reagowania na zmienne warunki zewnętrzne. W konsekwencji system może nie wykrywać braku światła, co może zaszkodzić roślinie w dłuższym czasie. 
+
+
+\subsubsection{SPI / OLED}
+Uszkodzenie interfejsu SPI lub wyświetlacza OLED powoduje brak wyświetlania informacji dla użytkownika. Komunikaty o stanie systemu, wilgotności, temperaturze czy błędach nie będą prezentowane za pomocą wizualnego interfejsu, pozostaną jednak informacje przekazywane za pomocą diody i systemu audio.
+
+\subsubsection{Czujnik temperatury}
+Przegrzanie lub uszkodzenie czujnika temperatury prowadzi do odczytów poza zakresem lub całkowitego ich braku. Może to skutkować brakiem reakcji na niekorzystne warunki otoczenia.
+
+\subsubsection{PWM}
+Zawieszenie sterowania PWM skutkuje brakiem możliwości sterowania diodami LED i systemem audio. Użytkownik jest informowany jednak również za pomocą komunikatów na wyświetlaczu OLED więc to ryzyko jest niegroźne.
+
+\subsubsection{Timer systemowy}
+Zatrzymanie lub błędne działanie głównego timera zakłóca działanie logiki czasowej systemu. 
+
+\subsubsection{Zanik zasilania}
+Zanik zasilania skutkuje pełnym zatrzymaniem działania donicy.
+
+\subsubsection{Zalanie wodą}
+Jedynie czujnik wilgotności gleby jest przeznaczony do pracy w kontakcie z wodą. Zalanie innych komponentów systemu może doprowadzić do ich trwałego uszkodzenia, zwarć lub nieprzewidywalnych stanów pracy.
+
+\begin{itemize}
+    \item Wykrycie
+    \begin{itemize}
+        \item System donicy nie posiada aktywnych czujników zalania.
+    \end{itemize}
+    \item Reakcja
+    \begin{itemize}
+        \item Zabezpieczenia powinny mieć charakter pasywny, użytkownik powinien zadbać aby tylko czujnik wilgotności gleby miał bezpośredni kontakt z wodą
+    \end{itemize}
+\end{itemize}
 
 \end{document}
 

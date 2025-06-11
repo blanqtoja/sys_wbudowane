@@ -1,6 +1,6 @@
 \subsection{Wyświetlacz OLED}
 
-Wyświetlacz OLED model UG-9664HSWAG01 (oznaczenie na schemacie OLED1) komunikuje się przez interfejs SPI. Wyświetlacz bazuje na sterowniku SSD1305 132 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller. Wyświetlacz służy jako interfejs użytkownika, prezentując dane w czytelnej formie graficznej.
+Do wyświetlania informacji (interfejsu użytkownika) wykorzystano wyświetlacz OLED UG-9664HSWAG01 (oznaczenie na schemacie OLED1). Jest to monochromatyczny wyświetlacz o rozdzielczości 96x64 pikseli, sterowany za pomocą magistrali SPI. Wyświetlacz ten oparty jest o sterownik SSD1305 (zdolny do obsługiwania rozdzielczości 132x63 pikseli).
 
 \subsubsection{Konfiguracja}
 Piny sterujące wyświetlaczem OLED:
@@ -13,7 +13,7 @@ Piny sterujące wyświetlaczem OLED:
 \begin{enumerate}
     \item Ustawiamy piny 2.1, 2,7 oraz 0.6 w tryb wyjścia za pomocą rejestrów GPIO. %Odwołanie do GPIO rejestrów FIODIR
     \item Ustawiamy pin 2.1 w tryb niskiego stanu aby upewnić się, że wyświetlacz jest wyłączony.
-    \item Wysyłamy instrukcje inicjalizujące do wyświetlacza OLED.
+    \item Wysyłamy sekwencję instrukcji inicjalizujących do wyświetlacza OLED.
     \item Odczekujemy krótki czas przed włączeniem wyświetlacza.
     \item Ustawiamy pin 2.1 w tryb wysokiego stanu aby włączyć wyświetlacz.
 \end{enumerate}
@@ -29,6 +29,8 @@ Piny sterujące wyświetlaczem OLED:
 
 \subsubsection {Rysowanie pojedynczego piksela}
 \label{piksel}
+Pamięć wyświetlacza podzielona jest na 8 stron, z których każda zawiera 132 bajty (kolumny). Każdy bajt reprezentuje 8 pionowych pikseli. Aktywny obszar matrycy to 96x64 piksele, jednak z powodu nadmiarowych kolumn konieczne jest przesunięcie (offset) adresowania o 18 kolumn w poziomie.
+
 \begin{enumerate}
     \item Na podstawie współrzędnej y określany jest numer strony (ang. page address) — każda strona odpowiada 8 poziomym liniom pikseli w pamięci graficznej SSD1305.
     \item Obliczany jest adres kolumny x, przy czym należy uwzględnić fakt, że kontroler SSD1305 obsługuje rozdzielczość 132x64 piksele, natomiast fizyczny wyświetlacz posiada tylko 96x64 piksele, co oznacza konieczność stosowania przesunięcia poziomego podczas adresowania kolumn.
@@ -53,9 +55,12 @@ Piny sterujące wyświetlaczem OLED:
     \item Po przerysowaniu całej linii znakowej kursor pionowy jest przesuwany w dół o jeden piksel, a poziomy resetowany do początkowej pozycji.
 \end{enumerate}
 
-\subsubsection{Wyświetlanie ciągu znaków i wypełnienie prostokąta}
+\subsubsection{Wyświetlanie ciągu znaków, rysowanie prostokąta}
 
-Wyświetlenie ciągu znaków i wypełnienie prostokąta realizowane są w oparciu o te same mechanizmy niskopoziomowe co rysowanie pojedynczego piksela, znaku, przy czym operacje te są zoptymalizowane pod kątem wydajności poprzez grupowanie zapisów do pamięci wyświetlacza.
+Wyświetlenie ciągu znaków i rysowanie prostokąta realizowane są w oparciu o te same mechanizmy niskopoziomowe co rysowanie pojedynczego piksela, znaku, przy czym operacje te są zoptymalizowane pod kątem wydajności poprzez grupowanie zapisów do pamięci wyświetlacza.
 
 W przypadku ciągów znaków każdy znak traktowany jest jako zestaw pikseli, a wypełnienie prostokąta sprowadza się do sekwencyjnego ustawiania bloków pikseli w określonym obszarze, co minimalizuje liczbę koniecznych operacji adresowania.
+
+\subsubsection{Czyszczenie ekranu}
+Czyszczenie ekranu polega na ustawieniu wszystkich strony (od 0xB0 do 0xB7) i wysyłaniu do każdej po 132 bajty zer (lub wartości 0xFF przy inwersji), w celu wyczyszczenia zawartości.
 

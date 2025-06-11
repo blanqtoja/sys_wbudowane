@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Lib_MCU",
+    "\\Lib_MCU\\src",
     "\\src"
   ],
-  "SelectedNode": "\\src\\song.c",
   "PreviewInSolutionExplorer": false
 }

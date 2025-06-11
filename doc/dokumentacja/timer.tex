@@ -1,0 +1,92 @@
+\subsection{Timer}
+
+\subsubsection{Wstęp}
+System wykorzystuje timery sprzętowe mikrokontrolera do precyzyjnego odmierzania czasu i wykonywania cyklicznych zadań. W przeciwieństwie do PWM, który służy do generowania sygnałów o zmiennym wypełnieniu, timery są wykorzystywane do wywoływania przerwań w określonych odstępach czasu (dokładniej o tym w sekcji PWM). Funkcjonalność ta obejmuje konfigurację preskalerów, rejestrów porównania oraz obsługę przerwań. Timery są używane do planowania pomiarów, kontroli cykli nawadniania oraz implementacji funkcji oszczędzania energii.
+
+\subsubsection{Rejestry Timer0}
+
+Działanie modułu Timer0 opiera się na zestawie rejestrów, które pozwalają na jego konfigurację oraz kontrolę. W poniższej tabeli przedstawiono podstawowe rejestry związane z Timerem0:
+
+\begin{table}[H]
+\centering
+\caption{Rejestry Timer0 mikrokontrolera LPC}
+\begin{tabular}{|l|l|p{8cm}|}
+\hline
+\textbf{Rejestr} & \textbf{Nazwa} & \textbf{Opis} \\ \hline
+\texttt{T0IR}    & Interrupt Register & Rejestr przerwań — informuje o źródle przerwania (np. dopasowanie wartości MR0). Ustawienie bitu na 1 czyści przerwanie. \\ \hline
+\texttt{T0TCR}   & Timer Control Register & Steruje uruchamianiem (bit 0) i resetowaniem (bit 1) timera. \\ \hline
+\texttt{T0TC}    & Timer Counter & Licznik główny — zlicza taktowania zegara (po uwzględnieniu preskalera). \\ \hline
+\texttt{T0PR}    & Prescale Register & Wartość, do której zlicza preskaler. Po osiągnięciu tej wartości licznik \texttt{T0TC} jest zwiększany o 1. \\ \hline
+\texttt{T0PC}    & Prescale Counter & Licznik preskalera — inkrementowany z każdym taktem zegara, aż osiągnie wartość z \texttt{T0PR}. \\ \hline
+\texttt{T0MCR}   & Match Control Register & Określa zachowanie po dopasowaniu licznika \texttt{T0TC} do wartości rejestru porównania \texttt{T0MRx} (np. wygenerowanie przerwania, zatrzymanie, reset). \\ \hline
+\texttt{T0MR0-3} & Match Registers 0–3 & Rejestry porównania. Gdy wartość \texttt{T0TC} osiągnie wartość z \texttt{T0MRx}, wykonywane są akcje zdefiniowane w \texttt{T0MCR}. \\ \hline
+\texttt{T0EMR}   & External Match Register & Sterowanie pinami zewnętrznymi w reakcji na dopasowanie (jeśli aktywne). \\ \hline
+\texttt{T0CTCR}  & Count Control Register & Umożliwia przełączenie trybu zliczania: timer / licznik zewnętrzny / enkoder kwadraturowy. \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsubsection{Implementacja}
+
+W ramach implementacji zastosowano moduł \texttt{TIMER0}, należący do grupy czterech dostępnych timerów mikrokontrolera. W projekcie wykorzystano go do odmierzania opóźnień w dwóch wariantach — w milisekundach oraz mikrosekundach.
+
+\paragraph{Funkcja \texttt{Timer0\_Wait(uint32\_t time)}}
+
+Funkcja ta realizuje opóźnienie o określoną liczbę milisekund. Konfiguracja timera przebiega w kilku krokach:
+
+\begin{itemize}
+    \item \textbf{Ustawienie preskalera}:
+    \begin{itemize}
+        \item \texttt{PrescaleOption} ustawione na \texttt{TIM\_PRESCALE\_USVAL} — timer przelicza czas w mikrosekundach,
+        \item \texttt{PrescaleValue} ustawione na 1000 — rejestr TC zwiększa się co 1~ms.
+    \end{itemize}
+    
+    \item \textbf{Konfiguracja kanału porównania MR0} przy pomocy struktury \texttt{TIM\_MATCHCFG\_Type}:
+    \begin{itemize}
+        \item \texttt{MatchChannel = 0} — użyto kanału 0,
+        \item \texttt{MatchValue = time} — timer porównuje wartość licznika z wartością parametru wejściowego,
+        \item \texttt{IntOnMatch = TRUE} — ustawienie flagi przerwania po dopasowaniu,
+        \item \texttt{ResetOnMatch = FALSE} — licznik nie resetuje się automatycznie,
+        \item \texttt{StopOnMatch = TRUE} — timer zatrzymuje się po dopasowaniu.
+    \end{itemize}
+    
+    \item \textbf{Uruchomienie timera}:
+    \begin{verbatim}
+TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TIM_ConfigStruct);
+TIM_ConfigMatch(LPC_TIM0, &TIM_MatchConfigStruct);
+TIM_Cmd(LPC_TIM0, ENABLE);
+    \end{verbatim}
+
+    \item \textbf{Oczekiwanie na zakończenie odmierzania czasu}:
+    \begin{verbatim}
+while (!(TIM_GetIntStatus(LPC_TIM0, 0)));
+TIM_ClearIntPending(LPC_TIM0, 0);
+    \end{verbatim}
+    Funkcja aktywnie sprawdza flagę przerwania i kończy działanie po osiągnięciu ustawionego czasu.
+\end{itemize}
+
+\paragraph{Funkcja \texttt{Timer0\_us\_Wait(uint32\_t time)}}
+
+Funkcja ta działa analogicznie do \texttt{Timer0\_Wait()}, lecz służy do tworzenia krótkich opóźnień rzędu mikrosekund.
+
+Główne różnice w konfiguracji to:
+
+\begin{itemize}
+    \item \texttt{PrescaleValue = 1} — co oznacza, że licznik TC zwiększa się co 1~\textmu s.
+    \item Pozostałe ustawienia są identyczne jak w funkcji \texttt{Timer0\_Wait()} — timer zatrzymuje się po dopasowaniu, ustawiana jest flaga przerwania, a licznik nie jest resetowany automatycznie.
+\end{itemize}
+
+Dzięki zastosowaniu tych dwóch funkcji możliwe jest tworzenie zarówno długich, jak i bardzo krótkich opóźnień z wykorzystaniem jednego zasobu sprzętowego — timera TIMER0. Implementacja ta bazuje na bibliotece CMSIS, co upraszcza dostęp do rejestrów sprzętowych i zwiększa przenośność kodu.
+
+\subsubsection{Zastosowanie Timer0 w programie}
+
+Timer0 jest wykorzystywany w programie do realizacji opóźnień w dwóch głównych miejscach:
+
+\begin{itemize}
+    \item \textbf{W funkcji głównej \texttt{main()}} – timer służy do opóźnienia kolejnych cykli pętli \texttt{while(1)}. Wykonanie funkcji \texttt{Timer0\_Wait(200)} powoduje zatrzymanie programu na 200 ms, co stabilizuje częstotliwość odczytów z czujników i aktualizacji OLED.
+    
+    \item \textbf{W funkcji \texttt{playNote()}} – funkcja ta odpowiada za generowanie dźwięków przez odpowiednie ustawianie stanu pinu z częstotliwością zależną od wysokości dźwięku. Timer0 w trybie mikrosekundowym (\texttt{Timer0\_us\_Wait()}) pozwala dokładnie kontrolować czas trwania stanu wysokiego i niskiego, co przekłada się na częstotliwość generowanego sygnału. W przypadku nuty o wartości zero (pauza), stosowana jest funkcja \texttt{Timer0\_Wait()} z parametrem w milisekundach.
+\end{itemize}
+
+Dzięki takiemu podejściu Timer0 pełni w systemie dwie ważne funkcje: zapewnia odpowiednie tempo działania głównej pętli programu oraz pozwala na precyzyjne generowanie dźwięków w oparciu o opóźnienia w mikrosekundach.
+

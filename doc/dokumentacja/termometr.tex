@@ -11,22 +11,11 @@ Do obsługi czujnika MAX6576 wykorzystano pin \texttt{PIO1\_5} odpowiadający pi
     \item \texttt{FIOPIN0} – odczyt wartości logicznej pinu w celu wykrywania zboczy sygnału z czujnika.
 \end{itemize}
 
-Do zliczania czasu pomiędzy zboczami wykorzystano Timer0:
-
-\begin{itemize}
-    \item \texttt{T0TCR} – ustawiony na 0x02 (reset), a następnie na 0x01 (start).
-    \item \texttt{T0PR} – preskaler ustawiony tak, aby timer inkrementował wartość co 1~ms, tj. dla 100~MHz: \texttt{T0PR = 100\,000 - 1}.
-    \item \texttt{T0TC} – licznik główny, odczytywany przy wystąpieniu pierwszego i ostatniego zbocza (w milisekundach).
-\end{itemize}
-
-Zbocza sygnału wykrywane są w programie poprzez porównanie aktualnego i poprzedniego stanu pinu \texttt{P0.2}.
-
 \subsubsection{Inicjalizacja i odczyt}
 \begin{enumerate}
     \item Konfiguracja pinu \texttt{PIO1\_5} (P0.2) jako wejściowego.
     \item System oczekuje na zbocze sygnału wejściowego, co inicjuje pomiar czasu.
     \item Zliczanie \texttt{NUM\_HALF\_PERIODS} (tutaj 340) kolejnych zboczy sygnału z czujnika.\\
-    (Licznik sprzętowy generuje przerwanie co 1~ms.)
     \item Pomiar czasu \(\Delta t_{\text{ms}}\) – liczba milisekund, które upłynęły między pierwszym a ostatnim zboczem.
     \item Przeliczenie czasu na temperaturę:
     \[

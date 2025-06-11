@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Lib_MCU",
+    "\\Lib_MCU\\src",
     "\\src"
   ],
   "PreviewInSolutionExplorer": false

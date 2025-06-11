@@ -1,0 +1,33 @@
+\section{Opis głównej pętli programu}
+
+\subsection{Inicjalizacja}
+\begin{itemize}
+    \item Konfiguracja portów GPIO
+    \item Inicjalizacja interfejsów komunikacyjnych (I2C, SPI)
+    \item Inicjalizacja przetwornika ADC
+    \item Inicjalizacja peryferiów: wyświetlacz OLED, czujnik światła, moduł PWM, czujnik temperatury
+    \item Konfiguracja timera SysTick dla odliczania milisekund
+\end{itemize}
+
+\subsection{Główna pętla}
+W każdej iteracji pętli program wykonuje:
+
+\begin{enumerate}
+    \item \textbf{Odczyt temperatury} - pobiera wartość z czujnika i konwertuje na stopnie Celsjusza
+    \item \textbf{Wyświetlanie temperatury} - aktualizuje wyświetlacz OLED z aktualną temperaturą
+    \item \textbf{Odczyt poziomu oświetlenia} - pobiera wartość z czujnika światła
+    \item \textbf{Pomiar wilgotności gleby} - wykorzystuje przetwornik ADC do odczytu z czujnika wilgotności
+    \item \textbf{Analiza wilgotności gleby}:
+    \begin{itemize}
+        \item Gleba sucha (>2801): wyświetla "sucho", dioda świeci żółto-zielono, odtwarza smutną melodię
+        \item Gleba wilgotna (1601-2800): wyświetla "w normie", dioda świeci zielono, odtwarza wesołą melodię
+        \item Gleba mokra (<1601): wyświetla "mokro", dioda świeci cyjanowo
+    \end{itemize}
+    \item \textbf{Analiza oświetlenia}:
+    \begin{itemize}
+        \item Jasno (>2000 lux): wyświetla "jasno"
+        \item Normalnie (350-2000 lux): wyświetla "OK"
+        \item Ciemno (<350 lux): wyświetla "ciemno"
+    \end{itemize}
+    \item \textbf{Opóźnienie} - 200ms między iteracjami
+\end{enumerate}

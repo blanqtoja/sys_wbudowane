@@ -15,7 +15,8 @@
 \usepackage[table]{xcolor} % włącza kolory w tabelach
 \usepackage{colortbl}      % dodatkowe narzędzia do kolorowania tabel
 \usepackage{array}         % lepsze zarządzanie kolumnami
-
+\usepackage{multirow}
+\usepackage{makecell}
 \lstset{
     language=C,
     basicstyle=\ttfamily\small,
@@ -56,25 +57,59 @@
 
 %tabela opisujaca kto co robi
 |%zrobic ladniejsza
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{|c|c|}
+%     \hline
+%     Funkcjonalność  & Członek zespołu\\
+%     \hline
+%     I2C  & \multirow{4}{*}{Aleksander Kaźmierczak} \\
+%     Czujnik światła   \\
+%     PWM  \\
+%     ADC (czujnik wilgotności) \\
+%     \hline
+%     GPIO  & \multirow{3}{*}{Malwina Wodnicka} \\
+%     Obsługa głośnika  \\
+%     Timer \\
+%     \hline
+%     SPI  & \multirow{3}{*}{Julia Dobroszek} \\
+%     OLED   \\
+%     Obsługa termometru \\
+    
+%     \hline
+%     \end{tabular}
+%     \caption{Zawartość zespołu}
+% \end{table}
+
+
+
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|>{\centering\arraybackslash}m{4.5cm}|}
+    \rowcolor{gray!30}
     \hline
-    Funkcjonalność & Realizacja & Członek zespołu\\
+    Funkcjonalność & Członek zespołu\\
     \hline
-    I2C & Zrealizowane & Aleksander Kaźmierczak \\
-    Czujnik światła & Zrealizowane & Aleksander Kaźmierczak \\
-    PWM & Zrealizowane & Aleksander Kaźmierczak \\
-    ADC (czujnik wilgotności) & Zrealizowane & Aleksander Kaźmierczak \\
-    \hline
-    GPIO & Zrealizowane & Malwina Wodnicka \\
-    Obsługa głośnika & Zrealizowane & Malwina Wodnicka \\
-    Timer & Zrealizowane & Malwina Wodnicka \\
-    \hline
-    SPI & Zrealizowano & Julia Dobroszek \\
-    OLED & Zrealizowano & Julia Dobroszek \\
-    Obsługa termometru & Zrealizowano & Julia Dobroszek \\
+    I2C & \multirow[c]{4}{*}{Aleksander Kaźmierczak (34\%)} \\
     
+    Czujnik światła& \\
+  
+    PWM&\\
+    
+    ADC (czujnik wilgotności)&\\
+    \hline
+    GPIO & \multirow[c]{3}{*}{Malwina Wodnicka (33\%)} \\
+    
+    Obsługa głośnika&\\
+    
+    Timer&\\
+    \hline
+    SPI & \multirow[c]{3}{*}{Julia Dobroszek (33\%)} \\
+    
+    OLED & \\
+    
+    Obsługa termometru&\\
     \hline
     \end{tabular}
     \caption{Zawartość zespołu}
@@ -101,25 +136,25 @@ Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprze
          \item Poziomu wilgotności gleby:
              \begin{itemize}
                 \label{sec:wykorzystanie_ADC}
-                 \item \textbf{sucho} - oznacza niski poziom wilgotności gleby (odczyt powyżej 2801), wskazujący na konieczność podlania rośliny
-                 \item \textbf{w normie} - oznacza optymalny poziom wilgotności gleby (odczyt między 1601 a 2800), idealny dla wzrostu większości roślin
-                 \item \textbf{mokro} - oznacza wysoki poziom wilgotności gleby (odczyt poniżej 1600), wskazujący na nadmiar wody, który może być szkodliwy dla rośliny
+                 \item \textbf{sucho} - oznacza niski poziom wilgotności gleby, wskazujący na konieczność podlania rośliny
+                 \item \textbf{w normie} - oznacza optymalny poziom wilgotności gleby, idealny dla wzrostu większości roślin
+                 \item \textbf{mokro} - oznacza wysoki poziom wilgotności gleby, wskazujący na nadmiar wody, który może być szkodliwy dla rośliny
              \end{itemize}
          \item Temperatury otoczenia (w stopniach Celsjusza) 
          \item Natężenia światła - system interpretuje odczyt z czujnika i wyświetla jeden z trzech komunikatów:
          \begin{itemize}
-             \item "jasno" - gdy wartość odczytu przekracza 2000
-             \item "OK" - gdy wartość odczytu mieści się w przedziale od 350 do 2000
-             \item "ciemno" - gdy wartość odczytu jest mniejsza niż 350
+             \item "jasno" - gdy wartość odczytu przekracza 2000 lux
+             \item "OK" - gdy wartość odczytu mieści się w przedziale od 350 do 2000 lux
+             \item "ciemno" - gdy wartość odczytu jest mniejsza niż 350 lux
          \end{itemize}
          \item Dodatkowych informacji o stanie systemu 
      \end{itemize} 
      
      \item \textbf{Dioda RGB} - W zależności od poziomu wilgotności gleby, dioda RGB świeci się różnymi kolorami: 
      \begin{itemize} 
-         \item Kolor żółto-zielony (\#c8ff1e) - oznacza stan \textbf{sucho} (odczyt powyżej 2801), sygnalizując potrzebę podlania rośliny
-         \item Kolor zielony (\#1eff00) - oznacza stan \textbf{w normie} (odczyt między 1601 a 2800), sygnalizując optymalny poziom wilgotności
-         \item Kolor błękitny (\#1effff) - oznacza stan \textbf{mokro} (odczyt poniżej 1600), sygnalizując nadmiar wody w glebie
+         \item Kolor żółto-zielony (\#c8ff1e) - oznacza stan \textbf{sucho}, sygnalizując potrzebę podlania rośliny
+         \item Kolor zielony (\#1eff00) - oznacza stan \textbf{w normie}, sygnalizując optymalny poziom wilgotności
+         \item Kolor błękitny (\#1effff) - oznacza stan \textbf{mokro}, sygnalizując nadmiar wody w glebie
      \end{itemize} 
  \end{enumerate}
 
@@ -129,12 +164,12 @@ Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprze
     
     \item \textbf{Konserwacja} - Aby zapewnić prawidłowe działanie urządzenia:
     \begin{itemize}
-        \item Regularnie czyścić czujnik wilgotności z osadów mineralnych, które mogą gromadzić się na jego powierzchni
         \item Utrzymywać wyświetlacz OLED w czystości, unikając bezpośredniego kontaktu z wodą
-        \item Sprawdzać okresowo stan połączeń elektrycznych
         \item \textbf{Kategorycznie unikać kontaktu elektroniki z wodą} - Jedynym elementem, który może mieć bezpośredni kontakt z wilgocią, jest czujnik wilgotności (metalowe druty). Pozostałe elementy elektroniczne należy chronić przed zalaniem, zachlapaniem oraz nadmierną wilgotnością powietrza, gdyż może to prowadzić do trwałego uszkodzenia urządzenia i utraty gwarancji
     \end{itemize}
 \end{enumerate}
+
+\input{alg}
 
 \section{Funkcjonalności}
 
@@ -175,31 +210,60 @@ Inteligentna donica dostarcza użytkownikowi informacji o stanie rośliny poprze
 
 \section{Analiza awarii}
 
+% \begin{table}[H]
+% \centering
+% \caption{Analiza FMEA/FMECA}
+% \begin{tabular}{|p{4.2cm}|c|c|c|p{4.5cm}|c|}
+% \hline
+% \textbf{Ryzyko} & \textbf{Szansa} & \textbf{Znaczenie} & \textbf{Wykrywalność} & \textbf{Reakcja} & \textbf{Iloczyn} \\
+% \hline
+% Błąd odczytu z czujnika wilgotności gleby (ADC) & 0.3 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+% \hline
+% Brak komunikacji z czujnikiem światła (I2C) & 0.2 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+% \hline
+% Uszkodzenie wyświetlacza OLED (SPI) & 0.1 &\cellcolor{yellow!50} 8 & ? & ? & ? \\
+% \hline
+% Przegrzanie czujnika temperatury & 0.1 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
+% \hline
+% Zawieszenie PWM (LED, audio) & 0.2 &\cellcolor{green!50} 3 & ? & ? & ? \\
+% \hline
+% Timer systemowy zatrzymany / błędny & 0.5 & \cellcolor{red!50}9 & ? & ? & ? \\
+% \hline
+% Zanik zasilania & 0.4 & \cellcolor{red!50}10 & ? & ? & ? \\
+% \hline
+% Zalanie układu & 0.8 & \cellcolor{red!50}10 & ? & ?. & ? \\
+% \hline
+% \end{tabular}
+% \end{table}
+
 \begin{table}[H]
-\centering
-\caption{Analiza FMEA/FMECA}
-\begin{tabular}{|p{4.2cm}|c|c|c|p{4.5cm}|c|}
-\hline
-\textbf{Ryzyko} & \textbf{Szansa} & \textbf{Znaczenie} & \textbf{Wykrywalność} & \textbf{Reakcja} & \textbf{Iloczyn} \\
-\hline
-Błąd odczytu z czujnika wilgotności gleby (ADC) & 0.3 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
-\hline
-Brak komunikacji z czujnikiem światła (I2C) & 0.2 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
-\hline
-Uszkodzenie wyświetlacza OLED (SPI) & 0.1 &\cellcolor{yellow!50} 8 & ? & ? & ? \\
-\hline
-Przegrzanie czujnika temperatury & 0.1 &\cellcolor{yellow!50} 7 & ? & ? & ? \\
-\hline
-Zawieszenie PWM (LED, audio) & 0.2 &\cellcolor{green!50} 3 & ? & ? & ? \\
-\hline
-Timer systemowy zatrzymany / błędny & 0.5 & \cellcolor{red!50}9 & ? & ? & ? \\
-\hline
-Zanik zasilania & 0.4 & \cellcolor{red!50}10 & ? & ? & ? \\
-\hline
-Zalanie układu & 0.8 & \cellcolor{red!50}10 & ? & ?. & ? \\
-\hline
-\end{tabular}
+    \centering
+    \caption{Analiza FMEA/FMECA}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|p{4.2cm}|c|c|c|c|c|}
+    \rowcolor{gray!30}
+    \hline
+    \textbf{Ryzyko} & \textbf{Szansa} & \textbf{Znaczenie} & \textbf{Wykrywalność} & \textbf{Reakcja} & \textbf{Iloczyn} \\
+    \hline
+    Błąd odczytu z czujnika wilgotności gleby (ADC) & 0.3 & \cellcolor{yellow!50}7 & Brak & Brak & 10.5 \\
+    \hline
+    Brak komunikacji z czujnikiem światła (I2C) & 0.2 & \cellcolor{yellow!50}7 &Brak& Brak & 5.6 \\
+    \hline
+    Uszkodzenie wyświetlacza OLED (SPI) & 0.1 & \cellcolor{yellow!50}8 &Brak & Brak & 2.4 \\
+    \hline
+    Uszkodzenie czujnika temperatury & 0.1 & \cellcolor{yellow!50}7 & Brak & Brak & 4.2 \\
+    \hline
+    Zawieszenie PWM (LED, audio) & 0.2 & \cellcolor{green!50}3 & Brak & Brak & 2.4 \\
+    \hline
+    Timer systemowy zatrzymany / błędny & 0.5 & \cellcolor{red!50}9 & Brak & Brak & 22.5 \\
+    \hline
+    Zanik zasilania & 0.4 & \cellcolor{red!50}10 & Brak & Brak & 12.0 \\
+    \hline
+    Zalanie układu & 0.8 & \cellcolor{red!50}10 & Brak & Brak & 16.0 \\
+    \hline
+    \end{tabular}
 \end{table}
+    
 
 \subsection{Analiza potencjalnych awarii}
 
@@ -217,7 +281,7 @@ Uszkodzenie interfejsu SPI lub wyświetlacza OLED powoduje brak wyświetlania in
 Przegrzanie lub uszkodzenie czujnika temperatury prowadzi do odczytów poza zakresem lub całkowitego ich braku. Może to skutkować brakiem reakcji na niekorzystne warunki otoczenia.
 
 \subsubsection{PWM}
-Zawieszenie sterowania PWM skutkuje brakiem możliwości sterowania diodami LED i systemem audio. Użytkownik jest informowany jednak również za pomocą komunikatów na wyświetlaczu OLED więc to ryzyko jest niegroźne.
+Zawieszenie sterowania PWM skutkuje brakiem możliwości sterowania diodami LED. Użytkownik jest informowany jednak również za pomocą komunikatów na wyświetlaczu OLED więc to ryzyko jest niegroźne.
 
 \subsubsection{Timer systemowy}
 Zatrzymanie lub błędne działanie głównego timera zakłóca działanie logiki czasowej systemu. 
